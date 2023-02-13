@@ -342,7 +342,7 @@ class AjustescompromisoController extends Controller
                          $compromiso->increment('montocompromiso', $totalajustar);
 
                          //y actualizar el  valor de la tabla ajuste compromiso
-                         $ajustescompromiso->montoajuste =  $totalajustar;
+                        // $ajustescompromiso->montoajuste =  $totalajustar;
                          $ajustescompromiso->status =  'PR';
                          $ajustescompromiso->save();
 
@@ -372,8 +372,95 @@ class AjustescompromisoController extends Controller
                  $compromiso->decrement('montocompromiso', $totalajustar);
 
                  //y actualizar el  valor de la tabla ajuste compromiso
-                 $ajustescompromiso->montoajuste =  $totalajustar;
+             //    $ajustescompromiso->montoajuste =  $totalajustar;
                  $ajustescompromiso->status =  'PR';
+                 $ajustescompromiso->save();
+
+        }
+
+
+
+
+
+        if($aprobado == 1){
+            return redirect()->route('ajustescompromisos.index')
+            ->with('success', 'Compromiso Aprobado Exitosamente. ');
+        }else{
+            return redirect()->route('ajustescompromisos.index')
+            ->with('success', 'No Aprobado. No hay Disponibilidad o ha ocurrido un error en el registro');
+        }
+
+    }
+
+    public function reversar($id)
+    {
+        $aprobado = 1;
+        //Variable para guardar el monto total del ajuste
+        $totalajustar = 0;
+
+        //Obtener los datos de la tabla ajustescompromisos
+        $ajustescompromiso = Ajustescompromiso::find($id);
+
+        //Obtener los datos del ajuste del compromiso
+        $detallesajustes = Detallesajuste::where('ajustes_id', $ajustescompromiso->id)->get();
+
+        //Consultar que tipo de ajuste es, si es 1 q es aumento, consultar primero disponibilidad
+        //Si es 2 que es disminucion proceder a hacer el ajuste.
+        if($ajustescompromiso->tipo==1){
+            //Chequeo si hay disponibilidad en las partidas
+            
+               
+                    $compromiso = Compromiso::find($ajustescompromiso->compromiso_id);
+                    //Ciclo para imputar
+                    foreach($detallesajustes as $rows){
+                        //Obtener la ejecucion 
+                            $ejecucion = Ejecucione::find($rows->ejecucion_id);
+                            $ejecucion->decrement('monto_comprometido', $rows->montoajuste);
+                            $ejecucion->increment('monto_por_comprometer', $rows->montoajuste);
+                            $ejecucion->increment('monto_precomprometido', $rows->montoajuste);
+
+                            //Obtener el detalle compromiso para incrementarle el valor que viene obteniendo
+                            $detallescompromisos = Detallescompromiso::where('compromiso_id',$compromiso->id)->where('ejecucion_id',$rows->ejecucion_id)->first();
+                            $detallescompromisos->decrement('montocompromiso', $rows->montoajuste);
+                         }
+                         $totalajustar = $detallesajustes->sum('montoajuste');
+                         //Sumarle el valor al monto del compromiso primero obtener el compromiso
+                         
+                         $compromiso->decrement('montocompromiso', $totalajustar);
+
+                         //y actualizar el  valor de la tabla ajuste compromiso
+                       //  $ajustescompromiso->montoajuste =  $totalajustar;
+                         $ajustescompromiso->status =  'EP';
+                         $ajustescompromiso->save();
+
+
+                         
+                     
+
+
+        }else{
+
+            $compromiso = Compromiso::find($ajustescompromiso->compromiso_id);
+            //Ciclo para imputar
+            foreach($detallesajustes as $rows){
+                //Obtener la ejecucion 
+                    $ejecucion = Ejecucione::find($rows->ejecucion_id);
+                    $ejecucion->increment('monto_comprometido', $rows->montoajuste);
+                    $ejecucion->decrement('monto_por_comprometer', $rows->montoajuste);
+                    $ejecucion->decrement('monto_precomprometido', $rows->montoajuste);
+
+                    //Obtener el detalle compromiso para incrementarle el valor que viene obteniendo
+                    $detallescompromisos = Detallescompromiso::where('compromiso_id',$compromiso->id)->where('ejecucion_id',$rows->ejecucion_id)->first();
+                    $detallescompromisos->increment('montocompromiso', $rows->montoajuste);
+                 }
+                 $totalajustar = $detallesajustes->sum('montoajuste');
+                 //restarle el valor al monto del compromiso primero obtener el compromiso
+                 
+                 $compromiso->increment('montocompromiso', $totalajustar);
+
+                 //y actualizar el  valor de la tabla ajuste compromiso
+               //  $ajustescompromiso->montoajuste =  $totalajustar;
+                 $ajustescompromiso->status =  'EP';
                  $ajustescompromiso->save();
 
         }

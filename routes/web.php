@@ -190,6 +190,8 @@ Route::get('requisiciones/aprobadas', [App\Http\Controllers\RequisicioneControll
 
 Route::patch('/requisiciones/anular/{requisicione}', [App\Http\Controllers\RequisicioneController::class, 'anular'])->name('requisiciones.anular')->middleware('auth');
 
+Route::patch('/requisiciones/reversar/{requisicione}', [App\Http\Controllers\RequisicioneController::class, 'reversar'])->name('requisiciones.reversar')->middleware('auth');
+
 Route::patch('/requisiciones/aprobar/{requisicione}', [App\Http\Controllers\RequisicioneController::class, 'aprobar'])->name('requisiciones.aprobar')->middleware('auth');
 
 Route::resource('requisiciones', App\Http\Controllers\RequisicioneController::class)->middleware('auth');
@@ -307,6 +309,8 @@ Route::get('ajustescompromisos/anuladas', [App\Http\Controllers\Ajustescompromis
 Route::get('ajustescompromisos/pdf/{ajuste}', [App\Http\Controllers\AjustescompromisoController::class, 'pdf'])->name('ajustescompromisos.pdf')->middleware('auth');
 
 Route::patch('/ajustescompromisos/aprobar/{ajuste}', [App\Http\Controllers\AjustescompromisoController::class, 'aprobar'])->name('ajustescompromisos.aprobar')->middleware('auth');
+
+Route::patch('/ajustescompromisos/reversar/{ajuste}', [App\Http\Controllers\AjustescompromisoController::class, 'reversar'])->name('ajustescompromisos.reversar')->middleware('auth');
 
 Route::patch('/ajustescompromisos/anular/{ajuste}', [App\Http\Controllers\AjustescompromisoController::class, 'anular'])->name('ajustescompromisos.anular')->middleware('auth');
 

@@ -68,7 +68,7 @@
                                         <th>Estado</th>
                                         <th>Usuario</th>
 
-                                        <th></th>
+                                        <th>Opciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -88,7 +88,7 @@
 											<td>{{ $ajustescompromiso->compromiso->ncompromiso }}</td>
 											<td>{{ $ajustescompromiso->documento }}</td>
 											<td>{{ $ajustescompromiso->concepto }}</td>
-											<td>{{ $ajustescompromiso->montoajuste }}</td>
+											<td>{{ number_format($ajustescompromiso->montoajuste,2,',','.') }}</td>
                                             <td>
                                             @if ($ajustescompromiso->status == 'EP')
                                                     EN PROCESO

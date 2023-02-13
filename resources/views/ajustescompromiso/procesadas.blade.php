@@ -69,7 +69,7 @@
                                         <th>Estado</th>
                                         <th>Usuario</th>
 
-                                        <th></th>
+                                        <th>Opciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -87,7 +87,7 @@
 											<td>{{ $ajustescompromiso->compromiso->ncompromiso }}</td>
 											<td>{{ $ajustescompromiso->documento }}</td>
 											<td>{{ $ajustescompromiso->concepto }}</td>
-											<td>{{ $ajustescompromiso->montoajuste }}</td>
+											<td>{{ number_format($ajustescompromiso->montoajuste,2,',','.') }}</td>
                                             <td>
                                             @if ($ajustescompromiso->status == 'EP')
                                                     EN PROCESO
@@ -103,8 +103,15 @@
                                             <td>{{ $ajustescompromiso->usuario->name }}</td>
                                             <td>
                                                 
-                                            <a class="btn btn-sm btn-primary " href="{{ route('ajustescompromisos.pdf',$ajustescompromiso->id) }}" data-toggle="tooltip" data-placement="top" title="Imprimir Ajuste Compromiso"><i class="fas fa-print"></i></a>
+                                            <a class="btn btn-sm btn-primary " href="{{ route('ajustescompromisos.pdf',$ajustescompromiso->id) }}" data-toggle="tooltip" data-placement="top" title="Imprimir Ajuste Compromiso"><i class="fas fa-print"></i> Imprimir</a>
 
+                                            <form action="{{ route('ajustescompromisos.reversar',$ajustescompromiso->id) }}" method="POST">
+                                                    <!-- Agregar detalles BOS a la requisicion -->
+                                                    
+                                                    @csrf
+                                                    @method('PATCH')
+                                                    <button type="submit" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="top" title="Reversar Ajuste de Compromiso"><i class="fa fa-fw fa-check"></i> Reversar</button>
+                                                </form>
                                         </td>
                                         </tr>
                                     @endforeach

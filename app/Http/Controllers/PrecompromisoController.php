@@ -13,6 +13,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use PDF;
 
 /**
@@ -29,7 +30,7 @@ class PrecompromisoController extends Controller
     public function index()
     {
        // $precompromisos = Precompromiso::where('status', 'EP')->paginate();
-
+       if(Auth::user()->hasAnyRole('Admin')){  
        $precompromisos = Precompromiso::query()
        ->when(request('search'), function($query){
            return $query->where ('id', 'like', '%'.request('search').'%')
@@ -46,9 +47,33 @@ class PrecompromisoController extends Controller
             $query->where('status', 'like', 'EP')
             ->orderBy('id', 'DESC');
         })
-        
        ->paginate(25)
        ->withQueryString();
+    }else{
+        $precompromisos = Precompromiso::query()
+       ->when(request('search'), function($query){
+           return $query->where ('id', 'like', '%'.request('search').'%')
+                        ->where('status', 'like', 'EP')
+                        ->where('unidadadministrativa_id', 'like', Auth::user()->unidad_id)
+                        ->orWhereHas('unidadadministrativa', function($q){
+                         $q->where('unidadejecutora', 'like', '%'.request('search').'%');
+                         })->where('status', 'like', 'EP')
+                         ->where('unidadadministrativa_id', 'like', Auth::user()->unidad_id)
+                          ->orWhereHas('beneficiario', function($qa){
+                            $qa->where('nombre', 'like', '%'.request('search').'%');
+                        })
+                        ->where('status', 'like', 'EP')
+                        ->where('unidadadministrativa_id', 'like', Auth::user()->unidad_id);
+        },
+        function ($query) {
+            $query->where('status', 'like', 'EP')
+            ->where('unidadadministrativa_id', 'like', Auth::user()->unidad_id)
+            ->orderBy('id', 'DESC');
+        })
+       ->paginate(25)
+       ->withQueryString();
+
+    }
 
      /*   $precompromisos = Precompromiso::query()
                         ->when(request('search'), function($query){
@@ -108,7 +133,7 @@ class PrecompromisoController extends Controller
         })
         ->paginate()
         ->withQueryString(); */
-
+        if(Auth::user()->hasAnyRole('Admin')){  
         $precompromisos = Precompromiso::query()
        ->when(request('search'), function($query){
            return $query->where ('id', 'like', '%'.request('search').'%')
@@ -125,9 +150,32 @@ class PrecompromisoController extends Controller
             $query->where('status', 'like', 'PR')
             ->orderBy('id', 'DESC');
         })
-        
        ->paginate(25)
        ->withQueryString();
+    }else{
+        $precompromisos = Precompromiso::query()
+        ->when(request('search'), function($query){
+            return $query->where ('id', 'like', '%'.request('search').'%')
+                         ->where('status', 'like', 'PR')
+                         ->where('unidadadministrativa_id', 'like', Auth::user()->unidad_id)
+                         ->orWhereHas('unidadadministrativa', function($q){
+                          $q->where('unidadejecutora', 'like', '%'.request('search').'%');
+                          })->where('status', 'like', 'PR')
+                          ->where('unidadadministrativa_id', 'like', Auth::user()->unidad_id)
+                           ->orWhereHas('beneficiario', function($qa){
+                             $qa->where('nombre', 'like', '%'.request('search').'%');
+                         })
+                         ->where('status', 'like', 'PR')
+                         ->where('unidadadministrativa_id', 'like', Auth::user()->unidad_id);
+         },
+         function ($query) {
+             $query->where('status', 'like', 'PR')
+             ->where('unidadadministrativa_id', 'like', Auth::user()->unidad_id)
+             ->orderBy('id', 'DESC');
+         })
+        ->paginate(25)
+        ->withQueryString();
+    }
 
 
         return view('precompromiso.procesadas', compact('precompromisos'))
@@ -142,6 +190,8 @@ class PrecompromisoController extends Controller
     public function indexanuladas()
     {
        // $precompromisos = Precompromiso::where('status', 'AN')->paginate();
+
+       if(Auth::user()->hasAnyRole('Admin')){  
        $precompromisos = Precompromiso::query()
        ->when(request('search'), function($query){
            return $query->where ('id', 'like', '%'.request('search').'%')
@@ -159,9 +209,32 @@ class PrecompromisoController extends Controller
             $query->where('status', 'like', 'AN')
             ->orderBy('id', 'DESC');
         })
-        
        ->paginate(25)
        ->withQueryString();
+    }else{
+        $precompromisos = Precompromiso::query()
+        ->when(request('search'), function($query){
+            return $query->where ('id', 'like', '%'.request('search').'%')
+                         ->where('status', 'like', 'AN')
+                         ->where('unidadadministrativa_id', 'like', Auth::user()->unidad_id)
+                         ->orWhereHas('unidadadministrativa', function($q){
+                          $q->where('unidadejecutora', 'like', '%'.request('search').'%');
+                          })->where('status', 'like', 'AN')
+                          ->where('unidadadministrativa_id', 'like', Auth::user()->unidad_id)
+                           ->orWhereHas('beneficiario', function($qa){
+                             $qa->where('nombre', 'like', '%'.request('search').'%');
+                         })
+                         ->where('status', 'like', 'AN')
+                         ->where('unidadadministrativa_id', 'like', Auth::user()->unidad_id);
+         },
+         function ($query) {
+             $query->where('status', 'like', 'AN')
+             ->where('unidadadministrativa_id', 'like', Auth::user()->unidad_id)
+             ->orderBy('id', 'DESC');
+         })
+        ->paginate(25)
+        ->withQueryString();
+    }
 
         return view('precompromiso.anuladas', compact('precompromisos'))
             ->with('i', (request()->input('page', 1) - 1) * $precompromisos->perPage());
@@ -175,6 +248,8 @@ class PrecompromisoController extends Controller
     public function indexaprobadas()
     {
        // $precompromisos = Precompromiso::where('status', 'AP')->paginate();
+
+       if(Auth::user()->hasAnyRole('Admin')){  
        $precompromisos = Precompromiso::query()
        ->when(request('search'), function($query){
            return $query->where ('id', 'like', '%'.request('search').'%')
@@ -192,9 +267,32 @@ class PrecompromisoController extends Controller
             $query->where('status', 'like', 'AP')
             ->orderBy('id', 'DESC');
         })
-        
        ->paginate(25)
        ->withQueryString();
+    }else{
+        $precompromisos = Precompromiso::query()
+        ->when(request('search'), function($query){
+            return $query->where ('id', 'like', '%'.request('search').'%')
+                         ->where('status', 'like', 'AP')
+                         ->where('unidadadministrativa_id', 'like', Auth::user()->unidad_id)
+                         ->orWhereHas('unidadadministrativa', function($q){
+                          $q->where('unidadejecutora', 'like', '%'.request('search').'%');
+                          })->where('status', 'like', 'AP')
+                          ->where('unidadadministrativa_id', 'like', Auth::user()->unidad_id)
+                           ->orWhereHas('beneficiario', function($qa){
+                             $qa->where('nombre', 'like', '%'.request('search').'%');
+                         })
+                         ->where('status', 'like', 'AP')
+                         ->where('unidadadministrativa_id', 'like', Auth::user()->unidad_id);
+         },
+         function ($query) {
+             $query->where('status', 'like', 'AP')
+             ->where('unidadadministrativa_id', 'like', Auth::user()->unidad_id)
+             ->orderBy('id', 'DESC');
+         })
+        ->paginate(25)
+        ->withQueryString();
+    }
 
         return view('precompromiso.aprobadas', compact('precompromisos'))
             ->with('i', (request()->input('page', 1) - 1) * $precompromisos->perPage());

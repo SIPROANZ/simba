@@ -102,9 +102,14 @@ class DetallesrequisicioneController extends Controller
         //que esta asociado al producto, e irlo agregando, y antes de agregar verificar que no exista en
         //dicha tabla para dicha requisicion de no existir se agrega en caso contrario no se hace nada.
         $ejecucion_id = 0;
+
         $ejecucion = DB::table('ejecuciones')->where('ejercicio_id', $ejercicio_id)->where('unidadadministrativa_id', $unidad_administrativa_id)->where('clasificadorpresupuestario', $clasificador_presupuestario)->first();
 
         $ejecucion_id = $ejecucion->id;
+/*
+        return redirect()->route('requisiciones.index')
+            ->with('success', 'Registro Agregado Exitosamente. Ejecucion id: ' . $ejecucion_id);
+*/
         $poa_id = $ejecucion->poa_id;
         $meta_id = $ejecucion->meta_id;
         $financiamiento_id = $ejecucion->financiamiento_id;

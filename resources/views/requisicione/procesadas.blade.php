@@ -106,7 +106,17 @@
                                         
                                             <td>
                                                     <a class="btn btn-sm btn-primary " href="{{ route('requisiciones.pdf',$requisicione->id) }}"><i class="fa fa-fw fa-eye"></i> Imprimir</a>
-                                            </td>
+                                            
+
+                                                    <form action="{{ route('requisiciones.reversar',$requisicione->id) }}" method="POST">
+                                                    <!-- Agregar detalles BOS a la requisicion -->
+                                                    
+                                                    @csrf
+                                                    @method('PATCH')
+                                                    <button type="submit" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="top" title="Reversar Requisicion"><i class="fa fa-fw fa-check"></i> Reversar</button>
+                                                </form>
+                                            
+                                                </td>
                                            
                                         </tr>
                                     @endforeach

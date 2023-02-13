@@ -12,7 +12,7 @@
 
         <div class="col-md-6">
         <div class="form-group">
-            {{ Form::label('montototal') }}
+            {{ Form::label('monto total') }}
             {{ Form::text('montototal', $precompromiso->montototal, ['class' => 'form-control' . ($errors->has('montototal') ? ' is-invalid' : ''), 'placeholder' => 'Montototal']) }}
             {!! $errors->first('montototal', '<div class="invalid-feedback">:message</div>') !!}
         </div>

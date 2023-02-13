@@ -51,7 +51,7 @@ class RequisicioneController extends Controller
         },
         function ($query) {
             $query->where('estatus', 'like', 'EP')
-            ->orderBy('id', 'ASC');
+            ->orderBy('id', 'DESC');
         })
         
        ->paginate(25)
@@ -81,7 +81,7 @@ class RequisicioneController extends Controller
         function ($query) {
             $query->where('estatus', 'like', 'EP')
             ->where('unidadadministrativa_id', 'like', Auth::user()->unidad_id)
-            ->orderBy('id', 'ASC');
+            ->orderBy('id', 'DESC');
         })
        ->paginate(25)
        ->withQueryString();
@@ -140,7 +140,7 @@ class RequisicioneController extends Controller
             },
             function ($query) {
                 $query->where('estatus', 'like', 'PR')
-                ->orderBy('id', 'ASC');
+                ->orderBy('id', 'DESC');
             })
             
            ->paginate(25)
@@ -170,7 +170,7 @@ class RequisicioneController extends Controller
             function ($query) {
                 $query->where('estatus', 'like', 'PR')
                 ->where('unidadadministrativa_id', 'like', Auth::user()->unidad_id)
-                ->orderBy('id', 'ASC');
+                ->orderBy('id', 'DESC');
             })
            ->paginate(25)
            ->withQueryString();
@@ -227,7 +227,7 @@ class RequisicioneController extends Controller
             },
             function ($query) {
                 $query->where('estatus', 'like', 'AN')
-                ->orderBy('id', 'ASC');
+                ->orderBy('id', 'DESC');
             })
            ->paginate(25)
            ->withQueryString();
@@ -256,7 +256,7 @@ class RequisicioneController extends Controller
             function ($query) {
                 $query->where('estatus', 'like', 'AN')
                 ->where('unidadadministrativa_id', 'like', Auth::user()->unidad_id)
-                ->orderBy('id', 'ASC');
+                ->orderBy('id', 'DESC');
             })
            ->paginate(25)
            ->withQueryString();
@@ -311,7 +311,7 @@ class RequisicioneController extends Controller
             },
             function ($query) {
                 $query->where('estatus', 'like', 'AP')
-                ->orderBy('id', 'ASC');
+                ->orderBy('id', 'DESC');
             })
             
            ->paginate(25)
@@ -341,7 +341,7 @@ class RequisicioneController extends Controller
             function ($query) {
                 $query->where('estatus', 'like', 'AP')
                 ->where('unidadadministrativa_id', 'like', Auth::user()->unidad_id)
-                ->orderBy('id', 'ASC');
+                ->orderBy('id', 'DESC');
             })
            ->paginate(25)
            ->withQueryString();
@@ -541,6 +541,16 @@ class RequisicioneController extends Controller
 
         return redirect()->route('requisiciones.index')
             ->with('success', 'Requisicion Anulada exitosamente.');
+    }
+
+    public function reversar($id)
+    {
+        $requisicione = Requisicione::find($id);
+        $requisicione->estatus = 'EP';
+        $requisicione->save();
+
+        return redirect()->route('requisiciones.index')
+            ->with('success', 'Requisicion Reversada exitosamente.');
     }
 
     /**
