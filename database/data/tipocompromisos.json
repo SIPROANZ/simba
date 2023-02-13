@@ -1,0 +1,562 @@
+[
+    {
+     "id": 2,
+     "nombre": "Contrado De Personal"
+    },
+    {
+     "id": 3,
+     "nombre": "Aportes Patronales"
+    },
+    {
+     "id": 6,
+     "nombre": "Servicios Basicos"
+    },
+    {
+     "id": 7,
+     "nombre": "Orden De Compra"
+    },
+    {
+     "id": 8,
+     "nombre": "Orden De Servicio"
+    },
+    {
+     "id": 9,
+     "nombre": "Ajustes Del Compromiso"
+    },
+    {
+     "id": 4,
+     "nombre": " Nomina Empleados Fijos"
+    },
+    {
+     "id": 11,
+     "nombre": "Retenciones "
+    },
+    {
+     "id": 12,
+     "nombre": "Nomina Obreros"
+    },
+    {
+     "id": 13,
+     "nombre": "Nomina Contratados"
+    },
+    {
+     "id": 14,
+     "nombre": "Bono Vacacional"
+    },
+    {
+     "id": 15,
+     "nombre": "Nomina Jubilados Y Pensionados "
+    },
+    {
+     "id": 16,
+     "nombre": "Encargaduria"
+    },
+    {
+     "id": 17,
+     "nombre": "Orden De Pago Directo"
+    },
+    {
+     "id": 18,
+     "nombre": "Cestaticket Socialista Empleados Fijos"
+    },
+    {
+     "id": 23,
+     "nombre": "Nomina Del Personal Aseador"
+    },
+    {
+     "id": 26,
+     "nombre": "Nomina De Personal De Alto Nivel Y Direccion"
+    },
+    {
+     "id": 27,
+     "nombre": "Pago Prestaciones Sociales"
+    },
+    {
+     "id": 33,
+     "nombre": "Apoyo Socioeconomico"
+    },
+    {
+     "id": 36,
+     "nombre": "Bono De Contingencia"
+    },
+    {
+     "id": 37,
+     "nombre": "Pago Guarderia"
+    },
+    {
+     "id": 40,
+     "nombre": "Liquidaciones Prestastaciones Sociales"
+    },
+    {
+     "id": 44,
+     "nombre": "Bono Dia Del Trabajador"
+    },
+    {
+     "id": 46,
+     "nombre": "Nomina Contratados Hp"
+    },
+    {
+     "id": 47,
+     "nombre": "Bono único Personal Jubilado Y Pensionado"
+    },
+    {
+     "id": 48,
+     "nombre": "Nomina De Guerra Economica"
+    },
+    {
+     "id": 49,
+     "nombre": "Donaciones Corrientes A Personal"
+    },
+    {
+     "id": 50,
+     "nombre": "Seguridad Social"
+    },
+    {
+     "id": 5,
+     "nombre": "Ayudas Medicas  Funcionario"
+    },
+    {
+     "id": 51,
+     "nombre": "Ayudas Sociales Dimisoc"
+    },
+    {
+     "id": 52,
+     "nombre": "Caravana De La Salud"
+    },
+    {
+     "id": 53,
+     "nombre": "Viaticos De La Caravana De La Salud"
+    },
+    {
+     "id": 54,
+     "nombre": "Orden De Pago"
+    },
+    {
+     "id": 55,
+     "nombre": "Funcionamiento Institucional"
+    },
+    {
+     "id": 56,
+     "nombre": "Funcionamiento Unidad Administrativa"
+    },
+    {
+     "id": 57,
+     "nombre": "Donaciones Deportiivas"
+    },
+    {
+     "id": 58,
+     "nombre": "Transferencia Corriente Entes Descentralizados"
+    },
+    {
+     "id": 59,
+     "nombre": "Transferencia De Capital Descentralizados"
+    },
+    {
+     "id": 60,
+     "nombre": "Donaciones Corrientes A Personas"
+    },
+    {
+     "id": 61,
+     "nombre": "Pago De Nomina"
+    },
+    {
+     "id": 62,
+     "nombre": "Nomina De Alto Nivel Y Dirección"
+    },
+    {
+     "id": 63,
+     "nombre": "Nomina De Pensionados Por Invalidez "
+    },
+    {
+     "id": 64,
+     "nombre": "Nomina De Elección Popular "
+    },
+    {
+     "id": 65,
+     "nombre": "Nomina De Jubilados "
+    },
+    {
+     "id": 66,
+     "nombre": "Nomina De Pensionados Por Viudez U Orfandad "
+    },
+    {
+     "id": 67,
+     "nombre": "Nomina Personal Docente"
+    },
+    {
+     "id": 68,
+     "nombre": "Pago De Prestaciones (deuda)"
+    },
+    {
+     "id": 70,
+     "nombre": "Trasferencias A Poderes Públicos "
+    },
+    {
+     "id": 73,
+     "nombre": "Transferencias Corrientes A Entes Descentralizados Sin Fines Empresariales"
+    },
+    {
+     "id": 74,
+     "nombre": "Transferencias Corrientes A Entes Descentralizados Con Fines Empresariales No Petroleros"
+    },
+    {
+     "id": 75,
+     "nombre": "Transferencias Corrientes A Entes Descentralizados Financieros No Bancarios"
+    },
+    {
+     "id": 76,
+     "nombre": "Transferencias De Capital A Entes Descentralizados Sin Fines Empresariales"
+    },
+    {
+     "id": 72,
+     "nombre": "Transferencia Corriente"
+    },
+    {
+     "id": 77,
+     "nombre": "Bono Vacacional Al Personal Obrero"
+    },
+    {
+     "id": 78,
+     "nombre": "Bono Alimenticio Al Personal Obrero"
+    },
+    {
+     "id": 80,
+     "nombre": "Nomina De Suplencia Al Personal Docente "
+    },
+    {
+     "id": 82,
+     "nombre": "Bono Vacacional Al Personal De Alto Nivel Y Dirección "
+    },
+    {
+     "id": 85,
+     "nombre": "Bono Alimenticio Al Personal De Elección Popular "
+    },
+    {
+     "id": 79,
+     "nombre": "Bono Alimenticio Al Personal Docente"
+    },
+    {
+     "id": 86,
+     "nombre": "Bono Alimenticio Al Personal Empleado"
+    },
+    {
+     "id": 83,
+     "nombre": "Bono Alimenticio Al Personal De Alto Nivel Y Dirección "
+    },
+    {
+     "id": 87,
+     "nombre": "Bono Alimenticio Al Personal Jubilado"
+    },
+    {
+     "id": 88,
+     "nombre": "Bono Alimenticio Al Personal Pensionado Por Viudez U Orfandad"
+    },
+    {
+     "id": 84,
+     "nombre": "Bono Vacacional Al Personal Empleado"
+    },
+    {
+     "id": 81,
+     "nombre": "Bono Alimenticio Al Personal Pensionado Por Invalidez "
+    },
+    {
+     "id": 89,
+     "nombre": "Bono Alimenticio Al Personal Contratado"
+    },
+    {
+     "id": 90,
+     "nombre": "Contrato De Obra"
+    },
+    {
+     "id": 91,
+     "nombre": "Bono Sin Incidencia Salarial"
+    },
+    {
+     "id": 92,
+     "nombre": "Bono Especial"
+    },
+    {
+     "id": 117,
+     "nombre": "Aguinaldos Obreros 25%"
+    },
+    {
+     "id": 94,
+     "nombre": "Transferencias De Capital Al Poder Municipal"
+    },
+    {
+     "id": 95,
+     "nombre": "Bono Recreativo Al Personal Jubilado"
+    },
+    {
+     "id": 96,
+     "nombre": "Bono Recreativo Al Personal Pensionado Por Invalidez "
+    },
+    {
+     "id": 97,
+     "nombre": "Bono Recreativo Al Personal Pensionado Por Viudez U Orfandad"
+    },
+    {
+     "id": 98,
+     "nombre": "Bono Vacacional Al Personal Docente"
+    },
+    {
+     "id": 99,
+     "nombre": "Bono Vacacional Al Personal Docente Diurno"
+    },
+    {
+     "id": 100,
+     "nombre": "Bono Vacacional Al Personal Docente Nocturno"
+    },
+    {
+     "id": 101,
+     "nombre": "Ayudas Al Personal Obrero Para Adquisición De Uniformes Y útiles Escolares De Sus Hijos E Hijas"
+    },
+    {
+     "id": 102,
+     "nombre": "Bono Inicio De Año Escolar"
+    },
+    {
+     "id": 103,
+     "nombre": "Aguinaldos Administrativos"
+    },
+    {
+     "id": 104,
+     "nombre": "Aguinaldos Alto Nivel Y Dirección"
+    },
+    {
+     "id": 105,
+     "nombre": "Aguinaldos Elección Popular "
+    },
+    {
+     "id": 106,
+     "nombre": "Aguinaldos Docentes "
+    },
+    {
+     "id": 107,
+     "nombre": "Aguinaldos Jubilados "
+    },
+    {
+     "id": 108,
+     "nombre": "Aguinaldos Pensionados Por Viudez Y Orfandad"
+    },
+    {
+     "id": 109,
+     "nombre": "Aguinaldos Pensionados Por Invalidez"
+    },
+    {
+     "id": 110,
+     "nombre": "Aguinaldo Obrero"
+    },
+    {
+     "id": 111,
+     "nombre": "Aguinaldos Contratados"
+    },
+    {
+     "id": 118,
+     "nombre": "Aguinaldos Pensionados Por Viudez Y Orfandad 25%"
+    },
+    {
+     "id": 121,
+     "nombre": "Pago De Aguinaldo Al Personal  Pensionado Por Viudez U Orfandad "
+    },
+    {
+     "id": 120,
+     "nombre": "Pago De Aguinaldo Al Personal Docente"
+    },
+    {
+     "id": 115,
+     "nombre": "Pago De Aguinaldo Al Personal Jubilado"
+    },
+    {
+     "id": 119,
+     "nombre": "Pago De Aguinaldo Al Personal Pensionado Por Invalidez"
+    },
+    {
+     "id": 114,
+     "nombre": "Pago De Aguinaldo Al Personal Contratado"
+    },
+    {
+     "id": 112,
+     "nombre": "Pago De Aguinaldo Al Personal Administrativo"
+    },
+    {
+     "id": 116,
+     "nombre": "Pago De Aguinaldo Al Personal De Eleccion Popular"
+    },
+    {
+     "id": 113,
+     "nombre": "Pago De Aguinaldo Al Personal De Alto Nivel Y Direccion "
+    },
+    {
+     "id": 122,
+     "nombre": "Pago De Aguinaldo Al Personal Empleado"
+    },
+    {
+     "id": 123,
+     "nombre": "Fideicomiso Administrativos"
+    },
+    {
+     "id": 124,
+     "nombre": "Fideicomiso Obreros"
+    },
+    {
+     "id": 125,
+     "nombre": "Fideicomiso Docentes"
+    },
+    {
+     "id": 126,
+     "nombre": "Vacaciones Elección Popular "
+    },
+    {
+     "id": 127,
+     "nombre": "Bono Vacacional Elección Popular"
+    },
+    {
+     "id": 128,
+     "nombre": "Pago De Aguinaldo Al Personal Obrero"
+    },
+    {
+     "id": 129,
+     "nombre": "Fideicomiso Docentes Por Horas Diurnas"
+    },
+    {
+     "id": 130,
+     "nombre": "Fideicomiso Docentes Por Horas Nocturnas"
+    },
+    {
+     "id": 71,
+     "nombre": "Viatico"
+    },
+    {
+     "id": 131,
+     "nombre": "Comisiones Bancarias E Intereses"
+    },
+    {
+     "id": 132,
+     "nombre": "Semana Adicional Alto Nivel Y Dirección"
+    },
+    {
+     "id": 133,
+     "nombre": "Semana Adicional Elección Popular"
+    },
+    {
+     "id": 134,
+     "nombre": "Semana Adicional Administrativos"
+    },
+    {
+     "id": 135,
+     "nombre": "Semana Adicional Obreros  "
+    },
+    {
+     "id": 136,
+     "nombre": "Semana Adicional Docentes"
+    },
+    {
+     "id": 41,
+     "nombre": "Poliza De Fidelidad"
+    },
+    {
+     "id": 137,
+     "nombre": "Semana Adicional Docente Hora Nocturna"
+    },
+    {
+     "id": 138,
+     "nombre": "Semana Adicional Docentes Hora Diurna"
+    },
+    {
+     "id": 139,
+     "nombre": "Semana Adicional Jubilados "
+    },
+    {
+     "id": 140,
+     "nombre": "Semana Adicional Pensionados Por Viudez Y Orfandad"
+    },
+    {
+     "id": 141,
+     "nombre": "Semana Adicional Pensionados Por Discapacidad"
+    },
+    {
+     "id": 142,
+     "nombre": "Semana Adicional Contratados"
+    },
+    {
+     "id": 143,
+     "nombre": "Deuda De Años Anteriores"
+    },
+    {
+     "id": 145,
+     "nombre": "Bono Vacacional Al Pers. Contratado"
+    },
+    {
+     "id": 146,
+     "nombre": "Diferencia Aumento Salarial"
+    },
+    {
+     "id": 147,
+     "nombre": "Diferencia Bono De Alimentacion"
+    },
+    {
+     "id": 148,
+     "nombre": "Diferencia Vacaciones"
+    },
+    {
+     "id": 149,
+     "nombre": "Cestaticket Socialista Empleados Contratados"
+    },
+    {
+     "id": 150,
+     "nombre": "Cestaticket Socialista Personal Obrero"
+    },
+    {
+     "id": 151,
+     "nombre": "Cestaticket Socialista Personal Docentes"
+    },
+    {
+     "id": 152,
+     "nombre": "Cestaticket Socialista Personal Docentes Por Hora Diurna"
+    },
+    {
+     "id": 153,
+     "nombre": "Cestaticket Socialista Personal Docentes Por Hora Nocturna"
+    },
+    {
+     "id": 154,
+     "nombre": "Cestaticket Socialista Personal Jubilado"
+    },
+    {
+     "id": 155,
+     "nombre": "Cestaticket Socialista Personal Pensionado Por Invalidez"
+    },
+    {
+     "id": 156,
+     "nombre": "Cestaticket Socialista Personal Pensionado Por Viudez Y Orfandad"
+    },
+    {
+     "id": 157,
+     "nombre": "Cestaticket Socialista Eleccion Popular"
+    },
+    {
+     "id": 158,
+     "nombre": "Cestaticket Socialista Alto Nivel Y Dirección"
+    },
+    {
+     "id": 159,
+     "nombre": "Cestaticket Socialista Personal Cotratado"
+    },
+    {
+     "id": 160,
+     "nombre": "Diferencia Por Aumento Cesta Ticket"
+    },
+    {
+     "id": 161,
+     "nombre": "Nomina Por Encargaduria Alto Nivel Y Direccion "
+    },
+    {
+     "id": 162,
+     "nombre": "Adelanto De Prestaciones Sociales"
+    },
+    {
+     "id": 163,
+     "nombre": "Transferencias De Capital A Entes Descentralizados Con Fines Empresariales No Petroleros"
+    }
+   ]

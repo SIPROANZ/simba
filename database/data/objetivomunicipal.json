@@ -1,0 +1,587 @@
+[
+    {
+     "id": 1582,
+     "objetivomunicipal": 1,
+     "objetivo": "1 Desarrollo Institucional Para Un Buen Gobierno"
+    },
+    {
+     "id": 1502,
+     "objetivomunicipal": 1,
+     "objetivo": "1 Desarrollo Institucional Para Un Buen Gobierno"
+    },
+    {
+     "id": 1505,
+     "objetivomunicipal": 4,
+     "objetivo": "4 Desarrollo Ambiental Sostenible"
+    },
+    {
+     "id": 1503,
+     "objetivomunicipal": 2,
+     "objetivo": "2 Desarrollo Económico Sostenible"
+    },
+    {
+     "id": 1504,
+     "objetivomunicipal": 3,
+     "objetivo": "3 Desarrollo Social Incluyente"
+    },
+    {
+     "id": 1332,
+     "objetivomunicipal": 1,
+     "objetivo": "Hacer de San Antonio un Espacio Seguro."
+    },
+    {
+     "id": 1333,
+     "objetivomunicipal": 2,
+     "objetivo": "Optimizar el Nivel de Vida de los Salienses."
+    },
+    {
+     "id": 1334,
+     "objetivomunicipal": 3,
+     "objetivo": "Salud de Primera Calidad para Los Salias."
+    },
+    {
+     "id": 1335,
+     "objetivomunicipal": 4,
+     "objetivo": "Desarrollo Económico y Productivo."
+    },
+    {
+     "id": 1336,
+     "objetivomunicipal": 5,
+     "objetivo": "Crecimiento Integral del Ser Humano."
+    },
+    {
+     "id": 1337,
+     "objetivomunicipal": 6,
+     "objetivo": "Excelencia Educativa."
+    },
+    {
+     "id": 1338,
+     "objetivomunicipal": 7,
+     "objetivo": "Gestión Moderna Transparente y Ético."
+    },
+    {
+     "id": 1339,
+     "objetivomunicipal": 8,
+     "objetivo": "Entorno Ambienta, Sustentable y Amigable."
+    },
+    {
+     "id": 1340,
+     "objetivomunicipal": 1,
+     "objetivo": "Velar Por El Desarrollo De Los Niñas Y Adolescentes Y Ser Voceros De Sus Intereses E Inquietudes."
+    },
+    {
+     "id": 1341,
+     "objetivomunicipal": 2,
+     "objetivo": "Promover La Divulgación De Los Derechos, Garantías Y Deberes De Niños, Niñas Y Adolescentes."
+    },
+    {
+     "id": 1342,
+     "objetivomunicipal": 3,
+     "objetivo": "Crear, Promover, Acompañar Y Supervisar A Las Entidades De Atención, Así Como Ejecutar Programas De Protección, Especialmente A Través De Las Comunidades Organizadas."
+    },
+    {
+     "id": 1343,
+     "objetivomunicipal": 4,
+     "objetivo": "Denunciar Ante Los órganos Competentes La Omisión O Prestación Irregular De Los Servicios Públicos Municipales."
+    },
+    {
+     "id": 1344,
+     "objetivomunicipal": 5,
+     "objetivo": "Conocer Casos De Amenazas O Violaciones A Los Derechos Colectivos O Difusos De Los Niños, Niñas Y Adolescentes."
+    },
+    {
+     "id": 1345,
+     "objetivomunicipal": 6,
+     "objetivo": "Brindar Protección Especial A Los Derechos Y Garantías Específicos De Los Niños, Niñas Y Adolescentes"
+    },
+    {
+     "id": 1346,
+     "objetivomunicipal": 1,
+     "objetivo": "Eje Estratégico Nº 1 Coadyuvar Con El Sistema Nacional De Control Fiscal"
+    },
+    {
+     "id": 1347,
+     "objetivomunicipal": 2,
+     "objetivo": "Eje Estratégico Nº 2 Fortalecer Los Procesos Medulares Y Optimizar El Control Del Patrimonio Público Municipal"
+    },
+    {
+     "id": 1348,
+     "objetivomunicipal": 3,
+     "objetivo": "Eje Estratégico Nº 3 Promover La Participación Ciudadana Coordinada Con El Control Fiscal Y La Contraloría Social"
+    },
+    {
+     "id": 1349,
+     "objetivomunicipal": 4,
+     "objetivo": "Eje Estratégico Nº 4 Fortalecer La Gestión Interna En La Ejecución De Los Recursos Presupuestarios, Financieros, Así Como El Resguardo De Los Bienes Y Fomentar Las Políticas De Talento Humano De La Contraloría Municipal Del Municipio Los Salias"
+    },
+    {
+     "id": 1350,
+     "objetivomunicipal": 1,
+     "objetivo": "Velar Por El Uso De Los Fondos Públicos En Todos Los Sectores De La Administración Municipal"
+    },
+    {
+     "id": 1351,
+     "objetivomunicipal": 2,
+     "objetivo": "Asesorar En Materia De Transporte Urbano, Aseo Y Vialidad"
+    },
+    {
+     "id": 1352,
+     "objetivomunicipal": 3,
+     "objetivo": "Asesorar En Materia De Salud Pública Y Asistencia Social."
+    },
+    {
+     "id": 1353,
+     "objetivomunicipal": 4,
+     "objetivo": "Seguimiento Del Plan De Desarrollo Urbano Local Del Municipio"
+    },
+    {
+     "id": 1354,
+     "objetivomunicipal": 5,
+     "objetivo": "Desarrollar Programas Deportivos Y Recreativos."
+    },
+    {
+     "id": 1355,
+     "objetivomunicipal": 6,
+     "objetivo": "Asesorar En Materia De Concesiones, Estrategias Políticas, Acuerdos, Ordenanzas Y Reglamentos."
+    },
+    {
+     "id": 1356,
+     "objetivomunicipal": 7,
+     "objetivo": "Programar En Materia Educativa Y Cultural"
+    },
+    {
+     "id": 1357,
+     "objetivomunicipal": 8,
+     "objetivo": "Asesorar En Materia De Participación Ciudadana, Consejos Comunales Y Sociedad Civil."
+    },
+    {
+     "id": 1358,
+     "objetivomunicipal": 9,
+     "objetivo": "Asesorar En Materia De Seguridad Y Orden Público "
+    },
+    {
+     "id": 1359,
+     "objetivomunicipal": 10,
+     "objetivo": "Protección De Los Derechos Humanos "
+    },
+    {
+     "id": 1360,
+     "objetivomunicipal": 11,
+     "objetivo": "Resguardo De Los Espacios Públicos Y Privados"
+    },
+    {
+     "id": 1361,
+     "objetivomunicipal": 12,
+     "objetivo": "Asegurar El Acatamiento De Normas Legales, Salvaguardar Los Recursos Y Bienes Que Integra El Patrimonio Publico"
+    },
+    {
+     "id": 1362,
+     "objetivomunicipal": 13,
+     "objetivo": "Promover, Coordinar, Dirigir Y Supervisar El Cumplimiento De Acciones Administrativas Y Presupuestarias Que Contribuyan Al Buen Funcionamiento Y Progreso Del Concejo Municipal"
+    },
+    {
+     "id": 1363,
+     "objetivomunicipal": 14,
+     "objetivo": "Refrendar Las Ordenanzas Y Demas Instrumentos Juridicos Que Dicte La Camara Municipal"
+    },
+    {
+     "id": 1364,
+     "objetivomunicipal": 1,
+     "objetivo": "Ser El Mejor Aliado Del Ciudadano, Velando Por La Seguridad De Las Personas Y Sus Bienes."
+    },
+    {
+     "id": 1365,
+     "objetivomunicipal": 15,
+     "objetivo": "Ejercer El Control Posterior De Las Operaciones Administrativas, Presupuestarias, Financieras Y De Gestión "
+    },
+    {
+     "id": 1583,
+     "objetivomunicipal": 1,
+     "objetivo": "1 Desarrollo Institucional Para Un Buen Gobierno"
+    },
+    {
+     "id": 1584,
+     "objetivomunicipal": 1,
+     "objetivo": "1 Desarrollo Institucional Para Un Buen Gobierno"
+    },
+    {
+     "id": 1585,
+     "objetivomunicipal": 4,
+     "objetivo": "4 Desarrollo Ambiental Sostenible"
+    },
+    {
+     "id": 1586,
+     "objetivomunicipal": 2,
+     "objetivo": "2 Desarrollo Económico Sostenible"
+    },
+    {
+     "id": 1587,
+     "objetivomunicipal": 3,
+     "objetivo": "3 Desarrollo Social Incluyente"
+    },
+    {
+     "id": 1588,
+     "objetivomunicipal": 1,
+     "objetivo": "Hacer de San Antonio un Espacio Seguro."
+    },
+    {
+     "id": 1589,
+     "objetivomunicipal": 2,
+     "objetivo": "Optimizar el Nivel de Vida de los Salienses."
+    },
+    {
+     "id": 1590,
+     "objetivomunicipal": 3,
+     "objetivo": "Salud de Primera Calidad para Los Salias."
+    },
+    {
+     "id": 1591,
+     "objetivomunicipal": 4,
+     "objetivo": "Desarrollo Económico y Productivo."
+    },
+    {
+     "id": 1592,
+     "objetivomunicipal": 5,
+     "objetivo": "Crecimiento Integral del Ser Humano."
+    },
+    {
+     "id": 1593,
+     "objetivomunicipal": 6,
+     "objetivo": "Excelencia Educativa."
+    },
+    {
+     "id": 1594,
+     "objetivomunicipal": 7,
+     "objetivo": "Gestión Moderna Transparente y Ético."
+    },
+    {
+     "id": 1595,
+     "objetivomunicipal": 8,
+     "objetivo": "Entorno Ambienta, Sustentable y Amigable."
+    },
+    {
+     "id": 1596,
+     "objetivomunicipal": 1,
+     "objetivo": "Velar Por El Desarrollo De Los Niñas Y Adolescentes Y Ser Voceros De Sus Intereses E Inquietudes."
+    },
+    {
+     "id": 1597,
+     "objetivomunicipal": 2,
+     "objetivo": "Promover La Divulgación De Los Derechos, Garantías Y Deberes De Niños, Niñas Y Adolescentes."
+    },
+    {
+     "id": 1598,
+     "objetivomunicipal": 3,
+     "objetivo": "Crear, Promover, Acompañar Y Supervisar A Las Entidades De Atención, Así Como Ejecutar Programas De Protección, Especialmente A Través De Las Comunidades Organizadas."
+    },
+    {
+     "id": 1599,
+     "objetivomunicipal": 4,
+     "objetivo": "Denunciar Ante Los órganos Competentes La Omisión O Prestación Irregular De Los Servicios Públicos Municipales."
+    },
+    {
+     "id": 1600,
+     "objetivomunicipal": 5,
+     "objetivo": "Conocer Casos De Amenazas O Violaciones A Los Derechos Colectivos O Difusos De Los Niños, Niñas Y Adolescentes."
+    },
+    {
+     "id": 1601,
+     "objetivomunicipal": 6,
+     "objetivo": "Brindar Protección Especial A Los Derechos Y Garantías Específicos De Los Niños, Niñas Y Adolescentes"
+    },
+    {
+     "id": 1602,
+     "objetivomunicipal": 1,
+     "objetivo": "Eje Estratégico Nº 1 Coadyuvar Con El Sistema Nacional De Control Fiscal"
+    },
+    {
+     "id": 1603,
+     "objetivomunicipal": 2,
+     "objetivo": "Eje Estratégico Nº 2 Fortalecer Los Procesos Medulares Y Optimizar El Control Del Patrimonio Público Municipal"
+    },
+    {
+     "id": 1604,
+     "objetivomunicipal": 3,
+     "objetivo": "Eje Estratégico Nº 3 Promover La Participación Ciudadana Coordinada Con El Control Fiscal Y La Contraloría Social"
+    },
+    {
+     "id": 1605,
+     "objetivomunicipal": 4,
+     "objetivo": "Eje Estratégico Nº 4 Fortalecer La Gestión Interna En La Ejecución De Los Recursos Presupuestarios, Financieros, Así Como El Resguardo De Los Bienes Y Fomentar Las Políticas De Talento Humano De La Contraloría Municipal Del Municipio Los Salias"
+    },
+    {
+     "id": 1606,
+     "objetivomunicipal": 1,
+     "objetivo": "Velar Por El Uso De Los Fondos Públicos En Todos Los Sectores De La Administración Municipal"
+    },
+    {
+     "id": 1607,
+     "objetivomunicipal": 2,
+     "objetivo": "Asesorar En Materia De Transporte Urbano, Aseo Y Vialidad"
+    },
+    {
+     "id": 1608,
+     "objetivomunicipal": 3,
+     "objetivo": "Asesorar En Materia De Salud Pública Y Asistencia Social."
+    },
+    {
+     "id": 1609,
+     "objetivomunicipal": 4,
+     "objetivo": "Seguimiento Del Plan De Desarrollo Urbano Local Del Municipio"
+    },
+    {
+     "id": 1610,
+     "objetivomunicipal": 5,
+     "objetivo": "Desarrollar Programas Deportivos Y Recreativos."
+    },
+    {
+     "id": 1611,
+     "objetivomunicipal": 6,
+     "objetivo": "Asesorar En Materia De Concesiones, Estrategias Políticas, Acuerdos, Ordenanzas Y Reglamentos."
+    },
+    {
+     "id": 1613,
+     "objetivomunicipal": 8,
+     "objetivo": "Asesorar En Materia De Participación Ciudadana, Consejos Comunales Y Sociedad Civil."
+    },
+    {
+     "id": 1614,
+     "objetivomunicipal": 9,
+     "objetivo": "Asesorar En Materia De Seguridad Y Orden Público "
+    },
+    {
+     "id": 1615,
+     "objetivomunicipal": 10,
+     "objetivo": "Protección De Los Derechos Humanos "
+    },
+    {
+     "id": 1616,
+     "objetivomunicipal": 11,
+     "objetivo": "Resguardo De Los Espacios Públicos Y Privados"
+    },
+    {
+     "id": 1617,
+     "objetivomunicipal": 12,
+     "objetivo": "Asegurar El Acatamiento De Normas Legales, Salvaguardar Los Recursos Y Bienes Que Integra El Patrimonio Publico"
+    },
+    {
+     "id": 1618,
+     "objetivomunicipal": 13,
+     "objetivo": "Promover, Coordinar, Dirigir Y Supervisar El Cumplimiento De Acciones Administrativas Y Presupuestarias Que Contribuyan Al Buen Funcionamiento Y Progreso Del Concejo Municipal"
+    },
+    {
+     "id": 1619,
+     "objetivomunicipal": 14,
+     "objetivo": "Refrendar Las Ordenanzas Y Demas Instrumentos Juridicos Que Dicte La Camara Municipal"
+    },
+    {
+     "id": 1620,
+     "objetivomunicipal": 1,
+     "objetivo": "Ser El Mejor Aliado Del Ciudadano, Velando Por La Seguridad De Las Personas Y Sus Bienes."
+    },
+    {
+     "id": 1621,
+     "objetivomunicipal": 15,
+     "objetivo": "Ejercer El Control Posterior De Las Operaciones Administrativas, Presupuestarias, Financieras Y De Gestión "
+    },
+    {
+     "id": 1612,
+     "objetivomunicipal": 7,
+     "objetivo": "Programar En Materia Educativa Y Cultural"
+    },
+    {
+     "id": 1622,
+     "objetivomunicipal": 1,
+     "objetivo": "1 Desarrollo Institucional Para Un Buen Gobierno"
+    },
+    {
+     "id": 1623,
+     "objetivomunicipal": 1,
+     "objetivo": "1 Desarrollo Institucional Para Un Buen Gobierno"
+    },
+    {
+     "id": 1624,
+     "objetivomunicipal": 4,
+     "objetivo": "4 Desarrollo Ambiental Sostenible"
+    },
+    {
+     "id": 1625,
+     "objetivomunicipal": 2,
+     "objetivo": "2 Desarrollo Económico Sostenible"
+    },
+    {
+     "id": 1626,
+     "objetivomunicipal": 3,
+     "objetivo": "3 Desarrollo Social Incluyente"
+    },
+    {
+     "id": 1627,
+     "objetivomunicipal": 1,
+     "objetivo": "Hacer de San Antonio un Espacio Seguro."
+    },
+    {
+     "id": 1628,
+     "objetivomunicipal": 2,
+     "objetivo": "Optimizar el Nivel de Vida de los Salienses."
+    },
+    {
+     "id": 1629,
+     "objetivomunicipal": 3,
+     "objetivo": "Salud de Primera Calidad para Los Salias."
+    },
+    {
+     "id": 1630,
+     "objetivomunicipal": 4,
+     "objetivo": "Desarrollo Económico y Productivo."
+    },
+    {
+     "id": 1631,
+     "objetivomunicipal": 5,
+     "objetivo": "Crecimiento Integral del Ser Humano."
+    },
+    {
+     "id": 1632,
+     "objetivomunicipal": 6,
+     "objetivo": "Excelencia Educativa."
+    },
+    {
+     "id": 1633,
+     "objetivomunicipal": 7,
+     "objetivo": "Gestión Moderna Transparente y Ético."
+    },
+    {
+     "id": 1634,
+     "objetivomunicipal": 8,
+     "objetivo": "Entorno Ambienta, Sustentable y Amigable."
+    },
+    {
+     "id": 1635,
+     "objetivomunicipal": 1,
+     "objetivo": "Velar Por El Desarrollo De Los Niñas Y Adolescentes Y Ser Voceros De Sus Intereses E Inquietudes."
+    },
+    {
+     "id": 1636,
+     "objetivomunicipal": 2,
+     "objetivo": "Promover La Divulgación De Los Derechos, Garantías Y Deberes De Niños, Niñas Y Adolescentes."
+    },
+    {
+     "id": 1637,
+     "objetivomunicipal": 3,
+     "objetivo": "Crear, Promover, Acompañar Y Supervisar A Las Entidades De Atención, Así Como Ejecutar Programas De Protección, Especialmente A Través De Las Comunidades Organizadas."
+    },
+    {
+     "id": 1638,
+     "objetivomunicipal": 4,
+     "objetivo": "Denunciar Ante Los órganos Competentes La Omisión O Prestación Irregular De Los Servicios Públicos Municipales."
+    },
+    {
+     "id": 1639,
+     "objetivomunicipal": 5,
+     "objetivo": "Conocer Casos De Amenazas O Violaciones A Los Derechos Colectivos O Difusos De Los Niños, Niñas Y Adolescentes."
+    },
+    {
+     "id": 1640,
+     "objetivomunicipal": 6,
+     "objetivo": "Brindar Protección Especial A Los Derechos Y Garantías Específicos De Los Niños, Niñas Y Adolescentes"
+    },
+    {
+     "id": 1641,
+     "objetivomunicipal": 1,
+     "objetivo": "Eje Estratégico Nº 1 Coadyuvar Con El Sistema Nacional De Control Fiscal"
+    },
+    {
+     "id": 1642,
+     "objetivomunicipal": 2,
+     "objetivo": "Eje Estratégico Nº 2 Fortalecer Los Procesos Medulares Y Optimizar El Control Del Patrimonio Público Municipal"
+    },
+    {
+     "id": 1643,
+     "objetivomunicipal": 3,
+     "objetivo": "Eje Estratégico Nº 3 Promover La Participación Ciudadana Coordinada Con El Control Fiscal Y La Contraloría Social"
+    },
+    {
+     "id": 1644,
+     "objetivomunicipal": 4,
+     "objetivo": "Eje Estratégico Nº 4 Fortalecer La Gestión Interna En La Ejecución De Los Recursos Presupuestarios, Financieros, Así Como El Resguardo De Los Bienes Y Fomentar Las Políticas De Talento Humano De La Contraloría Municipal Del Municipio Los Salias"
+    },
+    {
+     "id": 1645,
+     "objetivomunicipal": 1,
+     "objetivo": "Velar Por El Uso De Los Fondos Públicos En Todos Los Sectores De La Administración Municipal"
+    },
+    {
+     "id": 1646,
+     "objetivomunicipal": 2,
+     "objetivo": "Asesorar En Materia De Transporte Urbano, Aseo Y Vialidad"
+    },
+    {
+     "id": 1647,
+     "objetivomunicipal": 3,
+     "objetivo": "Asesorar En Materia De Salud Pública Y Asistencia Social."
+    },
+    {
+     "id": 1648,
+     "objetivomunicipal": 4,
+     "objetivo": "Seguimiento Del Plan De Desarrollo Urbano Local Del Municipio"
+    },
+    {
+     "id": 1649,
+     "objetivomunicipal": 5,
+     "objetivo": "Desarrollar Programas Deportivos Y Recreativos."
+    },
+    {
+     "id": 1650,
+     "objetivomunicipal": 6,
+     "objetivo": "Asesorar En Materia De Concesiones, Estrategias Políticas, Acuerdos, Ordenanzas Y Reglamentos."
+    },
+    {
+     "id": 1651,
+     "objetivomunicipal": 8,
+     "objetivo": "Asesorar En Materia De Participación Ciudadana, Consejos Comunales Y Sociedad Civil."
+    },
+    {
+     "id": 1652,
+     "objetivomunicipal": 9,
+     "objetivo": "Asesorar En Materia De Seguridad Y Orden Público "
+    },
+    {
+     "id": 1653,
+     "objetivomunicipal": 10,
+     "objetivo": "Protección De Los Derechos Humanos "
+    },
+    {
+     "id": 1654,
+     "objetivomunicipal": 11,
+     "objetivo": "Resguardo De Los Espacios Públicos Y Privados"
+    },
+    {
+     "id": 1655,
+     "objetivomunicipal": 12,
+     "objetivo": "Asegurar El Acatamiento De Normas Legales, Salvaguardar Los Recursos Y Bienes Que Integra El Patrimonio Publico"
+    },
+    {
+     "id": 1656,
+     "objetivomunicipal": 13,
+     "objetivo": "Promover, Coordinar, Dirigir Y Supervisar El Cumplimiento De Acciones Administrativas Y Presupuestarias Que Contribuyan Al Buen Funcionamiento Y Progreso Del Concejo Municipal"
+    },
+    {
+     "id": 1657,
+     "objetivomunicipal": 14,
+     "objetivo": "Refrendar Las Ordenanzas Y Demas Instrumentos Juridicos Que Dicte La Camara Municipal"
+    },
+    {
+     "id": 1658,
+     "objetivomunicipal": 1,
+     "objetivo": "Ser El Mejor Aliado Del Ciudadano, Velando Por La Seguridad De Las Personas Y Sus Bienes."
+    },
+    {
+     "id": 1659,
+     "objetivomunicipal": 15,
+     "objetivo": "Ejercer El Control Posterior De Las Operaciones Administrativas, Presupuestarias, Financieras Y De Gestión "
+    },
+    {
+     "id": 1660,
+     "objetivomunicipal": 7,
+     "objetivo": "Programar En Materia Educativa Y Cultural"
+    }
+   ]

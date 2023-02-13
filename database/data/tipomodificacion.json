@@ -1,0 +1,22 @@
+[
+    {
+     "id": 1,
+     "nombre": "Credito Adicional"
+    },
+    {
+     "id": 2,
+     "nombre": "Traspaso Interno"
+    },
+    {
+     "id": 3,
+     "nombre": "Insubsistencias"
+    },
+    {
+     "id": 4,
+     "nombre": "Ajustes en los Créditos por  reducción de los Ingresos"
+    },
+    {
+     "id": 6,
+     "nombre": "Rectificaciones"
+    }
+   ]

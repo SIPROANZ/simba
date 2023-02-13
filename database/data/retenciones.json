@@ -1,0 +1,970 @@
+[
+    {
+     "id": 1,
+     "tiporetencion_id": 1,
+     "descripcion": "I.V.A.",
+     "porcentaje": "75.00",
+     "tipo": "R",
+     "base_calculo": 2
+    },
+    {
+     "id": 6,
+     "tiporetencion_id": 1,
+     "descripcion": "I.V.A",
+     "porcentaje": "16.00",
+     "tipo": "I",
+     "base_calculo": 1
+    },
+    {
+     "id": 19,
+     "tiporetencion_id": 2,
+     "descripcion": "2% ISLR",
+     "porcentaje": "2.00",
+     "tipo": "R",
+     "base_calculo": 1
+    },
+    {
+     "id": 23,
+     "tiporetencion_id": 3,
+     "descripcion": "SEGURO SOCIAL OBLIGATORIO",
+     "porcentaje": "0.00",
+     "tipo": "R",
+     "base_calculo": 1
+    },
+    {
+     "id": 3,
+     "tiporetencion_id": 2,
+     "descripcion": "I.S.L.R",
+     "porcentaje": "2.00",
+     "tipo": "I",
+     "base_calculo": 1
+    },
+    {
+     "id": 28,
+     "tiporetencion_id": 2,
+     "descripcion": "IMPUESTO MUNICIPAL ",
+     "porcentaje": "1.20",
+     "tipo": "R",
+     "base_calculo": 1
+    },
+    {
+     "id": 31,
+     "tiporetencion_id": 2,
+     "descripcion": "IMPUESTO MUNICIPAL ",
+     "porcentaje": "1.00",
+     "tipo": "R",
+     "base_calculo": 1
+    },
+    {
+     "id": 32,
+     "tiporetencion_id": 2,
+     "descripcion": "IMPUESTO MUNICIPAL ",
+     "porcentaje": "1.25",
+     "tipo": "R",
+     "base_calculo": 1
+    },
+    {
+     "id": 35,
+     "tiporetencion_id": 3,
+     "descripcion": "SUSTRAYENDO ISLR",
+     "porcentaje": "3.00",
+     "tipo": "R",
+     "base_calculo": 1
+    },
+    {
+     "id": 36,
+     "tiporetencion_id": 2,
+     "descripcion": "I.S.L.R",
+     "porcentaje": "3.00",
+     "tipo": "I",
+     "base_calculo": 1
+    },
+    {
+     "id": 37,
+     "tiporetencion_id": 2,
+     "descripcion": "I.S.L.R",
+     "porcentaje": "5.00",
+     "tipo": "I",
+     "base_calculo": 1
+    },
+    {
+     "id": 42,
+     "tiporetencion_id": 3,
+     "descripcion": "S.S.O. ELECCION POPULAR",
+     "porcentaje": "0.00",
+     "tipo": "R",
+     "base_calculo": 1
+    },
+    {
+     "id": 43,
+     "tiporetencion_id": 3,
+     "descripcion": "A.P.I.E. ELECCION POLULAR",
+     "porcentaje": "0.00",
+     "tipo": "R",
+     "base_calculo": 1
+    },
+    {
+     "id": 44,
+     "tiporetencion_id": 3,
+     "descripcion": "F.P.J. ELECCION POPULAR",
+     "porcentaje": "0.00",
+     "tipo": "R",
+     "base_calculo": 1
+    },
+    {
+     "id": 45,
+     "tiporetencion_id": 3,
+     "descripcion": "S.S.O. ADMINISTRATIVOS",
+     "porcentaje": "0.00",
+     "tipo": "R",
+     "base_calculo": 1
+    },
+    {
+     "id": 46,
+     "tiporetencion_id": 3,
+     "descripcion": "A.P.I.E. ADMINISTRATIVOS",
+     "porcentaje": "0.00",
+     "tipo": "R",
+     "base_calculo": 1
+    },
+    {
+     "id": 47,
+     "tiporetencion_id": 3,
+     "descripcion": "F.A.O.V. ADMINISTRATIVOS",
+     "porcentaje": "0.00",
+     "tipo": "R",
+     "base_calculo": 1
+    },
+    {
+     "id": 48,
+     "tiporetencion_id": 3,
+     "descripcion": "F.P.J. ADMINISTRATIVOS",
+     "porcentaje": "0.00",
+     "tipo": "R",
+     "base_calculo": 1
+    },
+    {
+     "id": 49,
+     "tiporetencion_id": 3,
+     "descripcion": "CAJA DE AHORRO UREP-ANZ",
+     "porcentaje": "0.00",
+     "tipo": "R",
+     "base_calculo": 1
+    },
+    {
+     "id": 50,
+     "tiporetencion_id": 3,
+     "descripcion": "SINDICATO UREP-ANZ",
+     "porcentaje": "0.00",
+     "tipo": "R",
+     "base_calculo": 1
+    },
+    {
+     "id": 51,
+     "tiporetencion_id": 3,
+     "descripcion": "CAJA DE AHORROS CAPSTEEA",
+     "porcentaje": "0.00",
+     "tipo": "R",
+     "base_calculo": 1
+    },
+    {
+     "id": 52,
+     "tiporetencion_id": 3,
+     "descripcion": "CAJA DE AHORRO CAPPOEPTGA",
+     "porcentaje": "0.00",
+     "tipo": "R",
+     "base_calculo": 1
+    },
+    {
+     "id": 53,
+     "tiporetencion_id": 3,
+     "descripcion": "CAJA DE AHORRO CAPTEGANZ",
+     "porcentaje": "0.00",
+     "tipo": "R",
+     "base_calculo": 1
+    },
+    {
+     "id": 54,
+     "tiporetencion_id": 3,
+     "descripcion": "SINDICATO STEA",
+     "porcentaje": "0.00",
+     "tipo": "R",
+     "base_calculo": 1
+    },
+    {
+     "id": 55,
+     "tiporetencion_id": 3,
+     "descripcion": "SINDICATO SUTDE-ANZ",
+     "porcentaje": "0.00",
+     "tipo": "R",
+     "base_calculo": 1
+    },
+    {
+     "id": 56,
+     "tiporetencion_id": 3,
+     "descripcion": "SINDICATO SUTIEANZ",
+     "porcentaje": "0.00",
+     "tipo": "R",
+     "base_calculo": 1
+    },
+    {
+     "id": 57,
+     "tiporetencion_id": 3,
+     "descripcion": "SINDICATO SUGREGANZ",
+     "porcentaje": "0.00",
+     "tipo": "R",
+     "base_calculo": 1
+    },
+    {
+     "id": 58,
+     "tiporetencion_id": 3,
+     "descripcion": "SINDICATO SINUOBANZ",
+     "porcentaje": "0.00",
+     "tipo": "R",
+     "base_calculo": 1
+    },
+    {
+     "id": 59,
+     "tiporetencion_id": 3,
+     "descripcion": "SINDICATO SINTRAGEA",
+     "porcentaje": "0.00",
+     "tipo": "R",
+     "base_calculo": 1
+    },
+    {
+     "id": 60,
+     "tiporetencion_id": 3,
+     "descripcion": "I.S.L.R. ADMINISTRATIVOS",
+     "porcentaje": "0.00",
+     "tipo": "R",
+     "base_calculo": 1
+    },
+    {
+     "id": 61,
+     "tiporetencion_id": 3,
+     "descripcion": "CAP-UREP-ANZ PRESTAMOS",
+     "porcentaje": "0.00",
+     "tipo": "R",
+     "base_calculo": 1
+    },
+    {
+     "id": 62,
+     "tiporetencion_id": 3,
+     "descripcion": "PRESTAMO C.A.P.S.T.E.E.A.",
+     "porcentaje": "0.00",
+     "tipo": "R",
+     "base_calculo": 1
+    },
+    {
+     "id": 63,
+     "tiporetencion_id": 3,
+     "descripcion": "MUEBLERIA C.A.P.S.T.E.E.A.",
+     "porcentaje": "0.00",
+     "tipo": "R",
+     "base_calculo": 1
+    },
+    {
+     "id": 64,
+     "tiporetencion_id": 3,
+     "descripcion": "OTROS COMERCIALES C.A.P.S.T.E.E.A.",
+     "porcentaje": "0.00",
+     "tipo": "R",
+     "base_calculo": 1
+    },
+    {
+     "id": 65,
+     "tiporetencion_id": 3,
+     "descripcion": "PRES. HIPOTEC. CAPSTEEA",
+     "porcentaje": "0.00",
+     "tipo": "R",
+     "base_calculo": 1
+    },
+    {
+     "id": 66,
+     "tiporetencion_id": 3,
+     "descripcion": "PREST. MED. PALZO CAPSTEEA",
+     "porcentaje": "0.00",
+     "tipo": "R",
+     "base_calculo": 1
+    },
+    {
+     "id": 67,
+     "tiporetencion_id": 3,
+     "descripcion": "ODONTOLOGIA CAPSTEEA",
+     "porcentaje": "0.00",
+     "tipo": "R",
+     "base_calculo": 1
+    },
+    {
+     "id": 68,
+     "tiporetencion_id": 3,
+     "descripcion": "PREST. MED. PLAZO. CAPPOEPTGA",
+     "porcentaje": "0.00",
+     "tipo": "R",
+     "base_calculo": 1
+    },
+    {
+     "id": 69,
+     "tiporetencion_id": 3,
+     "descripcion": "FERIA ESCOLAR CAPSTEEA",
+     "porcentaje": "0.00",
+     "tipo": "R",
+     "base_calculo": 1
+    },
+    {
+     "id": 70,
+     "tiporetencion_id": 3,
+     "descripcion": "PRESTAMO ESPECIAL CAPSTEEA",
+     "porcentaje": "0.00",
+     "tipo": "R",
+     "base_calculo": 1
+    },
+    {
+     "id": 71,
+     "tiporetencion_id": 3,
+     "descripcion": "PREST. ELECTROD. (CAPUREPANZ)",
+     "porcentaje": "0.00",
+     "tipo": "R",
+     "base_calculo": 1
+    },
+    {
+     "id": 72,
+     "tiporetencion_id": 3,
+     "descripcion": "PREST. LARGO PLAZO (CAPUREPANZ)",
+     "porcentaje": "0.00",
+     "tipo": "R",
+     "base_calculo": 1
+    },
+    {
+     "id": 73,
+     "tiporetencion_id": 3,
+     "descripcion": "PREST. JUGUETES CAPUREPANZ",
+     "porcentaje": "0.00",
+     "tipo": "R",
+     "base_calculo": 1
+    },
+    {
+     "id": 74,
+     "tiporetencion_id": 3,
+     "descripcion": "PREST. CALZADOS CAPUREPANZ",
+     "porcentaje": "0.00",
+     "tipo": "R",
+     "base_calculo": 1
+    },
+    {
+     "id": 75,
+     "tiporetencion_id": 3,
+     "descripcion": "PRESTAMO TEXTIL CAPUREPANZ",
+     "porcentaje": "0.00",
+     "tipo": "R",
+     "base_calculo": 1
+    },
+    {
+     "id": 76,
+     "tiporetencion_id": 3,
+     "descripcion": "PRESTAMO ALIMENT. CAPUREPANZ",
+     "porcentaje": "0.00",
+     "tipo": "R",
+     "base_calculo": 1
+    },
+    {
+     "id": 77,
+     "tiporetencion_id": 3,
+     "descripcion": "PREST. TECNOLOG. CAPUREPANZ",
+     "porcentaje": "0.00",
+     "tipo": "R",
+     "base_calculo": 1
+    },
+    {
+     "id": 78,
+     "tiporetencion_id": 3,
+     "descripcion": "PRESTAMO CAPSTEEA (JUGUETES)",
+     "porcentaje": "0.00",
+     "tipo": "R",
+     "base_calculo": 1
+    },
+    {
+     "id": 79,
+     "tiporetencion_id": 3,
+     "descripcion": "SEGURO FUNERARIO FENATEV",
+     "porcentaje": "0.00",
+     "tipo": "R",
+     "base_calculo": 1
+    },
+    {
+     "id": 80,
+     "tiporetencion_id": 3,
+     "descripcion": "DESCUENTO POR PAGO INDEBIDO",
+     "porcentaje": "0.00",
+     "tipo": "R",
+     "base_calculo": 1
+    },
+    {
+     "id": 81,
+     "tiporetencion_id": 3,
+     "descripcion": "SEVIGEA",
+     "porcentaje": "0.00",
+     "tipo": "R",
+     "base_calculo": 1
+    },
+    {
+     "id": 82,
+     "tiporetencion_id": 3,
+     "descripcion": "S.S.O. ALTO NIVEL",
+     "porcentaje": "0.00",
+     "tipo": "R",
+     "base_calculo": 1
+    },
+    {
+     "id": 83,
+     "tiporetencion_id": 3,
+     "descripcion": "A.P.I.E. ALTO NIVEL",
+     "porcentaje": "0.00",
+     "tipo": "R",
+     "base_calculo": 1
+    },
+    {
+     "id": 84,
+     "tiporetencion_id": 3,
+     "descripcion": "F.A.O.V. ALTO NIVEL",
+     "porcentaje": "0.00",
+     "tipo": "R",
+     "base_calculo": 1
+    },
+    {
+     "id": 85,
+     "tiporetencion_id": 3,
+     "descripcion": "F.P.J. ALTO NIVEL",
+     "porcentaje": "0.00",
+     "tipo": "R",
+     "base_calculo": 1
+    },
+    {
+     "id": 86,
+     "tiporetencion_id": 3,
+     "descripcion": "MEDICINA CAPSTEEA",
+     "porcentaje": "0.00",
+     "tipo": "R",
+     "base_calculo": 1
+    },
+    {
+     "id": 87,
+     "tiporetencion_id": 3,
+     "descripcion": "P\/ESP. ALIMENTOS CAPSTEEA",
+     "porcentaje": "0.00",
+     "tipo": "R",
+     "base_calculo": 1
+    },
+    {
+     "id": 88,
+     "tiporetencion_id": 3,
+     "descripcion": "LABORATORIO CAPSTEEA",
+     "porcentaje": "0.00",
+     "tipo": "R",
+     "base_calculo": 1
+    },
+    {
+     "id": 89,
+     "tiporetencion_id": 3,
+     "descripcion": "ESPEC. MEDICAS CAPSTEEA",
+     "porcentaje": "0.00",
+     "tipo": "R",
+     "base_calculo": 1
+    },
+    {
+     "id": 90,
+     "tiporetencion_id": 3,
+     "descripcion": "PRESTAMO FUNERARIO CAPSTEEA",
+     "porcentaje": "0.00",
+     "tipo": "R",
+     "base_calculo": 1
+    },
+    {
+     "id": 91,
+     "tiporetencion_id": 3,
+     "descripcion": "S.S.O. DOCENTES",
+     "porcentaje": "0.00",
+     "tipo": "R",
+     "base_calculo": 1
+    },
+    {
+     "id": 92,
+     "tiporetencion_id": 3,
+     "descripcion": "A.P.I.E. DOCENTES",
+     "porcentaje": "0.00",
+     "tipo": "R",
+     "base_calculo": 1
+    },
+    {
+     "id": 93,
+     "tiporetencion_id": 3,
+     "descripcion": "F.A.O.V. DOCENTES",
+     "porcentaje": "0.00",
+     "tipo": "R",
+     "base_calculo": 1
+    },
+    {
+     "id": 94,
+     "tiporetencion_id": 3,
+     "descripcion": "F.P.J. DOCENTES",
+     "porcentaje": "0.00",
+     "tipo": "R",
+     "base_calculo": 1
+    },
+    {
+     "id": 95,
+     "tiporetencion_id": 3,
+     "descripcion": "SINDICATO SUMA",
+     "porcentaje": "0.00",
+     "tipo": "R",
+     "base_calculo": 1
+    },
+    {
+     "id": 96,
+     "tiporetencion_id": 3,
+     "descripcion": "MUTUO AUXILIO Y MONTEPIO",
+     "porcentaje": "0.00",
+     "tipo": "R",
+     "base_calculo": 1
+    },
+    {
+     "id": 97,
+     "tiporetencion_id": 3,
+     "descripcion": "PRESTAMO CAPTEGANZ",
+     "porcentaje": "0.00",
+     "tipo": "R",
+     "base_calculo": 1
+    },
+    {
+     "id": 98,
+     "tiporetencion_id": 3,
+     "descripcion": "PREST. ESPEC. ALIMEN. CAPPOEPTGA",
+     "porcentaje": "0.00",
+     "tipo": "R",
+     "base_calculo": 1
+    },
+    {
+     "id": 99,
+     "tiporetencion_id": 3,
+     "descripcion": "I.N.A.V.I.",
+     "porcentaje": "0.00",
+     "tipo": "R",
+     "base_calculo": 1
+    },
+    {
+     "id": 100,
+     "tiporetencion_id": 3,
+     "descripcion": "SINDICATO ASOJUPEANZ",
+     "porcentaje": "0.00",
+     "tipo": "R",
+     "base_calculo": 1
+    },
+    {
+     "id": 101,
+     "tiporetencion_id": 3,
+     "descripcion": "SEGURO H.C.M. FENATEV",
+     "porcentaje": "0.00",
+     "tipo": "R",
+     "base_calculo": 1
+    },
+    {
+     "id": 102,
+     "tiporetencion_id": 3,
+     "descripcion": "PRESTAMO C.A.P.P.O.E.P.T.G.A.",
+     "porcentaje": "0.00",
+     "tipo": "R",
+     "base_calculo": 1
+    },
+    {
+     "id": 103,
+     "tiporetencion_id": 3,
+     "descripcion": "PRESTAMO MUEBLERIA CAPTEGANZ",
+     "porcentaje": "0.00",
+     "tipo": "R",
+     "base_calculo": 1
+    },
+    {
+     "id": 104,
+     "tiporetencion_id": 3,
+     "descripcion": "S.S.O. OBREROS",
+     "porcentaje": "0.00",
+     "tipo": "R",
+     "base_calculo": 1
+    },
+    {
+     "id": 105,
+     "tiporetencion_id": 3,
+     "descripcion": "A.P.I.E. OBREROS",
+     "porcentaje": "0.00",
+     "tipo": "R",
+     "base_calculo": 1
+    },
+    {
+     "id": 106,
+     "tiporetencion_id": 3,
+     "descripcion": "F.A.O.V. OBREROS",
+     "porcentaje": "0.00",
+     "tipo": "R",
+     "base_calculo": 1
+    },
+    {
+     "id": 107,
+     "tiporetencion_id": 3,
+     "descripcion": "F.P.J. OBREROS",
+     "porcentaje": "0.00",
+     "tipo": "R",
+     "base_calculo": 1
+    },
+    {
+     "id": 108,
+     "tiporetencion_id": 3,
+     "descripcion": "PRESTAMO ESPEC. CAPPOEPTGA",
+     "porcentaje": "0.00",
+     "tipo": "R",
+     "base_calculo": 1
+    },
+    {
+     "id": 109,
+     "tiporetencion_id": 3,
+     "descripcion": "I.P.A.S.M.E. DOCENTES",
+     "porcentaje": "0.00",
+     "tipo": "R",
+     "base_calculo": 1
+    },
+    {
+     "id": 110,
+     "tiporetencion_id": 3,
+     "descripcion": "S.S.O. CONTRATADOS",
+     "porcentaje": "0.00",
+     "tipo": "R",
+     "base_calculo": 1
+    },
+    {
+     "id": 111,
+     "tiporetencion_id": 3,
+     "descripcion": "A.P.I.E. CONTRATADOS",
+     "porcentaje": "0.00",
+     "tipo": "R",
+     "base_calculo": 1
+    },
+    {
+     "id": 112,
+     "tiporetencion_id": 3,
+     "descripcion": "F.A.O.V. CONTRATADOS",
+     "porcentaje": "0.00",
+     "tipo": "R",
+     "base_calculo": 1
+    },
+    {
+     "id": 113,
+     "tiporetencion_id": 3,
+     "descripcion": "MENDOZA ERMES",
+     "porcentaje": "0.00",
+     "tipo": "R",
+     "base_calculo": 1
+    },
+    {
+     "id": 114,
+     "tiporetencion_id": 3,
+     "descripcion": "VARGAS MACHADO JOSE GILBERTO",
+     "porcentaje": "0.00",
+     "tipo": "R",
+     "base_calculo": 1
+    },
+    {
+     "id": 115,
+     "tiporetencion_id": 3,
+     "descripcion": "YAGUARAN JESUS S.",
+     "porcentaje": "0.00",
+     "tipo": "R",
+     "base_calculo": 1
+    },
+    {
+     "id": 116,
+     "tiporetencion_id": 3,
+     "descripcion": "MEJIAS C. JESUS ",
+     "porcentaje": "0.00",
+     "tipo": "R",
+     "base_calculo": 1
+    },
+    {
+     "id": 117,
+     "tiporetencion_id": 3,
+     "descripcion": "SIFONTES IVAN G.",
+     "porcentaje": "0.00",
+     "tipo": "R",
+     "base_calculo": 1
+    },
+    {
+     "id": 118,
+     "tiporetencion_id": 3,
+     "descripcion": "RONDON R. RAMON",
+     "porcentaje": "0.00",
+     "tipo": "R",
+     "base_calculo": 1
+    },
+    {
+     "id": 119,
+     "tiporetencion_id": 3,
+     "descripcion": "LUNA MEAÑO CARLOS ANDRES",
+     "porcentaje": "0.00",
+     "tipo": "R",
+     "base_calculo": 1
+    },
+    {
+     "id": 120,
+     "tiporetencion_id": 3,
+     "descripcion": "NAVARRO FREDY",
+     "porcentaje": "0.00",
+     "tipo": "R",
+     "base_calculo": 1
+    },
+    {
+     "id": 121,
+     "tiporetencion_id": 3,
+     "descripcion": "CARAO MARAIMA JULIO CESAR",
+     "porcentaje": "0.00",
+     "tipo": "R",
+     "base_calculo": 1
+    },
+    {
+     "id": 122,
+     "tiporetencion_id": 3,
+     "descripcion": "VILLALBA DEIVIS ALEXANDER",
+     "porcentaje": "0.00",
+     "tipo": "R",
+     "base_calculo": 1
+    },
+    {
+     "id": 123,
+     "tiporetencion_id": 3,
+     "descripcion": "PINTO SILVA JUAN CARLOS",
+     "porcentaje": "0.00",
+     "tipo": "R",
+     "base_calculo": 1
+    },
+    {
+     "id": 124,
+     "tiporetencion_id": 3,
+     "descripcion": "GUAREGUA GUAREGUA ROBERTO ANTONIO",
+     "porcentaje": "0.00",
+     "tipo": "R",
+     "base_calculo": 1
+    },
+    {
+     "id": 125,
+     "tiporetencion_id": 3,
+     "descripcion": "CORTEZ LEON YANET ADALGISA",
+     "porcentaje": "0.00",
+     "tipo": "R",
+     "base_calculo": 1
+    },
+    {
+     "id": 126,
+     "tiporetencion_id": 3,
+     "descripcion": "NARVAEZ AMUNDARAIN ELIDA S.",
+     "porcentaje": "0.00",
+     "tipo": "R",
+     "base_calculo": 1
+    },
+    {
+     "id": 127,
+     "tiporetencion_id": 3,
+     "descripcion": "SUNIAGA GUZMAN AQUILES JOSE",
+     "porcentaje": "0.00",
+     "tipo": "R",
+     "base_calculo": 1
+    },
+    {
+     "id": 128,
+     "tiporetencion_id": 3,
+     "descripcion": "FAJARDO ROJAS LIDIA JOSEFINA",
+     "porcentaje": "0.00",
+     "tipo": "R",
+     "base_calculo": 1
+    },
+    {
+     "id": 129,
+     "tiporetencion_id": 3,
+     "descripcion": "RODRIGUEZ SUNILDE COROMOTO",
+     "porcentaje": "0.00",
+     "tipo": "R",
+     "base_calculo": 1
+    },
+    {
+     "id": 130,
+     "tiporetencion_id": 3,
+     "descripcion": "GONZALEZ MALAVE ROSIRIS DEL V",
+     "porcentaje": "0.00",
+     "tipo": "R",
+     "base_calculo": 1
+    },
+    {
+     "id": 131,
+     "tiporetencion_id": 3,
+     "descripcion": "GONZALEZ RAMIREZ ANA MARIA",
+     "porcentaje": "0.00",
+     "tipo": "R",
+     "base_calculo": 1
+    },
+    {
+     "id": 132,
+     "tiporetencion_id": 3,
+     "descripcion": "ALBORNOZ R. NELSON B.",
+     "porcentaje": "0.00",
+     "tipo": "R",
+     "base_calculo": 1
+    },
+    {
+     "id": 133,
+     "tiporetencion_id": 3,
+     "descripcion": "SARABIA ZAMORA JESSIKA JOSEFINA",
+     "porcentaje": "0.00",
+     "tipo": "R",
+     "base_calculo": 1
+    },
+    {
+     "id": 134,
+     "tiporetencion_id": 3,
+     "descripcion": "FONDO NEGRO PRIMERO",
+     "porcentaje": "3.00",
+     "tipo": "R",
+     "base_calculo": 1
+    },
+    {
+     "id": 135,
+     "tiporetencion_id": 3,
+     "descripcion": "S.S.O MENSUAL CONTRATADOS",
+     "porcentaje": "0.00",
+     "tipo": "R",
+     "base_calculo": 1
+    },
+    {
+     "id": 136,
+     "tiporetencion_id": 3,
+     "descripcion": "A.P.I.E MENSUAL CONTRATADOS",
+     "porcentaje": "0.00",
+     "tipo": "R",
+     "base_calculo": 1
+    },
+    {
+     "id": 137,
+     "tiporetencion_id": 3,
+     "descripcion": "F.A.O.V MENSUAL CONTRATADOS",
+     "porcentaje": "0.00",
+     "tipo": "R",
+     "base_calculo": 1
+    },
+    {
+     "id": 138,
+     "tiporetencion_id": 3,
+     "descripcion": "IPASME",
+     "porcentaje": "0.00",
+     "tipo": "R",
+     "base_calculo": 1
+    },
+    {
+     "id": 139,
+     "tiporetencion_id": 2,
+     "descripcion": "ISLR 1%",
+     "porcentaje": "1.00",
+     "tipo": "R",
+     "base_calculo": 1
+    },
+    {
+     "id": 140,
+     "tiporetencion_id": 2,
+     "descripcion": "3% ISLR",
+     "porcentaje": "3.00",
+     "tipo": "R",
+     "base_calculo": 1
+    },
+    {
+     "id": 141,
+     "tiporetencion_id": 3,
+     "descripcion": "INCE AGUINALDO",
+     "porcentaje": "0.00",
+     "tipo": "R",
+     "base_calculo": 1
+    },
+    {
+     "id": 142,
+     "tiporetencion_id": 3,
+     "descripcion": "PAGO INDEBIDO JUBILADO",
+     "porcentaje": "0.00",
+     "tipo": "R",
+     "base_calculo": 1
+    },
+    {
+     "id": 143,
+     "tiporetencion_id": 2,
+     "descripcion": "I.S.L.R",
+     "porcentaje": "1.00",
+     "tipo": "I",
+     "base_calculo": 1
+    },
+    {
+     "id": 144,
+     "tiporetencion_id": 3,
+     "descripcion": "DESCUENTO POR INASISTENCIA CONTRATADOS",
+     "porcentaje": "0.00",
+     "tipo": "R",
+     "base_calculo": 1
+    },
+    {
+     "id": 145,
+     "tiporetencion_id": 3,
+     "descripcion": "DESCUENTO POR INASISTENCIA OBREROS",
+     "porcentaje": "0.00",
+     "tipo": "R",
+     "base_calculo": 1
+    },
+    {
+     "id": 146,
+     "tiporetencion_id": 2,
+     "descripcion": "IMPUESTO MUNICIPAL",
+     "porcentaje": "2.00",
+     "tipo": "R",
+     "base_calculo": 1
+    },
+    {
+     "id": 147,
+     "tiporetencion_id": 2,
+     "descripcion": "ISLR 5%",
+     "porcentaje": "5.00",
+     "tipo": "R",
+     "base_calculo": 1
+    },
+    {
+     "id": 9,
+     "tiporetencion_id": 4,
+     "descripcion": "TIMBRE FISCAL ",
+     "porcentaje": "2.00",
+     "tipo": "R",
+     "base_calculo": 1
+    },
+    {
+     "id": 149,
+     "tiporetencion_id": 4,
+     "descripcion": "TIMBRE FISCAL 2%",
+     "porcentaje": "2.00",
+     "tipo": "I",
+     "base_calculo": 1
+    },
+    {
+     "id": 150,
+     "tiporetencion_id": 1,
+     "descripcion": "IVA 100%",
+     "porcentaje": "100.00",
+     "tipo": "R",
+     "base_calculo": 1
+    },
+    {
+     "id": 151,
+     "tiporetencion_id": 1,
+     "descripcion": "IVA",
+     "porcentaje": "100.00",
+     "tipo": "I",
+     "base_calculo": 1
+    }
+   ]

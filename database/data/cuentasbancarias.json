@@ -1,0 +1,402 @@
+[
+    {
+     "id": 1,
+     "banco_id": 7,
+     "institucion_id": 13,
+     "fechaapertura": "2020-01-01",
+     "montoapertura": "503.00",
+     "montosaldo": "503.00",
+     "cuenta": "0172-0110-79-1104046618",
+     "descripcion": "GASTO CORRIENTE"
+    },
+    {
+     "id": 2,
+     "banco_id": 8,
+     "institucion_id": 13,
+     "fechaapertura": "2020-01-01",
+     "montoapertura": "0.01",
+     "montosaldo": "0.01",
+     "cuenta": "0174-0130-13-1304190075",
+     "descripcion": "GASTOS CORRIENTES"
+    },
+    {
+     "id": 3,
+     "banco_id": 9,
+     "institucion_id": 13,
+     "fechaapertura": "2020-01-01",
+     "montoapertura": "0.00",
+     "montosaldo": "0.00",
+     "cuenta": "0114-0520-76-5200064595",
+     "descripcion": "NOMINA"
+    },
+    {
+     "id": 7,
+     "banco_id": 3,
+     "institucion_id": 13,
+     "fechaapertura": "2020-01-01",
+     "montoapertura": "0.00",
+     "montosaldo": "0.00",
+     "cuenta": "0163-0900-16-9003009068",
+     "descripcion": "NOMINA"
+    },
+    {
+     "id": 23,
+     "banco_id": 2,
+     "institucion_id": 13,
+     "fechaapertura": "2020-01-01",
+     "montoapertura": "0.00",
+     "montosaldo": "0.00",
+     "cuenta": "0175-0088-11-0073157221",
+     "descripcion": "GASTOS CORRIENTES"
+    },
+    {
+     "id": 24,
+     "banco_id": 2,
+     "institucion_id": 13,
+     "fechaapertura": "2020-01-01",
+     "montoapertura": "0.01",
+     "montosaldo": "0.01",
+     "cuenta": "0175-0264-61-0074917459",
+     "descripcion": "GASTOS CORRIENTES"
+    },
+    {
+     "id": 26,
+     "banco_id": 3,
+     "institucion_id": 13,
+     "fechaapertura": "2020-01-01",
+     "montoapertura": "0.00",
+     "montosaldo": "0.00",
+     "cuenta": "0163-0404-22-4042000298",
+     "descripcion": "APORTE IVSS"
+    },
+    {
+     "id": 17,
+     "banco_id": 1,
+     "institucion_id": 13,
+     "fechaapertura": "2020-01-01",
+     "montoapertura": "0.00",
+     "montosaldo": "0.00",
+     "cuenta": "0116-0069-71-0010578315",
+     "descripcion": "RECAUDACION-(8307)"
+    },
+    {
+     "id": 21,
+     "banco_id": 2,
+     "institucion_id": 13,
+     "fechaapertura": "2020-01-01",
+     "montoapertura": "0.00",
+     "montosaldo": "0.00",
+     "cuenta": "0175-0074-17-0000000438",
+     "descripcion": "GASTOS CORRIENTES"
+    },
+    {
+     "id": 36,
+     "banco_id": 4,
+     "institucion_id": 13,
+     "fechaapertura": "2020-01-01",
+     "montoapertura": "0.00",
+     "montosaldo": "0.00",
+     "cuenta": "0102-0113-61-0000022350",
+     "descripcion": "GASTOS CORRIENTES"
+    },
+    {
+     "id": 14,
+     "banco_id": 3,
+     "institucion_id": 13,
+     "fechaapertura": "2020-01-01",
+     "montoapertura": "0.00",
+     "montosaldo": "0.00",
+     "cuenta": "0163-0900-13-9003009078",
+     "descripcion": "DEDUCCIONES VARIAS"
+    },
+    {
+     "id": 13,
+     "banco_id": 3,
+     "institucion_id": 13,
+     "fechaapertura": "2020-01-01",
+     "montoapertura": "0.00",
+     "montosaldo": "0.00",
+     "cuenta": "0163-0900-14-9003009069",
+     "descripcion": "FONDO DE TERCEROS"
+    },
+    {
+     "id": 15,
+     "banco_id": 2,
+     "institucion_id": 13,
+     "fechaapertura": "2020-01-01",
+     "montoapertura": "0.00",
+     "montosaldo": "0.00",
+     "cuenta": "0175-0088-11-0000001238",
+     "descripcion": "FONDO DE TERCEROS"
+    },
+    {
+     "id": 22,
+     "banco_id": 2,
+     "institucion_id": 13,
+     "fechaapertura": "2020-01-01",
+     "montoapertura": "0.00",
+     "montosaldo": "0.00",
+     "cuenta": "0175-0432-12-0121403703",
+     "descripcion": "GASTOS CORRIENTES"
+    },
+    {
+     "id": 12,
+     "banco_id": 3,
+     "institucion_id": 13,
+     "fechaapertura": "2020-01-01",
+     "montoapertura": "0.00",
+     "montosaldo": "0.00",
+     "cuenta": "0163-0404-24-4042000297",
+     "descripcion": "DEDUCCIONES IVSS"
+    },
+    {
+     "id": 31,
+     "banco_id": 4,
+     "institucion_id": 13,
+     "fechaapertura": "2020-01-01",
+     "montoapertura": "0.00",
+     "montosaldo": "0.00",
+     "cuenta": "0102-0661-82-0000012344",
+     "descripcion": "RECAUDACION"
+    },
+    {
+     "id": 20,
+     "banco_id": 1,
+     "institucion_id": 13,
+     "fechaapertura": "2020-01-01",
+     "montoapertura": "0.00",
+     "montosaldo": "0.02",
+     "cuenta": "0116-0142-10-0003942490",
+     "descripcion": "RECAUDACION POR REGALIAS"
+    },
+    {
+     "id": 34,
+     "banco_id": 6,
+     "institucion_id": 13,
+     "fechaapertura": "2020-01-01",
+     "montoapertura": "0.24",
+     "montosaldo": "0.54",
+     "cuenta": "0134-0062-83-0621043582",
+     "descripcion": "GASTOS CORRIENTES"
+    },
+    {
+     "id": 30,
+     "banco_id": 4,
+     "institucion_id": 13,
+     "fechaapertura": "2020-01-01",
+     "montoapertura": "973.58",
+     "montosaldo": "52319.74",
+     "cuenta": "0102-0660-01-0000044040",
+     "descripcion": "PAGOS FIDEICOMISO"
+    },
+    {
+     "id": 5,
+     "banco_id": 11,
+     "institucion_id": 13,
+     "fechaapertura": "2020-01-01",
+     "montoapertura": "27.57",
+     "montosaldo": "106.24",
+     "cuenta": "0105-0088-59-1088070299",
+     "descripcion": "NOMINA"
+    },
+    {
+     "id": 18,
+     "banco_id": 1,
+     "institucion_id": 13,
+     "fechaapertura": "2020-01-01",
+     "montoapertura": "0.00",
+     "montosaldo": "0.31",
+     "cuenta": "0116-0069-71-0010427023",
+     "descripcion": "RECAUDACION DE MINERALES"
+    },
+    {
+     "id": 6,
+     "banco_id": 2,
+     "institucion_id": 13,
+     "fechaapertura": "2020-01-01",
+     "montoapertura": "178.87",
+     "montosaldo": "709.03",
+     "cuenta": "0175-0088-10-0070349342",
+     "descripcion": "NOMINA"
+    },
+    {
+     "id": 35,
+     "banco_id": 6,
+     "institucion_id": 13,
+     "fechaapertura": "2020-01-01",
+     "montoapertura": "3317.86",
+     "montosaldo": "149627.58",
+     "cuenta": "0134-0062-83-0621043450",
+     "descripcion": "GASTOS CORRIENTES"
+    },
+    {
+     "id": 33,
+     "banco_id": 5,
+     "institucion_id": 13,
+     "fechaapertura": "2020-01-01",
+     "montoapertura": "1701.70",
+     "montosaldo": "3379.68",
+     "cuenta": "0168-0043-11-5100915690",
+     "descripcion": "GASTOS CORRIENTES"
+    },
+    {
+     "id": 8,
+     "banco_id": 4,
+     "institucion_id": 13,
+     "fechaapertura": "2020-01-01",
+     "montoapertura": "570.05",
+     "montosaldo": "1664.66",
+     "cuenta": "0102-0387-20-0000006635",
+     "descripcion": "NOMINA"
+    },
+    {
+     "id": 19,
+     "banco_id": 1,
+     "institucion_id": 13,
+     "fechaapertura": "2020-01-01",
+     "montoapertura": "1834.84",
+     "montosaldo": "34921.12",
+     "cuenta": "0116-0069-79-0026213818",
+     "descripcion": "RECAUDACION"
+    },
+    {
+     "id": 16,
+     "banco_id": 1,
+     "institucion_id": 13,
+     "fechaapertura": "2020-01-01",
+     "montoapertura": "1227.09",
+     "montosaldo": "102952.83",
+     "cuenta": "0116-0069-70-0007461402",
+     "descripcion": "RECAUDACION-TIMBRE FISCAL (4123)"
+    },
+    {
+     "id": 32,
+     "banco_id": 4,
+     "institucion_id": 13,
+     "fechaapertura": "2020-01-01",
+     "montoapertura": "195.99",
+     "montosaldo": "107427.75",
+     "cuenta": "0102-0660-04-0000174428",
+     "descripcion": "RECAUDACION"
+    },
+    {
+     "id": 51,
+     "banco_id": 17,
+     "institucion_id": 13,
+     "fechaapertura": "2022-01-01",
+     "montoapertura": "0.00",
+     "montosaldo": "0.00",
+     "cuenta": "0191-0176-21-2100087122",
+     "descripcion": "RECAUDACION"
+    },
+    {
+     "id": 52,
+     "banco_id": 17,
+     "institucion_id": 13,
+     "fechaapertura": "2022-01-01",
+     "montoapertura": "0.00",
+     "montosaldo": "0.00",
+     "cuenta": "0191-0176-27-2100087138",
+     "descripcion": "RECAUDACION"
+    },
+    {
+     "id": 53,
+     "banco_id": 17,
+     "institucion_id": 13,
+     "fechaapertura": "2022-01-01",
+     "montoapertura": "0.00",
+     "montosaldo": "0.00",
+     "cuenta": "0191-0176-23-2100087143",
+     "descripcion": "RECAUDACION"
+    },
+    {
+     "id": 28,
+     "banco_id": 4,
+     "institucion_id": 13,
+     "fechaapertura": "2020-01-01",
+     "montoapertura": "2458.38",
+     "montosaldo": "268832.37",
+     "cuenta": "0102-0387-28-0000033352",
+     "descripcion": "RECAUDACION-TIMBRE FISCAL"
+    },
+    {
+     "id": 4,
+     "banco_id": 10,
+     "institucion_id": 13,
+     "fechaapertura": "2020-01-01",
+     "montoapertura": "48.54",
+     "montosaldo": "48.52",
+     "cuenta": "0128-0036-34-3600939106",
+     "descripcion": "NOMINA"
+    },
+    {
+     "id": 11,
+     "banco_id": 4,
+     "institucion_id": 13,
+     "fechaapertura": "2020-01-01",
+     "montoapertura": "572.78",
+     "montosaldo": "4590.48",
+     "cuenta": "0102-0661-89-0000012315",
+     "descripcion": "DEDUCCIONES SINDICATOS Y CAJAS DE AHORRO"
+    },
+    {
+     "id": 29,
+     "banco_id": 4,
+     "institucion_id": 13,
+     "fechaapertura": "2020-01-01",
+     "montoapertura": "1.02",
+     "montosaldo": "19464.49",
+     "cuenta": "0102-0661-81-0000012331",
+     "descripcion": "RECAUDACION POR REGALIAS"
+    },
+    {
+     "id": 10,
+     "banco_id": 4,
+     "institucion_id": 13,
+     "fechaapertura": "2020-01-01",
+     "montoapertura": "12.57",
+     "montosaldo": "103226.67",
+     "cuenta": "0102-0653-74-0000002464",
+     "descripcion": "IMPUESTOS"
+    },
+    {
+     "id": 50,
+     "banco_id": 17,
+     "institucion_id": 13,
+     "fechaapertura": "2022-01-01",
+     "montoapertura": "0.00",
+     "montosaldo": "288843.67",
+     "cuenta": "0191-0176-23-2100085277",
+     "descripcion": "RECAUDACION -MATRIZ"
+    },
+    {
+     "id": 25,
+     "banco_id": 3,
+     "institucion_id": 13,
+     "fechaapertura": "2020-01-01",
+     "montoapertura": "0.00",
+     "montosaldo": "500000.00",
+     "cuenta": "0163-0404-20-4042000201",
+     "descripcion": "GASTOS CORRIENTES"
+    },
+    {
+     "id": 9,
+     "banco_id": 4,
+     "institucion_id": 13,
+     "fechaapertura": "2020-01-01",
+     "montoapertura": "0.33",
+     "montosaldo": "1055.58",
+     "cuenta": "0102-0552-26-0000040264",
+     "descripcion": "FONDO DE COMPENSACION INTERTERRITORIAL"
+    },
+    {
+     "id": 27,
+     "banco_id": 4,
+     "institucion_id": 13,
+     "fechaapertura": "2020-01-01",
+     "montoapertura": "3835.50",
+     "montosaldo": "880877.19",
+     "cuenta": "0102-0656-18-0000006059",
+     "descripcion": "GASTOS CORRIENTES"
+    }
+   ]
