@@ -104,7 +104,7 @@
                                             <td>{{ $analisi->usuario->name }}</td>
 
                                             <td>
-                                            <a class="btn btn-sm btn-primary " href="{{ route('analisis.pdf',$analisi->id) }}" data-toggle="tooltip" data-placement="top" title="Imprimir Analisis"><i class="fa fa-fw fa-eye"></i> Imprimir</a>
+                                            <a class="btn btn-sm btn-primary " href="{{ route('analisis.pdf',$analisi->id) }}" data-toggle="tooltip" data-placement="top" title="Imprimir Analisis" target="_black"><i class="fa fa-fw fa-eye"></i> Imprimir</a>
                                                  
                                            {{--  <form action="{{ route('analisis.modificar',$analisi->id) }}" method="POST">
                                                     <!-- Agregar detalles BOS a la requisicion -->

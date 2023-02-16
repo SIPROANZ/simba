@@ -110,6 +110,11 @@
   .firma{
     font-size: 10px;
   }
+
+  .pie{
+    font-size: 10px;
+    margin-left: 5px;  
+  }
 </style>
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -127,7 +132,7 @@
                     <th class="text-center">
                         <h2 class="titulo" >REPÚBLICA BOLIVARIANA DE VENEZUELA <br> GOBERNACION DEL ESTADO ANZOÁTEGUI
                         <br> DIRECCIÓN DE ADMINISTRACIÓN Y FINANZAS<h2>
-                        <h4><strong>FECHA: {{ $transferencias->created_at->toDateString() }}</strong></h4>
+                        <h2 class="titulo">FECHA: {{ $transferencias->created_at->toDateString() }}</h2>
                         
                     </th>
                     
@@ -256,6 +261,9 @@
                   </tr>
                 </tbody>
               </table>
+
+              <div class="pie text-left justify-left">Elaborado por: {{ $transferencias->usuario->name }}</div>
+
         </footer>
       </div>
 

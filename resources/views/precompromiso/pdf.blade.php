@@ -249,7 +249,7 @@
                   </tr>
                 </tbody>
               </table>
-              <div class="pie text-left justify-left">Elaborado por:</div>
+              <div class="pie text-left justify-left">Elaborado por: {{ $precompromiso->usuario->name }}</div>
         </footer>
       </div> 
                                                                 

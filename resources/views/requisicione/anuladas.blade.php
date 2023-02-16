@@ -107,7 +107,7 @@
                                         <td style="text-align: center">{{ $requisicione->usuario->name }}</td>
 
                                             <td>
-                                                    <a class="btn btn-sm btn-primary " href="{{ route('requisiciones.pdf',$requisicione->id) }}"><i class="fa fa-fw fa-eye"></i> Imprimir</a>
+                                                    <a class="btn btn-sm btn-primary " href="{{ route('requisiciones.pdf',$requisicione->id) }}" target="_black"><i class="fa fa-fw fa-eye"></i> Imprimir</a>
                                             </td>
                                            
                                         </tr>

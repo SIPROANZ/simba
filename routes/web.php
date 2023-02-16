@@ -428,4 +428,6 @@ Route::resource('transferenciaentrecuentas', App\Http\Controllers\Transferenciae
 
 Route::resource('comprobantesretenciones', App\Http\Controllers\ComprobantesretencioneController::class)->middleware('auth');
 
+Route::resource('detallesajustes', App\Http\Controllers\DetallesajusteController::class)->middleware('auth');
+
 

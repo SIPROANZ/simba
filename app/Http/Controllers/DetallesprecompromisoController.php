@@ -89,7 +89,7 @@ class DetallesprecompromisoController extends Controller
             {
                 //Error esta queriendo precomprometer mas de la cuenta
                 return redirect()->route('precompromisos.agregar',$precompromiso_id)
-                ->with('success', 'Error el monto que intenta precomprometer es mayor al monto establecido, o ya ha superado el limite. ' . $mensaje);
+                ->with('success', 'Error el monto que intenta precomprometer '. $total_precompromiso .' es mayor al monto establecido '.$precompromiso->montototal.', o ya ha superado el limite. ' . $mensaje);
             } else {
                 //Se procede a precomprometer
                 $detallesprecompromiso = Detallesprecompromiso::create($request->all());

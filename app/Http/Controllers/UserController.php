@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Unidadadministrativa;
 use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\DB;
 
 /**
  * Class UserController
@@ -51,7 +52,13 @@ class UserController extends Controller
     {
         $user = new User();
 
-        $unidades = Unidadadministrativa::orderBy('unidadejecutora', 'ASC')->pluck('unidadejecutora','id');
+       // $unidades = Unidadadministrativa::orderBy('unidadejecutora', 'ASC')->pluck('unidadejecutora','id');
+        
+        $unidades = Unidadadministrativa::select(
+            DB::raw("CONCAT(sector,'.',programa,'.',subprograma,'.',proyecto,'.',actividad,' ',unidadejecutora) AS name"),'id')
+                ->orderBy('name', 'ASC')
+            ->pluck('name', 'id');
+        
         return view('user.create', compact('user', 'unidades'));
     }
 

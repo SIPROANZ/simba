@@ -36,7 +36,7 @@ class Detallesrequisicione extends Model
      *
      * @var array
      */
-    protected $fillable = ['requisicion_id','bos_id','cantidad'];
+    protected $fillable = ['requisicion_id','bos_id','cantidad', 'financiamiento_id'];
 
 
     /**

@@ -49,7 +49,7 @@
                                         <th>No</th>
                                         
 										<th>Persona</th>
-										<th>Cedula</th>
+										<th>Documento</th>
 										<th>Rif</th>
 										<th>Nombre Beneficiario</th>
 										<th>Direccion</th>

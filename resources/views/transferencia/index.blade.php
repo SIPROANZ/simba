@@ -98,6 +98,7 @@
 
                                             <a class="btn btn-sm btn-primary " href="{{ route('transferencias.pdf',$transferencia->id) }}" data-toggle="tooltip" data-placement="top" title="Imprimir transferncias" target="_black"><i class="fas fa-print"></i> Imprimir</a>
 
+                                            <a class="btn btn-sm btn-success " href="{{ url('#') }}" data-toggle="tooltip" data-placement="top" title="Imprimir transferncias"><i class="fas fa-check"></i> Reversar</a>
                                         </td>
                                         </tr>
                                     @endforeach

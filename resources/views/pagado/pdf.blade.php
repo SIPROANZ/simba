@@ -3,7 +3,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PDf Orden de Pago</title>
+    <title>Pagado</title>
 
     <link rel="stylesheet" href="{{ public_path('css/bootstrap.min.css') }}" type="text/css">
 
@@ -109,6 +109,10 @@
 
   .firma{
     font-size: 10px;
+  }
+  .pie{
+    font-size: 10px;
+    margin-left: 5px;  
   }
 </style>
 
@@ -280,6 +284,7 @@
                   </tr>
                 </tbody>
               </table>
+              <div class="pie text-left justify-left">Elaborado por: {{ $pagado->usuario->name }}</div>
         </footer>
       </div>
 

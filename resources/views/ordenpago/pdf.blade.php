@@ -10,7 +10,42 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 
 <style>
-  * {
+
+
+@page {
+margin: 90px 5px;
+}
+
+header {
+position: fixed;
+top: -60px;
+left: 0px;
+right: 0px;
+height: 50px;
+
+/** Extra personal styles 
+background-color: #03a9f4;
+color: white;
+text-align: center;
+line-height: 35px; **/
+}
+
+footer {
+position: fixed;
+bottom: 10px;
+left: 45px;
+right: 30px;
+height: 50px;
+
+/** Extra personal styles 
+background-color: #03a9f4;
+color: white;
+text-align: center;
+line-height: 35px; **/
+}
+
+
+  /* {
     margin: 0;
     padding:0;
   }
@@ -18,10 +53,12 @@
   width:100%;
   height: 100%;
   margin-top: 20px; 
-  margin-bottom: 50px; 
+  margin-bottom: 10px; 
  
 
   }
+
+  */
 
   img
   {
@@ -90,7 +127,7 @@
   .encabezado{
     font-size: 5px;
   }
-
+/*
   .header {
                  position: fixed;
                   top: 50px;
@@ -104,15 +141,18 @@
   .footer {
    text-align: center;
    justify-content: center;
+   
    margin:auto;
-   /*background-color: #F1C40F;*/
+   /*margin-top:40px;
+   /*background-color: #F1C40F;
    position: fixed;
    width: 90%;
    height: 100px;
    bottom:0;
+   /*margin-top:25px;
    margin-bottom:20px;
    margin-left:10px;
-   }
+   } */
 
   .lateral{
   height: 50px;
@@ -123,7 +163,7 @@
     font-size: 10px;
   }
   .pie{
-    font-size: 11px;
+    font-size: 10px;
     margin-left: 5px;  
   }
 </style>
@@ -136,7 +176,7 @@
             <table class="table">
                 <tr>
                     <th class="text-center">
-                        <h2 class="titulo" >REPÚBLICA BOLIVARIANA DE VENEZUELA <br> GOBERNACION DEL ESTADO ANZOÁTEGUI
+                        <h2 class="titulo">REPÚBLICA BOLIVARIANA DE VENEZUELA <br> GOBERNACION DEL ESTADO ANZOÁTEGUI
                         <br> DIRECCIÓN DE ADMINISTRACIÓN Y FINANZAS<h2>
                         
                     </th>
@@ -406,7 +446,7 @@
 
                 @foreach ($detalleretenciones as $valor)
                 <tr>
-                    <td> {{ $valor->retencione->descripcion }}</td>
+                    <td> {{ $valor->retencione->descripcion . ' ' . $valor->retencione->porcentaje . '%' }}</td>
                     <td class="text-right justify-content"> {{ number_format($valor->montoneto, 2,',','.') }}</td>
                 </tr>
                 @endforeach
@@ -440,7 +480,7 @@
             @endif
        </main>
 
-       <footer class="footer">
+       <footer>
               <table class="table table-bordered">
                 <thead >
                   <tr>
@@ -455,6 +495,8 @@
                   </tr>
                 </tbody>
               </table>
+              <div class="pie text-left justify-left">Elaborado por: {{ $ordenpago->usuario->name }}</div>
+       
         </footer>
       </div>
 

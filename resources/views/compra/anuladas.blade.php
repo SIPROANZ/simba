@@ -104,7 +104,7 @@
 
                                             <td>
                                            
-                                            <a class="btn btn-sm btn-primary " href="{{ route('compras.pdf',$compra->id) }}" data-toggle="tooltip" data-placement="top" title="Imprimir Compra"><i class="fa fa-fw fa-print"></i> Imprimir</a>
+                                            <a class="btn btn-sm btn-primary " href="{{ route('compras.pdf',$compra->id) }}" data-toggle="tooltip" data-placement="top" title="Imprimir Compra" target="_black"><i class="fa fa-fw fa-print"></i> Imprimir</a>
                                            
                                             </td>
                                         </tr>

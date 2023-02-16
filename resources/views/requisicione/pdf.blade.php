@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Requisicion</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 
     <style>
@@ -46,7 +46,7 @@
   background-color: #000000;
   }
   td{
-    padding-left:15px;
+    padding-left:12px;
   }
   .resumen1{
     margin-left:10px;
@@ -142,7 +142,7 @@
       <table class="resumen1">
           <tr>
              <th scope="row">FECHA:</th>
-             <td>{{ $requisicione->created_at }}</td>
+             <td>{{ $requisicione->created_at->toDateString() }}</td>
           </tr>
           <tr>
             <th scope="row"> <strong>UNIDAD SOLICITANTE:</strong></th>
@@ -184,7 +184,7 @@
         @endforeach
        </tbody>
      </table>
-     <br><br>
+    
      <!-- A#O DEL PRESUPUESTO -->
      <div class="form-group">
         <h2 class="titulo"><strong> AÑO DEL PRESUPUESTO {{ $requisicione->ejercicio->ejercicioejecucion }}</strong><h2>
@@ -228,7 +228,7 @@
                 <thead >
                   <tr>
                     <th class="firma" >DIRECTOR(A) DE LA UNIDAD EJECUTORA</th>
-                    <th  class="firma"  >JEFE(A) DEL DPTO DE REQUISICIÓN</th>
+                    <th  class="firma"  >JEFE(A) DEL DPTO DE COMPRAS</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -238,7 +238,7 @@
                   </tr>
                 </tbody>
               </table>
-              <div class="pie text-left justify-left">Elaborado por:</div>
+              <div class="pie text-left justify-left">Elaborado por: {{ $requisicione->usuario->name; }}</div>
         </footer>
 
 

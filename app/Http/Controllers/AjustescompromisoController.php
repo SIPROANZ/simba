@@ -128,6 +128,32 @@ class AjustescompromisoController extends Controller
         $compromisos = Compromiso::query()
        ->when(request('search'), function($query){
            return $query->where ('ncompromiso', 'like', '%'.request('search').'%')
+                       
+                        ->orWhereHas('unidadadministrativa', function($q){
+                         $q->where('unidadejecutora', 'like', '%'.request('search').'%');
+                         })
+                          ->orWhereHas('beneficiario', function($qa){
+                            $qa->where('nombre', 'like', '%'.request('search').'%');
+                        });
+        },
+        function ($query) {
+            $query->orderBy('id', 'DESC');
+        })
+        
+       ->paginate(25)
+       ->withQueryString();
+
+        return view('ajustescompromiso.agregar', compact('compromisos'))
+            ->with('i', (request()->input('page', 1) - 1) * $compromisos->perPage());
+    }
+
+    public function agregarold()
+    {
+       // $compromisos = Compromiso::where('status', 'PR')->paginate();
+
+        $compromisos = Compromiso::query()
+       ->when(request('search'), function($query){
+           return $query->where ('ncompromiso', 'like', '%'.request('search').'%')
                         ->where('status', 'like', 'PR')
                         ->orWhereHas('unidadadministrativa', function($q){
                          $q->where('unidadejecutora', 'like', '%'.request('search').'%');
@@ -330,7 +356,7 @@ class AjustescompromisoController extends Controller
                             $ejecucion = Ejecucione::find($rows->ejecucion_id);
                             $ejecucion->increment('monto_comprometido', $rows->montoajuste);
                             $ejecucion->decrement('monto_por_comprometer', $rows->montoajuste);
-                            $ejecucion->decrement('monto_precomprometido', $rows->montoajuste);
+                           // $ejecucion->decrement('monto_precomprometido', $rows->montoajuste);
 
                             //Obtener el detalle compromiso para incrementarle el valor que viene obteniendo
                             $detallescompromisos = Detallescompromiso::where('compromiso_id',$compromiso->id)->where('ejecucion_id',$rows->ejecucion_id)->first();
@@ -360,7 +386,7 @@ class AjustescompromisoController extends Controller
                     $ejecucion = Ejecucione::find($rows->ejecucion_id);
                     $ejecucion->decrement('monto_comprometido', $rows->montoajuste);
                     $ejecucion->increment('monto_por_comprometer', $rows->montoajuste);
-                    $ejecucion->increment('monto_precomprometido', $rows->montoajuste);
+                  //  $ejecucion->increment('monto_precomprometido', $rows->montoajuste);
 
                     //Obtener el detalle compromiso para incrementarle el valor que viene obteniendo
                     $detallescompromisos = Detallescompromiso::where('compromiso_id',$compromiso->id)->where('ejecucion_id',$rows->ejecucion_id)->first();

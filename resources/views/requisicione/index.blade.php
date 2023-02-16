@@ -122,6 +122,9 @@
                                                    @csrf
                                                     @method('PATCH')
 
+                                                    <a class="btn btn-sm btn-primary " href="{{ route('requisiciones.pdf',$requisicione->id) }}" target="_black"><i class="fa fa-fw fa-eye"></i> Imprimir</a>
+                                            
+
                                                     <button type="submit" class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="top" title="Aprobar Requisicion"><i class="fas fa-check-double"></i> Aprobar</button>
                                                 </form>
 

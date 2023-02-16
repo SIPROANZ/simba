@@ -533,6 +533,11 @@ class CompraController extends Controller
         $compra->status = 'AN';
         $compra->save();
 
+        //colocar el analisis en proceso
+        $analisis = Analisi::find($compra->analisis_id);
+        $analisis->estatus = 'EP';
+        $analisis->save();
+
         return redirect()->route('compras.index')
             ->with('success', 'Compra Anulada exitosamente.');
 
@@ -567,7 +572,7 @@ class CompraController extends Controller
         $compra->save();
 
         return redirect()->route('compras.index')
-            ->with('success', 'Compra Anulada exitosamente.');
+            ->with('success', 'Compra Reversada exitosamente.');
 
             
     }
@@ -580,7 +585,10 @@ class CompraController extends Controller
      */
     public function reversar($id)
     {
-        $analisi = Analisi::find($id);
+        //Obtener el id de la compra
+        $compra = Compra::find($id);
+
+        $analisi = Analisi::find($compra->analisis_id);
         $analisi->estatus = 'EP';
         $analisi->save();
 

@@ -159,7 +159,7 @@
                    </tr>
                    <tr>
                       <th scope="row"><strong>Fecha:</strong></th>
-                      <td> {{ $compromiso->created_at }}</td>
+                      <td> {{ $compromiso->created_at->toDateString() }}</td>
                    </tr>
                    <tr>
                       <th scope="row"><strong>Concepto: </strong></th>
@@ -235,7 +235,7 @@
                   </tr>
                 </tbody>
               </table>
-              <div class="pie text-left justify-left">Elaborado por:</div>
+              <div class="pie text-left justify-left">Elaborado por: {{ $compromiso->usuario->name }}</div>
         </footer>
       </div> 
                                                                 

@@ -9,7 +9,7 @@
         </div>
         
 
-        <div class="col-md-9">
+        <div class="col-md-6">
         <div class="form-group">
             {{ Form::label('bos') }}
             {{ Form::select('bos_id', $detallesbos, $detallesrequisicione->bos_id, ['class' => 'form-control' . ($errors->has('bos_id') ? ' is-invalid' : ''), 'placeholder' => 'Seleccione un Bos']) }}
@@ -24,6 +24,15 @@
             {!! $errors->first('cantidad', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         </div>
+
+        <div class="col-md-3">
+        <div class="form-group">
+            {{ Form::label('financiamiento') }}
+            {{ Form::select('financiamiento_id', $financiamientos, $detallesrequisicione->financiamiento_id, ['class' => 'form-control' . ($errors->has('bos_id') ? ' is-invalid' : ''), 'placeholder' => 'Seleccione Financiamiento']) }}
+            {!! $errors->first('financiamiento_id', '<div class="invalid-feedback">:message</div>') !!}
+        </div>
+        </div>
+
         </div>
 
     </div>

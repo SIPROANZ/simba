@@ -87,8 +87,9 @@
    width: 90%;
    height: 100px;
    bottom:0;
-   margin-bottom:50px;
+   margin-bottom:70px;
    margin-left:10px;
+  
    }
   .lateral{
   height: 50px; 
@@ -102,7 +103,7 @@
   }
   .pie{
     font-size: 11px;
-    margin-left: 5px;  
+    margin-left: 5px;
   }
 
 </style>
@@ -205,7 +206,7 @@
                                     <tbody>
                                         @foreach ($detallesayudas as $detallesayuda)
                                             <tr>
-                                                <td>{{ $ayudassociale->beneficiario->rif}}
+                                                <td>{{ $ayudassociale->beneficiario->documento}}
                                                 <td>{{ $ayudassociale->beneficiario->nombre }}</td>
                                                 <td>{{ $ayudassociale->beneficiario->banco}}</td>
                                                 <td>{{ $ayudassociale->beneficiario->numerocuenta }}</td>
@@ -263,7 +264,7 @@
                 </tbody>
                
               </table>
-              <div class="pie text-left justify-left">Elaborado por:</div>
+              <div class="pie text-left justify-left">Elaborado por: {{ $ayudassociale->usuario->name }}</div>
             </footer>
         <div><!-- fin del div container -->                                
    </body>

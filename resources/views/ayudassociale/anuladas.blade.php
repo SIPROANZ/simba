@@ -96,7 +96,7 @@
 
                                             <td>
                                                
-                                            <a class="btn btn-sm btn-primary " href="{{ route('ayudassociales.pdf',$ayudassociale->id) }}" data-toggle="tooltip" data-placement="top" title="Imprimir Ayuda Social"><i class="fas fa-print"></i> Imprimir</a>
+                                            <a class="btn btn-sm btn-primary " href="{{ route('ayudassociales.pdf',$ayudassociale->id) }}" data-toggle="tooltip" data-placement="top" title="Imprimir Ayuda Social" target="_black"><i class="fas fa-print"></i> Imprimir</a>
                                            
                                         </td>
                                         </tr>

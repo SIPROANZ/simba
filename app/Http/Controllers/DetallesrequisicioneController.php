@@ -7,6 +7,7 @@ use App\Requisicione;
 use App\Bo;
 use App\Requidetclaspre;
 use App\Clasificadorpresupuestario;
+use App\Financiamiento;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -25,6 +26,7 @@ class DetallesrequisicioneController extends Controller
     {
         $detallesrequisiciones = Detallesrequisicione::paginate();
 
+
         return view('detallesrequisicione.index', compact('detallesrequisiciones'))
             ->with('i', (request()->input('page', 1) - 1) * $detallesrequisiciones->perPage());
     }
@@ -41,6 +43,8 @@ class DetallesrequisicioneController extends Controller
         $bos = Bo::pluck('descripcion', 'id');
 
         $requisiciones = Requisicione::pluck('concepto', 'id');
+        $financiamientos = Financiamiento::pluck('nombre', 'id');
+
 
         $requisicion_id = session('requisicion');
         $requisicion = Requisicione::find($requisicion_id);
@@ -59,7 +63,7 @@ class DetallesrequisicioneController extends Controller
         ->pluck('bos.descripcion', 'bos.id'); 
            //Fin de agregar bos
 
-        return view('detallesrequisicione.create', compact('detallesrequisicione', 'bos', 'requisiciones', 'detallesbos'));
+        return view('detallesrequisicione.create', compact('financiamientos', 'detallesrequisicione', 'bos', 'requisiciones', 'detallesbos'));
     }
 
     /**
@@ -112,7 +116,8 @@ class DetallesrequisicioneController extends Controller
 */
         $poa_id = $ejecucion->poa_id;
         $meta_id = $ejecucion->meta_id;
-        $financiamiento_id = $ejecucion->financiamiento_id;
+       // $financiamiento_id = $ejecucion->financiamiento_id;
+        $financiamiento_id = $request->financiamiento_id;
         $disponible = $ejecucion->monto_por_comprometer;
 
          
@@ -208,6 +213,8 @@ class DetallesrequisicioneController extends Controller
         $requisicion = Requisicione::find($requisicion_id);
         $unidadadministrativa_id = $requisicion->unidadadministrativa_id;
 
+        $financiamientos = Financiamiento::pluck('nombre', 'id');
+
          //Agregar BOS qeu dependa de la unidad administrativa que esta solicitando la requisicion
          $detallesbos = DB::table('bos')
          ->join('productoscps', 'bos.producto_id', '=', 'productoscps.producto_id') 
@@ -219,7 +226,7 @@ class DetallesrequisicioneController extends Controller
          ->pluck('bos.descripcion', 'bos.id'); 
             //Fin de agregar bos
 
-        return view('detallesrequisicione.edit', compact('unidadadministrativa_id', 'detallesrequisicione' , 'bos', 'requisiciones', 'detallesbos'));
+        return view('detallesrequisicione.edit', compact('financiamientos', 'unidadadministrativa_id', 'detallesrequisicione' , 'bos', 'requisiciones', 'detallesbos'));
     }
 
     /**

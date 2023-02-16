@@ -233,7 +233,7 @@
                                     <tr>
                                         
                                         
-										<th>Documento</th>
+										<th>No Ayuda</th>
 										<th>Monto total</th>
 										<th>Concepto</th>
 										<th>Unidad administrativa</th>
@@ -249,7 +249,7 @@
                                         <tr>
                                             
                                             
-											<td>{{ $ayudassociale->documento }}</td>
+											<td>{{ $ayudassociale->id }}</td>
 											<td>{{ number_format($ayudassociale->montototal, 2, ',', '.') }}</td>
 											<td>{{ $ayudassociale->concepto }}</td>
 											<td>{{ $ayudassociale->unidadadministrativa->denominacion }}</td>

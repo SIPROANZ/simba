@@ -53,7 +53,7 @@ class Compromiso extends Model
      *
      * @var array
      */
-    protected $fillable = ['unidadadministrativa_id','tipocompromiso_id','ncompromiso','beneficiario_id','montocompromiso','status','documento','fechaanulacion','precompromiso_id','compra_id','ayuda_id', 'created_at','usuario_id' ];
+    protected $fillable = ['unidadadministrativa_id','tipocompromiso_id','ncompromiso','beneficiario_id','montocompromiso','status','documento','fechaanulacion','precompromiso_id','compra_id','ayuda_id', 'created_at','usuario_id'];
 
 
     /**

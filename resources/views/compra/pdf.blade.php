@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Orden de Compra Numero: {{ $compra->numordencompra }}</title>
 
     <style>
   * {
@@ -84,7 +84,7 @@
    width: 90%;
    height: 100px;
    bottom:0;
-   margin-bottom:50px;
+   margin-bottom:70px;
    margin-left:10px;
    }
 
@@ -98,7 +98,7 @@
   }
 
   .pie{
-    font-size: 11px;
+    font-size: 10px;
     margin-left: 5px;  
   }
 
@@ -173,32 +173,17 @@
                                       
                     </tr>
                     <tr >
-                        <td  style='border: 0'  WIDTH="68.2%" >
+                        <td  style='border: 0'  colspan="2" width="70%">
+                        <strong>DESPACHAR A: </strong><br>
+                        <strong>SECTOR: </strong> {{ $sector }} <br>
+                        <strong>SUB-SECTOR:</strong> {{ $sub_sector }} <br>
+                        <strong>DEPARTAMENTO:</strong> {{ $departamento }} <br>
+                        <strong>USO DEL BIEN:</strong> {{ $uso }} <br>
 
-                        <table class="margen table-sm " style='border: 0'>
-                            <tr>
-                                <th scope="row" colspan="2"  ><strong>DESPACHAR A:</strong></th>
-                            </tr>
-                            <tr>
-                                <th scope="row"><strong>SECTOR:</strong></th>
-                                <td > {{ $sector }}</td>
-                            </tr>
-                            <tr>
-                                <th scope="row"><strong>SUB-SECTOR:</strong></th>
-                                <td > {{ $sub_sector }}</td>
-                            </tr>
-                            <tr>
-                                <th scope="row"><strong>DEPARTAMENTO:</strong></th>
-                                <td >{{ $departamento }}</td>
-                            </tr> 
-                            <tr>
-                                <th scope="row"><strong>USO DEL BIEN:</strong></th>
-                                <td >{{ $uso }}</td>
-                            </tr> 
-                        </table>
+
                         </td> 
-                        <td  style='border: 0'></td>
-                        <td WIDTH="31.8%">1er - Sirvase citar numero de muestra Orden De
+                        
+                        <td width="30%">1er - Sirvase citar numero de muestra Orden De
                               Compra en sus Facturas y Notas de Entrega
                               2do - No se aceptan tachaduras ni Emmendaduras
                               3er - Es Impresindible de la Presentación de la
@@ -359,7 +344,7 @@
                 </tbody>
                
               </table>
-              <div class="pie text-left justify-left">Elaborado por:</div>
+              <div class="pie text-left justify-left">Elaborado por: {{ $compra->usuario->name }}</div>
             </footer>
         <div><!-- fin del div container -->  
 </body>

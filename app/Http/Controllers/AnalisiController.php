@@ -377,13 +377,8 @@ class AnalisiController extends Controller
 
         $total = $detallesanalisis->sum('subtotal');
 
-
-
         //Obtener el proveedor
         $beneficiario = Beneficiario::find($detalle->beneficiario_id);
-
-
-     
 
         $pdf = PDF::setPaper('letter', 'landscape')->loadView('analisi.pdf', ['total'=>$total,'beneficiario'=>$beneficiario, 'analisi'=>$analisi, 'detallesanalisis'=>$detallesanalisis]);
         return $pdf->stream();

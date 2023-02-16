@@ -122,9 +122,11 @@
                             </span>
 
                              <div class="float-right">
-                                <a href="{{ route('ejecuciones.create') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
+                                 @can('admin.crear')
+                                 <a href="{{ route('ejecuciones.create') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
                                   {{ __('Crear Nuevo') }}
                                 </a>
+                                @endcan
 
                                 {{--    <a href="{{ route('ejecuciones.pdf') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
                                   {{ __('Exportar') }}
@@ -196,7 +198,10 @@
 
                                             <td class="text-center">
                                             <a class="btn btn-sm btn-primary " href="{{ route('ejecuciones.show',$ejecucione->id) }}"><i class="fa fa-fw fa-eye"></i> Mostrar</a>
-                                                    
+                                              
+                                            @can('admin.crear')
+                                            <a class="btn btn-sm btn-success" href="{{ route('ejecuciones.edit',$ejecucione->id) }}"><i class="fa fa-fw fa-edit"></i> Editar</a>
+                                             @endcan       
                                             </td>
 
                       <!-- Para editar una ejecucion -->

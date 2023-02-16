@@ -13,7 +13,7 @@
         </div>
         <div class="col-md-4">
         <div class="form-group">
-            {{ Form::label('Cedula') }}
+            {{ Form::label('Documento') }}
             {{ Form::text('documento', $beneficiario->documento, ['class' => 'form-control' . ($errors->has('documento') ? ' is-invalid' : ''), 'placeholder' => 'Cedula del Beneficiario']) }}
             {!! $errors->first('documento', '<div class="invalid-feedback">:message</div>') !!}
         </div>
@@ -40,7 +40,7 @@
         <div class="col-md-4">
         <div class="form-group">
             {{ Form::label('tipo de beneficiario') }}
-            {{ Form::select('tipobeneficiario',['Proveedor'=>'Proveedor', 'Contratista'=>'Contratista', 'Cooperativa'=>'Cooperativa', 'Fundacion'=>'Fundacion', 'Otros'=>'Otros'], $beneficiario->tipobeneficiario, ['class' => 'form-control' . ($errors->has('tipobeneficiario') ? ' is-invalid' : ''), 'placeholder' => 'Seleccione un tipo de beneficiario']) }}
+            {{ Form::select('tipobeneficiario',['Proveedor'=>'Proveedor', 'Contratista'=>'Contratista', 'Cooperativa'=>'Cooperativa', 'Fundacion'=>'Fundacion', 'Comuna'=>'Comuna', 'Otros'=>'Otros'], $beneficiario->tipobeneficiario, ['class' => 'form-control' . ($errors->has('tipobeneficiario') ? ' is-invalid' : ''), 'placeholder' => 'Seleccione un tipo de beneficiario']) }}
             {!! $errors->first('tipobeneficiario', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         </div>

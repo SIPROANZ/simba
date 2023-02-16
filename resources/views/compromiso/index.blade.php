@@ -121,7 +121,7 @@
                                                    
                                                     <a class="btn btn-sm btn-success" href="{{ route('compromisos.edit',$compromiso->id) }}" data-toggle="tooltip" data-placement="top" title="Editar Compromiso"><i class="fa fa-fw fa-edit"></i> Editar!</a>
                                                     
-                                                    <a class="btn btn-sm btn-info " href="{{ route('compromisos.pdf',$compromiso->id) }}" data-toggle="tooltip" data-placement="top" title="Imprimir Compromiso"><i class="fas fa-print"></i> Imprimir</a>
+                                                    <a class="btn btn-sm btn-info " href="{{ route('compromisos.pdf',$compromiso->id) }}" data-toggle="tooltip" data-placement="top" title="Imprimir Compromiso" target="_black"><i class="fas fa-print"></i> Imprimir</a>
    
                                                     <a class="btn btn-sm btn-warning " href="{{ route('compromisos.reversar',$compromiso->id) }}" data-toggle="tooltip" data-placement="top" title="Reversar"><i class="fas fa-angle-double-left"></i> Reversar</a>
    

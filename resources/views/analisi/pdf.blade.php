@@ -79,7 +79,7 @@
     width: 95%;
     height: 100px;
     bottom:0;
-    margin-bottom:30px;
+    margin-bottom:50px;
     margin-left:10px;
     }
     .lateral{
@@ -89,6 +89,11 @@
 
    .firma{
     font-size: 10px;
+  }
+  .pie{
+    font-size: 8px;
+    margin-left: 5px;  
+    
   }
   .contenido{
     text-align: center;
@@ -215,7 +220,7 @@
                     
                     <tr>
                     <td colspan="4">Total</td>
-                    <td class="text-right justify-content">{{ $total }}</td>
+                    <td class="text-right justify-content">{{ number_format($total,2,',','.') }}</td>
                     <td></td>
                     <td >0,00</td>
                     <td></td>
@@ -252,30 +257,14 @@
                 </thead>
                 <tbody>
                     <tr >
-                        <td rowspan="2"></td>
-                      
-                        <td></td>
-                        <td colspan="2"> PRECIO MAS BAJO</td>
-                        <td></td>
-                        <td colspan="2"> PRECIO MAS BAJO</td>
-                        <td></td>
-                        <td colspan="2"> PRECIO MAS BAJO</td>
-                                               
+                        <td colspan="10">
+                            {{ $analisi->criterio->nombre }}
+                        </td>
+                                             
                     </tr>
+                   
                     <tr>
-                       
-                        <td></td>
-                        <td colspan="2"> PRECIO MAS BAJO</td>
-                        <td></td>
-                        <td colspan="2"> PRECIO MAS BAJO</td>
-                        <td class="text-center justify-content">X</td>
-                        <td colspan="2"> PRECIO MAS BAJO</td>
-                    </tr>
-                    <tr>
-                        <td colspan="10" >OBSERVACION:
-                         Tecnologia Anzoategui, C.a = COMPUTADORA PORTATIL (LAPTOP) MARCA HP, PROCESADOR CORE I5, 8GB DE RAM, 256 GB DE SSD, 11AVA GENERACION,COMPUTADORA
-                     PORTATIL (LAPTOP) MARCA LENOVO IDEAPAD3, PROCESADOR CORE I3, 8GB DE RAM, 256 GB DE SSD, 11AVA GENERACION</td>
-                    </tr>
+                        <td colspan="10" >OBSERVACION:  {{ $analisi->observacion }} </tr>
                 </tbody>
            </table>
         </main>	
@@ -297,6 +286,7 @@
                 </tbody>
                
               </table>
+              <div class="pie text-left justify-left">Elaborado por: {{ $analisi->usuario->name }}</div>
             </footer>	                                 
   </body>
 </html>

@@ -114,9 +114,11 @@
                                                     <!-- Agregar detalles BOS a la requisicion -->
                                                     <a class="btn btn-sm btn-info " href="{{ route('compras.show',$compra->id) }}" data-toggle="tooltip" data-placement="top" title="Mostrar Compra"><i class="fa fa-fw fa-eye"></i> Mostrar</a>
                                                     
-                                                    <a class="btn btn-sm btn-primary " href="{{ route('compras.pdf',$compra->id) }}" data-toggle="tooltip" data-placement="top" title="Imprimir Compra"><i class="fa fa-fw fa-print"></i> Imprimir</a>
+                                                    <a class="btn btn-sm btn-primary " href="{{ route('compras.pdf',$compra->id) }}" data-toggle="tooltip" data-placement="top" title="Imprimir Compra" target="_black"><i class="fa fa-fw fa-print"></i> Imprimir</a>
                                                    
                                                     <a class="btn btn-sm btn-success" href="{{ route('compras.edit',$compra->id) }}" data-toggle="tooltip" data-placement="top" title="Editar Compra"><i class="fa fa-fw fa-edit"></i> Editar</a>
+                                                     
+                                                    <a class="btn btn-sm btn-success" href="{{ route('compras.reversar',$compra->id) }}" data-toggle="tooltip" data-placement="top" title="Reversar Analisis"><i class="fa fa-fw fa-edit"></i> Reversar Analisis</a>
                                                    
                                                    @csrf
                                                     @method('PATCH')

@@ -114,9 +114,11 @@
 
                                             <td>
                                             
-                                            <form action="{{ route('compromisos.modificar',$compromiso->id) }}" method="POST">
-                                            <a class="btn btn-sm btn-primary " href="{{ route('compromisos.pdf',$compromiso->id) }}" data-toggle="tooltip" data-placement="top" title="Imprimir Compromiso"><i class="fas fa-print"></i> Imprimir</a>
-                                                 @csrf
+                                            <form action="{{ route('compromisos.modificar', $compromiso->id) }}" method="POST">
+                                            
+                                                <a class="btn btn-sm btn-primary " href="{{ route('compromisos.pdf',$compromiso->id) }}" data-toggle="tooltip" data-placement="top" title="Imprimir Compromiso" target="_black"><i class="fas fa-print"></i> Imprimir</a>
+                                                  
+                                                    @csrf
                                                     @method('PATCH')
                                                     <button type="submit" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="top" title="Modificar Compromiso, este boton modifica la ejecucion presupuestaria"><i class="fa fa-fw fa-check"></i> Restaurar</button>
                                                 </form>

@@ -661,6 +661,10 @@ class CompromisoController extends Controller
      */
     public function modificar($id)
     {
+
+        return redirect()->route('compromisos.index')->with('success', 'Proceso de restauracion en curso, vuelva a intentarlo. ID. ' . $id);
+
+        /*
         $compromiso = Compromiso::find($id);
 
         if($compromiso->status == 'EP')
@@ -690,6 +694,8 @@ class CompromisoController extends Controller
         return redirect()->route('compromisos.index')->with('success', 'Compromiso Restaurado exitosamente.');
 
         }
+
+        */
      
     }
 
@@ -944,7 +950,7 @@ class CompromisoController extends Controller
                 $compra = Compra::find($compromiso->compra_id);
                 $detallesanalisi = Detallesanalisi::find($compra->analisis_id);
                 $analisis = Analisi::find($compra->analisis_id);
-                $proveedor = $detallesanalisi->proveedor_id;
+                $proveedor = $detallesanalisi->beneficiario_id;
                 $unidadadministrativa = $analisis->unidadadministrativa_id;
                 $montototal = $compra->montototal;
                

@@ -126,9 +126,14 @@ class DetalleretencioneController extends Controller
     {
         $detalleretencione = Detalleretencione::find($id);
 
-        $retencione = Retencione::select(
+       /* $retencione = Retencione::select(
             DB::raw("CONCAT(descripcion,' ',porcentaje, '%') AS name"),'id')
-            ->pluck('name', 'id');
+            ->pluck('name', 'id'); */
+
+            $retencione = Retencione::select(
+                DB::raw("CONCAT(descripcion,' ',porcentaje, '%') AS name"),'id')
+                ->orderBy('name', 'ASC')
+                ->pluck('name', 'id');
 
         return view('detalleretencione.edit', compact('detalleretencione', 'retencione'));
     }
@@ -143,11 +148,16 @@ class DetalleretencioneController extends Controller
     public function update(Request $request, Detalleretencione $detalleretencione)
     {
         request()->validate(Detalleretencione::$rules);
+      
+        $detalleretencione = Detalleretencione::find($detalleretencione->id);
+        $odp = $detalleretencione->ordenpago_id;
+
+        $request->merge(['montoneto'=>$request->montoIVA]);
 
         $detalleretencione->update($request->all());
 
-        return redirect()->route('detalleretenciones.index')
-            ->with('success', 'Detalleretencione updated successfully');
+        return redirect()->route('ordenpagos.agregar',$odp)
+            ->with('success', 'Retencion Editada Satisfactoriamente');
     }
 
     /**
@@ -173,7 +183,7 @@ class DetalleretencioneController extends Controller
 
         $detalleretencione->delete();
 
-        return redirect()->route('ordenpagos.agregar',$odp )
+        return redirect()->route('ordenpagos.agregar',$odp)
             ->with('success', 'Retención eliminada exitosamente');
     }
 }

@@ -444,17 +444,33 @@ class TransferenciaController extends Controller
     }
 
     /**
+     * Se utilizara para reversar la opcion de la transferencia que fue creada
+     */
+    public function destroy($id)
+    {
+        //$transferencia = Transferencia::find($id)->delete();
+        $transferencia = Transferencia::find($id);
+        //Obtener el numero de pagado
+        
+
+        return redirect()->route('transferencias.index')
+            ->with('success', 'Transferencia deleted successfully');
+    }
+
+
+    /**
      * @param int $id
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Exception
      */
-    public function destroy($id)
+    public function destroyold($id)
     {
         $transferencia = Transferencia::find($id)->delete();
 
         return redirect()->route('transferencias.index')
             ->with('success', 'Transferencia deleted successfully');
     }
+
 
      /**
      * Show the form for creating a new resource.

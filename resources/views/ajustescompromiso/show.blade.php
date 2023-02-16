@@ -118,7 +118,7 @@
                                         <tr>
                                             <td>{{ ++$i }}</td>
                                             
-											<td>{{ $detallesajuste->montoajuste }}</td>
+											<td>{{ number_format($detallesajuste->montoajuste, 2 ,',','.') }}</td>
 											<td>{{ $detallesajuste->ajustes_id }}</td>
 											<td>{{ $detallesajuste->unidadadministrativa->unidadejecutora }}</td>
 											<td>{{ $detallesajuste->ejecucione->clasificadorpresupuestario }}</td>

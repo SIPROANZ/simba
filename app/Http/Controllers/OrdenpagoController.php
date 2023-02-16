@@ -569,8 +569,8 @@ class OrdenpagoController extends Controller
         $aprobado = 1;
 
         $ordenpago = Ordenpago::find($id);
-        $ordenpago->status = 'PR';
-        $ordenpago->save();
+       // $ordenpago->status = 'PR';
+      //  $ordenpago->save();
         //Obtener la compra y tambien actualizar su estado
         $compromiso = Compromiso::find($ordenpago->compromiso_id);
         $compromiso->status = 'AP';
@@ -601,6 +601,11 @@ class OrdenpagoController extends Controller
                 $aprobado = 0;
             } */
         }
+
+        $ordenpago->status = 'PR';
+        $ordenpago->save();
+        $compromiso->status = 'AP';
+        $compromiso->save();
 
         if($aprobado == 1){
             return redirect()->route('ordenpagos.procesados')
@@ -744,6 +749,57 @@ class OrdenpagoController extends Controller
      * @throws \Exception
      */
     public function reversar($id)
+    {
+        $aprobado = 1;
+
+        $ordenpago = Ordenpago::find($id);
+        
+        //Obtener la compra y tambien actualizar su estado
+       $compromiso = Compromiso::find($ordenpago->compromiso_id);
+       
+       // Obtener el detalle de compromiso para aplicar en la ejecucion
+       // $detallescompromiso = Detallescompromiso::where('compromiso_id','=',$compromiso->id)->get();
+
+        $detalleordenpago = Detalleordenpago::where('ordenpago_id', $id)->get();
+
+        //Ciclo para guardar detalle de orden de pago
+        foreach($detalleordenpago as $rows){
+         /*   $datos_guardar = [
+                'ordenpago_id' => $id,
+                'unidadadministrativa_id' => $rows->unidadadministrativa_id,
+                'ejecucion_id' => $rows->ejecucion_id,
+                'monto' => $rows->montocompromiso,
+            ];
+            $detalleordenpago = Detalleordenpago::create($datos_guardar); */
+                            //Obtener la ejecucion
+            $ejecucion = Ejecucione::find($rows->ejecucion_id);
+            //dd($rows);
+            //Hacer el if
+            // if($rows->montocompromiso <= $ejecucion->monto_por_causar){
+                $ejecucion->decrement('monto_causado', $rows->monto);
+                $ejecucion->increment('monto_por_causar', $rows->monto);
+                $ejecucion->decrement('monto_por_pagar', $rows->monto);
+                //$ejecucion->save();
+/*             }else{
+                $aprobado = 0;
+            } */
+        }
+
+        $ordenpago->status = 'EP';
+        $ordenpago->save();
+        $detalleordenpago = Detalleordenpago::where('ordenpago_id', $id)->delete();
+
+        if($aprobado == 1){
+            return redirect()->route('ordenpagos.procesados')
+            ->with('success', 'Orden de Pago Reversada Exitosamente. ');
+        }else{
+            return redirect()->route('ordenpagos.index')
+            ->with('success', 'No Reversada.');
+        }
+
+    }
+
+    public function reversar_old($id)
     {
         $aprobado = 1;
 
