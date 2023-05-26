@@ -8,6 +8,8 @@ use App\Tipodecompromiso;
 use App\Beneficiario;
 use App\Detallesayuda;
 use App\Ejecucione;
+use App\Models\User;
+
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -19,6 +21,12 @@ use PDF;
  */
 class AyudassocialeController extends Controller
 {
+
+    public function __construct()
+{
+    $this->middleware('can:admin.ayudas')->only('index', 'edit', 'update', 'pdf', 'create', 'store', 'indexanuladas', 'indexprocesadas', 'indexaprobadas');
+    
+}
     /**
      * Display a listing of the resource.
      *
@@ -282,12 +290,13 @@ class AyudassocialeController extends Controller
         $aprobado = 1;
         $procesar = 0; 
         $ayudassociale = Ayudassociale::find($id);
-        $ayudassociale->status = 'PR';
-        $ayudassociale->save();
+       
         
 
         //Obtener el detalle ejecucion y corroborar que haya disponibilidad
         $detallesayudas = Detallesayuda::where('ayuda_id','=',$id)->get();
+
+        if($detallesayudas->count()>0){ 
         //Ciclo para validar que todas las partidas tengan disponibilidad
         foreach($detallesayudas as $rows){
             $monto =  $rows->montocompromiso;
@@ -322,6 +331,10 @@ class AyudassocialeController extends Controller
         }
         
         if($aprobado == 1){
+
+            $ayudassociale->status = 'PR';
+            $ayudassociale->save();
+
             return redirect()->route('ayudassociales.index')
             ->with('success', 'Ayuda Social Precomprometida Exitosamente. ');
         }else{
@@ -329,6 +342,12 @@ class AyudassocialeController extends Controller
             ->with('success', 'No Aprobado. No hay Disponibilidad o ha ocurrido un error en el registro');
         }
 
+     } else {
+        return redirect()->route('ayudassociales.index')
+        ->with('success', 'Error. No hay ninguna imputacion para esta ayuda');
+    
+
+     } /* fin de if */
     }
 
   
@@ -413,7 +432,7 @@ class AyudassocialeController extends Controller
         $ayudassociale = Ayudassociale::find($id);
 
 
-        $detallesayudas = Detallesayuda::where('ayuda_id','=',$id)->paginate();
+        $detallesayudas = Detallesayuda::where('ayuda_id','=',$id)->get();
         
         $totalcompromiso = $detallesayudas->sum('montocompromiso');
 
@@ -440,4 +459,114 @@ class AyudassocialeController extends Controller
         return $pdf->stream();
 
     }
+
+    public function reportes()
+    {
+       
+        $unidades = Unidadadministrativa::select(
+            DB::raw("CONCAT(sector,'.',programa,'.',subprograma,'.',proyecto,'.',actividad,' ',unidadejecutora) AS name"),'id')
+            ->orderBy('name','ASC')
+            ->pluck('name', 'id'); 
+       
+
+        $usuarios = User::orderBy('name', 'ASC')->pluck('name' , 'id'); 
+
+        $fecha_actual = Carbon::now();
+      
+
+        return view('ayudassociale.reportes', compact('fecha_actual','usuarios','unidades'));
+
+            
+    }
+
+    public function reporte_pdf(Request $request)
+    {
+      
+       
+        //Buscar por institucion
+        $rif = $request->rif;
+
+        //Obtener Beneficiario
+        $beneficiario_id = false;
+        $nombre_beneficiario = '';
+        $rs_beneficiario = Beneficiario::where('rif', $rif)->first();
+        if($rs_beneficiario){
+            $beneficiario_id = $rs_beneficiario->id;
+            $nombre_beneficiario = $rs_beneficiario->nombre;
+        }
+        
+
+
+
+        $unidadAdministrativa = $request->unidadadministrativa_id;
+        
+        
+        $estatus = $request->status;
+        $nombre_estatus = '';
+        if($estatus == 'EP')
+        {
+            $nombre_estatus = 'EN PROCESO';
+        }elseif($estatus == 'AP'){
+            $nombre_estatus = 'APROBADO';
+        }elseif($estatus == 'PR'){
+            $nombre_estatus = 'PROCESADO';
+        }elseif($estatus == 'AN'){
+            $nombre_estatus = 'ANULADO';
+        }
+        $usuario = $request->usuario_id;
+        $inicio = $request->fecha_inicio;
+        $fin = $request->fecha_fin;
+        
+        $nombre_usuario = '';
+        $rs_usuario = User::find($usuario);
+        if($rs_usuario){
+            $nombre_usuario = $rs_usuario->name;
+        }
+
+        $nombre_unidad = '';
+        $rs_unidad= Unidadadministrativa::find($unidadAdministrativa);
+        if($rs_unidad){
+            $nombre_unidad = $rs_unidad->unidadejecutora;
+        }
+
+        
+
+
+        //
+        
+        $ayudas = Ayudassociale::beneficiarios($beneficiario_id)->unidad($unidadAdministrativa)->estatus($estatus)->usuarios($usuario)->fechaInicio($inicio)->fechaFin($fin)->get();
+        $total_bs = $ayudas->sum('montototal');
+        $aprobadas = Ayudassociale::where('status', 'AP')->beneficiarios($beneficiario_id)->unidad($unidadAdministrativa)->estatus($estatus)->usuarios($usuario)->fechaInicio($inicio)->fechaFin($fin)->count();
+        $procesadas = Ayudassociale::where('status', 'PR')->beneficiarios($beneficiario_id)->unidad($unidadAdministrativa)->estatus($estatus)->usuarios($usuario)->fechaInicio($inicio)->fechaFin($fin)->count();
+        $enproceso = Ayudassociale::where('status', 'EP')->beneficiarios($beneficiario_id)->unidad($unidadAdministrativa)->estatus($estatus)->usuarios($usuario)->fechaInicio($inicio)->fechaFin($fin)->count();
+        $anuladas = Ayudassociale::where('status', 'AN')->beneficiarios($beneficiario_id)->unidad($unidadAdministrativa)->estatus($estatus)->usuarios($usuario)->fechaInicio($inicio)->fechaFin($fin)->count();
+        $total = Ayudassociale::beneficiarios($beneficiario_id)->unidad($unidadAdministrativa)->estatus($estatus)->usuarios($usuario)->fechaInicio($inicio)->fechaFin($fin)->count();
+       
+     
+
+
+        $datos = [
+            
+            'aprobadas' => $aprobadas,
+            'procesadas' => $procesadas,
+            'enproceso' => $enproceso,
+            'anuladas' => $anuladas,
+            'total' => $total, 
+            
+            
+            'inicio' => $inicio,
+            'fin' => $fin,  
+            'usuario' =>$nombre_usuario,  
+            'estatus' =>$nombre_estatus,  
+            'unidad' => $nombre_unidad,
+            'beneficiario' => $nombre_beneficiario,
+            'total_bs' => $total_bs
+            ]; 
+
+        $pdf = PDF::setPaper('letter', 'landscape')->loadView('ayudassociale.reportepdf', ['datos'=>$datos, 'ayudas'=>$ayudas]);
+        return $pdf->stream();
+        
+         
+    }
+
 }

@@ -12,6 +12,11 @@ use Illuminate\Http\Request;
  */
 class DetallesajusteController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:admin.ajustecompromiso')->only('index', 'edit', 'update', 'create', 'store');
+        
+    }
     /**
      * Display a listing of the resource.
      *

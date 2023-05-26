@@ -17,11 +17,14 @@
                         <div style="display: flex; justify-content: space-between; align-items: center;">
 
                             <span id="card_title">
-                                {{ __('Unidad Administrativa') }}
+                                {{ __('') }}
                             </span>
 
                              <div class="float-right">
-                                <a href="{{ route('unidadadministrativas.create') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
+                                <a href="{{ route('unidadadministrativas.reportes') }}" class="btn btn-outline-dark btn-sm float-right"  data-placement="left">
+                                    {{ __('Reportes') }}
+                                  </a>
+                                <a href="{{ route('unidadadministrativas.create') }}" class="btn btn-outline-dark btn-sm float-right"  data-placement="left">
                                   {{ __('Crear Nuevo') }}
                                 </a>
                               </div>
@@ -43,59 +46,80 @@
 </form>
 
                         <div class="table-responsive">
-                            <table class="table table-hover table-bordered table-striped">
+                            <table class="table table-hover small table-bordered table-striped">
                                 <thead>
                                     <tr>
                                     <th>No</th>
-                                        <th  class="text-center">Ejercicio</th>
-										<th  class="text-center">Sector</th>
-										<th  class="text-center">Programa</th>
-										<th  class="text-center">Subprograma</th>
-										<th  class="text-center">Proyecto</th>
-										<th  class="text-center">Actividad</th>
-										<th  class="text-center">Denominación</th>
-										<th  class="text-center">Unidad ejecutora</th>
-										<th  class="text-center">Institucion Id</th>
-										<th  class="text-center">Nivel</th>
-										<th  class="text-center">Email</th>
-										<th  class="text-center">Teléfono</th>
-										<th  class="text-center">Descripción</th>
-										<th  class="text-center">Inversión</th>
-										<th  class="text-center">Nivel ejecutor</th>
-                                        <th  class="text-center">Usuario</th>
-                                        <th  class="text-center">Opciones</th>
+                                        <th class="text-center">Ejercicio</th>
+										<th class="text-center">Sect-Prog-Subprog-Proy-Act</th>
+										<th class="text-center">Denominación</th>
+										<th class="text-center">Institucion</th>
+
+                                        <th class="text-center">Descripción</th>
+
+
+                                        <th class="text-center">Usuario</th>
+                                        <th class="text-center">Opciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach ($unidadadministrativas as $unidadadministrativa)
                                         <tr>
-                                        <td  class="text-center">{{ ++$i }}</td>
+                                        <td class="text-center">{{ ++$i }}</td>
                                             
-											<td  class="text-center">{{ $unidadadministrativa->ejercicio_id }}</td>
-											<td  class="text-center">{{ $unidadadministrativa->sector }}</td>
-											<td  class="text-center">{{ $unidadadministrativa->programa }}</td>
-											<td  class="text-center">{{ $unidadadministrativa->subprograma }}</td>
-											<td  class="text-center">{{ $unidadadministrativa->proyecto }}</td>
-											<td  class="text-center">{{ $unidadadministrativa->actividad }}</td>
-											<td  class="text-center">{{ $unidadadministrativa->denominacion }}</td>
-											<td  class="text-center">{{ $unidadadministrativa->unidadejecutora }}</td>
-											<td  class="text-center">{{ $unidadadministrativa->institucion_id }}</td>
-											<td  class="text-center">{{ $unidadadministrativa->nivel }}</td>
-											<td  class="text-center">{{ $unidadadministrativa->email }}</td>
-											<td  class="text-center">{{ $unidadadministrativa->telefono }}</td>
-											<td  class="text-center">{{ $unidadadministrativa->descripcion }}</td>
-											<td  class="text-center">{{ $unidadadministrativa->inversion }}</td>
-											<td  class="text-center">{{ $unidadadministrativa->nivelejecutor }}</td>
-                                            <td  class="text-center">{{ $unidadadministrativa->usuario->name }}</td>
+											<td class="text-center">{{ $unidadadministrativa->ejercicio->ejercicioejecucion }}</td>
+											<td class="text-center">{{ $unidadadministrativa->sector }}-{{ $unidadadministrativa->programa }}-{{ $unidadadministrativa->subprograma }}-{{ $unidadadministrativa->proyecto }}-{{ $unidadadministrativa->actividad }}
+                                            </td>
+											
+                                            
+											<td class="text-left"><b>Denominacion: </b>{{ $unidadadministrativa->denominacion }}<br>
+                                            <b>Unidad Ejecutora: </b> {{ $unidadadministrativa->unidadejecutora }}
+                                            </td>
+                                            
+											<td class="text-left">{{ $unidadadministrativa->institucione->institucion }}</td>
+											
+                                            <td class="text-left"><b>Descripcion: </b>{{ $unidadadministrativa->descripcion }}<br>
+                                                <b>Nivel: </b>{{ $unidadadministrativa->nivel }}, 
+                                                <b>Correo: </b>{{ $unidadadministrativa->email }}, 
+                                                <b>Telefono: </b>{{ $unidadadministrativa->telefono }}, 
+                                                <b>Inversion: </b>{{ $unidadadministrativa->inversion }}, 
+                                                <b>Nivel Ejecutor: </b>{{ $unidadadministrativa->nivelejecutor }}
+                                            
+                                            </td>
+                                       
+                                            
+                                            
+                                            <td class="text-center">{{ $unidadadministrativa->usuario->name }}</td>
 
-                                            <td  class="text-center">
-                                                <form action="{{ route('unidadadministrativas.destroy',$unidadadministrativa->id) }}" method="POST">
-                                                    <a class="btn btn-sm btn-primary " href="{{ route('unidadadministrativas.show',$unidadadministrativa->id) }}"><i class="fa fa-fw fa-eye"></i> Mostrar</a>
-                                                    <a class="btn btn-sm btn-success" href="{{ route('unidadadministrativas.edit',$unidadadministrativa->id) }}"><i class="fa fa-fw fa-edit"></i> Editar</a>
+                                            <td class="text-center">
+                                                                                                                                 <!-- =========================================================== -->
+
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card card-secondary collapsed-card">
+              <div class="card-header">
+                <h3 class="card-title">Ver </h3>
+
+                <div class="card-tools">
+                  <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-plus"></i>
+                  </button>
+                </div>
+                <!-- /.card-tools -->
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                                                <form action="{{ route('unidadadministrativas.destroy',$unidadadministrativa->id) }}" method="POST" class="submit-prevent-form">
+                                                    <a class="btn btn-sm btn-block btn btn-outline-dark btn-block" href="{{ route('unidadadministrativas.show',$unidadadministrativa->id) }}"><i class="fas fa-print"></i> Mostrar</a>
+                                                    <a class="btn btn-sm btn-block btn btn-outline-dark btn-block" href="{{ route('unidadadministrativas.edit',$unidadadministrativa->id) }}"><i class="fa fa-fw fa-edit"></i> Editar</a>
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-fw fa-trash"></i> Eliminar</button>
+                                                    <button type="submit" class="btn btn-outline-danger btn-sm btn-block submit-prevent-button"><i class="fa fa-fw fa-trash"></i> Eliminar</button>
                                                 </form>
+                                                                                                              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
                                             </td>
                                         </tr>
                                     @endforeach
@@ -110,6 +134,15 @@
     </div>
     @stop
 
-@section('css')
-    <link rel="stylesheet" href="/css/admin_custom.css">
-@stop
+ @section('css')
+    
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="{{ asset('css/submit.css') }}">
+        
+    @stop
+    
+    @section('js')
+    <script src="{{ asset('js/submit.js') }}"></script>
+    
+    
+    @stop

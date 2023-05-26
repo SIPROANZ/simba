@@ -4,7 +4,7 @@
 @section('title', 'Analisis de Cotizacion')
 
 @section('content_header')
-    <h1>Analisis de Cotizacion</h1>
+    <h1>Analisis de Cotizaciones Procesadas</h1>
 @stop
 
 @section('content')
@@ -18,27 +18,27 @@
                         <div style="display: flex; justify-content: space-between; align-items: center;">
 
                             <span id="card_title">
-                                {{ __('Analisis de Cotizaciones Procesadas') }}
+                                {{ __('') }}
                             </span>
 
                              <div class="float-right">
-                                <a href="{{ route('analisis.create') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
+                                <a href="{{ route('analisis.create') }}" class="btn btn-outline-dark btn-sm float-right"  data-placement="left">
                                   {{ __('Crear Nuevo Analisis de Cotizacion') }}
                                 </a>
 
-                                <a href="{{ route('analisis.aprobadas') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
+                                <a href="{{ route('analisis.aprobadas') }}" class="btn btn-outline-dark btn-sm float-right"  data-placement="left">
                                   {{ __('Aprobadas') }}
                                 </a>
 
-                                <a href="{{ route('analisis.index') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
+                                <a href="{{ route('analisis.index') }}" class="btn btn-outline-dark btn-sm float-right"  data-placement="left">
                                   {{ __('En Proceso') }}
                                 </a>
 
-                                <a href="{{ route('analisis.procesadas') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
+                                <a href="{{ route('analisis.procesadas') }}" class="btn btn-outline-dark btn-sm float-right"  data-placement="left">
                                   {{ __('Procesadas') }}
                                 </a>
 
-                                <a href="{{ route('analisis.anuladas')  }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
+                                <a href="{{ route('analisis.anuladas')  }}" class="btn btn-outline-dark btn-sm float-right"  data-placement="left">
                                   {{ __('Anuladas') }}
                                 </a>
 
@@ -61,7 +61,7 @@
 </div>
 </form>
                         <div class="table-responsive">
-                            <table class="table table-striped table-hover">
+                            <table class="table table-hover  small table-bordered table-striped">
                                 <thead class="thead">
                                     <tr>
                                         <th>No. Analisis</th>
@@ -86,7 +86,7 @@
 											<td>{{ $analisi->requisicione->correlativo }}</td>
 											<td>{{ $analisi->criterio->nombre }}</td>
 											<td>{{ $analisi->numeracion }}</td>
-											<td>{{ $analisi->observacion }}</td>
+											<td>{!! $analisi->observacion !!}</td>
                                             <td>
 
                                             @if ($analisi->estatus == 'EP')
@@ -104,14 +104,16 @@
                                             <td>{{ $analisi->usuario->name }}</td>
 
                                             <td>
-                                            <a class="btn btn-sm btn-primary " href="{{ route('analisis.pdf',$analisi->id) }}" data-toggle="tooltip" data-placement="top" title="Imprimir Analisis" target="_black"><i class="fa fa-fw fa-eye"></i> Imprimir</a>
-                                                 
-                                            <form action="{{ route('analisis.modificar',$analisi->id) }}" method="POST">
+                                            <a class="btn btn-sm btn-block btn btn-outline-dark btn-block" href="{{ route('analisis.pdf',$analisi->id) }}" data-toggle="tooltip" data-placement="top" title="Imprimir Analisis" target="_black"><i class="fas fa-print"></i> Imprimir</a>
+                                                
+                                            @can('admin.reversar')
+                                            <form action="{{ route('analisis.modificar',$analisi->id) }}" method="POST" class="submit-prevent-form">
                                                     <!-- Agregar detalles BOS a la requisicion -->
                                                    @csrf
                                                     @method('PATCH')
-                                                    <button type="submit" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="top" title="Modificar Analisis"><i class="fa fa-fw fa-check"></i> Modificar</button>
+                                                    <button type="submit" class="btn btn-sm btn-block btn btn-outline-success btn-block submit-prevent-button show-alert-reversar-box" data-toggle="tooltip" data-placement="top" title="Modificar Analisis"><i class="fa fa-fw fa-check"></i> Reversar</button>
                                             </form>
+                                            @endcan
 
                                             </td>
                                         </tr>
@@ -125,4 +127,18 @@
             </div>
         </div>
     </div>
+@stop
+
+@section('css')
+    
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous"/>
+<link rel="stylesheet" href="{{ asset('css/submit.css') }}">
+    
+@stop
+
+@section('js')
+<script src="{{ asset('js/submit.js') }}"></script>
+<script src="{{ asset('js/alerta_reversar.js') }}"></script>
+
+
 @stop

@@ -19,7 +19,7 @@
                         <span class="card-title">Editar Factura</span>
                     </div>
                     <div class="card-body">
-                        <form method="POST" action="{{ route('facturas.update', $factura->id) }}"  role="form" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('facturas.update', $factura->id) }}"  role="form" enctype="multipart/form-data" class="submit-prevent-form">
                             {{ method_field('PATCH') }}
                             @csrf
 

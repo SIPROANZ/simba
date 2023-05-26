@@ -3,7 +3,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PDf Orden de Pago</title>
+    <title>TRANSFERENCIAS</title>
 
     <link rel="stylesheet" href="{{ public_path('css/bootstrap.min.css') }}" type="text/css">
 
@@ -162,7 +162,14 @@
                </thead>
                <tbody>
                 <tr>
-                    <td colspan="2">{{ $transferencias->concepto }}</td>
+                    <td colspan="2">{{ $transferencias->concepto }}
+
+                    @if($transferencias->conceptoanulacion != 'sin conceptoanulacion')
+                        {{ ' / ' . $transferencias->conceptoanulacion }}
+                    @endif
+
+                    </td>
+
                  </tr>
                
                </tbody>
@@ -248,7 +255,7 @@
               <table class="table table-bordered">
                 <thead >
                   <tr>
-                    <th width="33.33%" class="firma">ELABORADO POR:&nbsp;&nbsp;</th>
+                    <th width="33.33%" class="firma">ELABORADO POR EL USUARIO :   el Usuario ::&nbsp;&nbsp;</th>
                     <th width="33.33%" class="firma">APROBADO POR:&nbsp;&nbsp;&nbsp;</th>
                     <th width="33.33%" class="firma">RECIBI CONFORME:</th>
                   </tr>
@@ -262,7 +269,7 @@
                 </tbody>
               </table>
 
-              <div class="pie text-left justify-left">Elaborado por: {{ $transferencias->usuario->name }}</div>
+              <div class="pie text-left justify-left">ELABORADO POR EL USUARIO :  {{ $transferencias->usuario->name }}</div>
 
         </footer>
       </div>

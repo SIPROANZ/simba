@@ -118,7 +118,7 @@
                     <div class="col-md-12">  
                             <div class="text-center justify-content">
                                     <h2 class="titulo2 "  >REPÚBLICA BOLIVARIANA DE VENEZUELA
-                                    GOBERNACIÓN DE ANZOÁTEGUI </h2>
+                                    PROANZOÁTEGUI </h2>
                                     <h2 class="titulo2  " >DIRECCIÓN DE ADMINISTRACIÓN
                                     DEPARTAMENTO DE COMPRAS</h2>
                                     <h3 class="subtitulo">HOJA DE ANÁLISIS</h3>
@@ -182,8 +182,8 @@
                    
                     <tr>
                     <td colspan="2">{{ $beneficiario->nombre }}</td>  
-                    <td colspan="2"></td>
-                    <td colspan="2"></td>   
+                    <td colspan="2">{{ $beneficiario_b->nombre }}</td>
+                    <td colspan="2">{{ $beneficiario_c->nombre }}</td>   
                     </tr>
                     <tr>
                         <td class="table-secondary" >PRECIO UNIT.</td>
@@ -197,6 +197,7 @@
                     <?php $i=0; ?>
 
                     {{-- Se coloca el foreach, para colocar los detalles del analisis --}}
+                  
                     @foreach($detallesanalisis as $rows)
                     
                     <tr>
@@ -207,24 +208,26 @@
                         <td class="text-right justify-content">{{ number_format($rows->cantidad,2,',','.') }}</td>
                         <td class="text-right justify-content">{{ number_format($rows->precio,2,',','.') }}</td>
                         <td class="text-right justify-content">{{ number_format($rows->subtotal,2,',','.') }}</td>
-                        <td>0,00</td>
-                        <td>0,00</td>
-                        <td>0,00</td>
-                        <td>0,00</td>
+                        <td class="text-right justify-content">{{ number_format($rows->preciob,2,',','.') }}</td>
+                        <td class="text-right justify-content">{{ number_format($rows->subtotalb,2,',','.') }}</td>
+                        <td class="text-right justify-content">{{ number_format($rows->precioc,2,',','.') }}</td>
+                        <td class="text-right justify-content">{{ number_format($rows->subtotalc,2,',','.') }}</td>
                         <td></td>
                     </tr>
 
-
                     @endforeach
+
+                    
+                    
 
                     
                     <tr>
                     <td colspan="4">Total</td>
                     <td class="text-right justify-content">{{ number_format($total,2,',','.') }}</td>
                     <td></td>
-                    <td >0,00</td>
+                    <td class="text-right justify-content">{{ number_format($total_b,2,',','.') }}</td>
                     <td></td>
-                    <td >0,00</td>
+                    <td class="text-right justify-content">{{ number_format($total_c,2,',','.') }}</td>
                     <td></td>
                    
 

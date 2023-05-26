@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Beneficiario;
 use Illuminate\Http\Request;
+use PDF;
+
 
 /**
  * Class BeneficiarioController
@@ -11,6 +13,11 @@ use Illuminate\Http\Request;
  */
 class BeneficiarioController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:admin.beneficiarios')->only('index', 'edit', 'update', 'create', 'store');
+        
+    }
     /**
      * Display a listing of the resource.
      *
@@ -124,5 +131,34 @@ class BeneficiarioController extends Controller
 
         return redirect()->route('beneficiarios.index')
             ->with('success', 'Beneficiario deleted successfully');
+    }
+
+
+    public function reportes()
+    {
+       return view('beneficiario.reportes');
+    }
+
+    public function reporte_pdf(Request $request)
+    {
+         //Buscar por institucion
+         $direccion = $request->direccion;
+         $persona = $request->persona;
+
+        
+
+        //direccion
+        $beneficiarios = Beneficiario::direccion($direccion)->persona($persona)->get();
+        $total_beneficiarios = count($beneficiarios);
+        
+        $datos = [
+            'direccion' =>$direccion,  
+            'total' => $total_beneficiarios,
+            'caracterbeneficiario' => $persona,
+            ]; 
+
+        $pdf = PDF::setPaper('letter', 'landscape')->loadView('beneficiario.reportepdf', ['datos'=>$datos, 'beneficiarios'=>$beneficiarios]);
+        return $pdf->stream();
+         
     }
 }

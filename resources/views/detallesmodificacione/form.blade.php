@@ -63,6 +63,6 @@
 
     </div>
     <div class="box-footer mt20">
-        <button type="submit" class="btn btn-primary">Enviar</button>
+        <button type="submit" class="btn btn-primary submit-prevent-button">Enviar</button>
     </div>
 </div>

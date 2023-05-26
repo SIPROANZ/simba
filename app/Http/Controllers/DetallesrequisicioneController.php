@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Detallesrequisicione;
 use App\Requisicione;
-use App\Bo;
 use App\Requidetclaspre;
+use App\Bo;
+use App\Productoscp;
 use App\Clasificadorpresupuestario;
 use App\Financiamiento;
 use Illuminate\Http\Request;
@@ -17,6 +18,11 @@ use Illuminate\Support\Facades\DB;
  */
 class DetallesrequisicioneController extends Controller
 {
+    public function __construct()
+{
+    $this->middleware('can:admin.solicitudes')->only('index', 'edit', 'update', 'create', 'store');
+    
+}
     /**
      * Display a listing of the resource.
      *
@@ -263,8 +269,49 @@ class DetallesrequisicioneController extends Controller
      */
     public function destroy($id)
     {
-        $detallesrequisicione = Detallesrequisicione::find($id)->delete();
-        
+        $detallesrequisicione = Detallesrequisicione::find($id);
+        //Obtener el bos_id y la requisicion_id
+        $bos_id = $detallesrequisicione->bos_id;
+        $requisicion_id = $detallesrequisicione->requisicion_id;
+        //de mi modelo bos obtener el id del producto
+        $producto = Bo::find($bos_id);
+        $producto_id = $producto->producto_id;
+        //Obtener el id del clasificador presupuestario de la tabla productoscps
+        $clasificador = Productoscp::where('producto_id', $producto_id)->first();
+        $clasificador_id = $clasificador->clasificadorp_id;
+        //Obtener la cuenta o codigo del clasificador presupuestario 4.02.00.00.00 -> ejemplo
+        $cuenta = Clasificadorpresupuestario::find($clasificador_id);
+        $cuenta_presupuestaria = $cuenta->cuenta;
+        //Crear las banderas para saber cuantas veces un producto pertenece a la misma partida presupuestaria
+        $repetidos = 0;
+        //Hacer ciclo y repetir todos los pasos anteriores y ver si hay uno o mas de un producto que se repita 
+        //en la misma partida
+        $productos_en_partida = Detallesrequisicione::where('requisicion_id', $requisicion_id)->get();
+
+        foreach ($productos_en_partida as $value) {
+            //de mi modelo bos obtener el id del producto
+        $prod = Bo::find($value->bos_id);
+        $prod_id = $prod->producto_id;
+        //Obtener el id del clasificador presupuestario de la tabla productoscps
+        $clasif = Productoscp::where('producto_id', $prod_id)->first();
+        $clasifi_id = $clasif->clasificadorp_id;
+
+        if($clasificador_id==$clasifi_id){
+            $repetidos = $repetidos + 1;
+        }
+    
+        }
+
+        //Validar si repetido es uno se borra el registro de la tabla reqdetclaspres en caso contrario no se borra
+        if($repetidos==1){
+
+            $valor_eliminar = Requidetclaspre::where('requisicion_id', $requisicion_id)->where('claspres', $cuenta_presupuestaria)->delete();
+
+        }
+
+        //Eliminar requisicion
+        $detallesrequisicione->delete();
+
         //Obtener el id de la requisicion
         $requisicion = session('requisicion');
         if(session()->has('requisicion')){

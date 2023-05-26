@@ -20,7 +20,7 @@
                             </span>
 
                              <div class="float-right">
-                                <a href="{{ route('detallepagados.create') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
+                                <a href="{{ route('detallepagados.create') }}" class="btn btn-outline-dark btn-sm float-right"  data-placement="left">
                                   {{ __('Create New') }}
                                 </a>
                               </div>
@@ -41,7 +41,7 @@
 </div>
 </form>
                         <div class="table-responsive">
-                            <table class="table table-striped table-hover">
+                                  <table class="table table-hover  small table-bordered table-striped">
                                 <thead class="thead">
                                     <tr>
                                         <th>No</th>
@@ -67,12 +67,12 @@
 											<td>{{ $detallepagado->montopagado }}</td>
 
                                             <td>
-                                                <form action="{{ route('detallepagados.destroy',$detallepagado->id) }}" method="POST">
-                                                    <a class="btn btn-sm btn-primary " href="{{ route('detallepagados.show',$detallepagado->id) }}"><i class="fa fa-fw fa-eye"></i> Show</a>
-                                                    <a class="btn btn-sm btn-success" href="{{ route('detallepagados.edit',$detallepagado->id) }}"><i class="fa fa-fw fa-edit"></i> Edit</a>
+                                                <form action="{{ route('detallepagados.destroy',$detallepagado->id) }}" method="POST" class="submit-prevent-form">
+                                                    <a class="btn btn-sm btn-block btn btn-outline-dark btn-block" href="{{ route('detallepagados.show',$detallepagado->id) }}"><i class="fas fa-print"></i> Show</a>
+                                                    <a class="btn btn-sm btn-block btn btn-outline-dark btn-block" href="{{ route('detallepagados.edit',$detallepagado->id) }}"><i class="fa fa-fw fa-edit"></i> Edit</a>
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-fw fa-trash"></i> Delete</button>
+                                                    <button type="submit" class="btn btn-outline-danger btn-sm btn-block submit-prevent-button"><i class="fa fa-fw fa-trash"></i> Delete</button>
                                                 </form>
                                             </td>
                                         </tr>
@@ -88,7 +88,16 @@
     </div>
     @stop
 
-@section('css')
-    <link rel="stylesheet" href="/css/admin_custom.css">
-@stop
+ @section('css')
+    
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="{{ asset('css/submit.css') }}">
+        
+    @stop
+    
+    @section('js')
+    <script src="{{ asset('js/submit.js') }}"></script>
+    
+    
+    @stop
 

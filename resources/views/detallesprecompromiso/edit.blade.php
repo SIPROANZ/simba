@@ -15,10 +15,10 @@
 
                 <div class="card card-default">
                     <div class="card-header">
-                        <span class="card-title">Editar Detalles precompromiso</span>
+                        <span class="card-title"></span>
                     </div>
                     <div class="card-body">
-                        <form method="POST" action="{{ route('detallesprecompromisos.update', $detallesprecompromiso->id) }}"  role="form" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('detallesprecompromisos.update', $detallesprecompromiso->id) }}"  role="form" enctype="multipart/form-data" class="submit-prevent-form">
                             {{ method_field('PATCH') }}
                             @csrf
 

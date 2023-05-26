@@ -22,12 +22,22 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use PDF;
 
+use App\Unidadadministrativa;
+use App\Beneficiario;
+use App\Models\User;
+
+
 /**
  * Class CompromisoController
  * @package App\Http\Controllers
  */
 class CompromisoController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:admin.compromisos')->only('index', 'edit', 'update', 'pdf', 'create', 'store', 'indexanuladas', 'indexprocesadas', 'indexaprobadas', 'indexcompras');
+        
+    }
     /**
      * Display a listing of the resource.
      *
@@ -69,11 +79,11 @@ class CompromisoController extends Controller
     public function indexcompras()
     {
        // $compras = Compra::paginate();
-        $compras = Compra::where('status', 'PR')->paginate();
+        $compras = Compra::where('status', 'PR')->orderBy('id', 'DESC')->paginate();
 
-        $ayudassociales = Ayudassociale::where('status', 'PR')->paginate();
+        $ayudassociales = Ayudassociale::where('status', 'PR')->orderBy('id', 'DESC')->paginate();
 
-        $precompromisos = Precompromiso::where('status', 'PR')->paginate();
+        $precompromisos = Precompromiso::where('status', 'PR')->orderBy('id', 'DESC')->paginate();
 
         return view('compromiso.compras', compact('compras', 'ayudassociales', 'precompromisos'))
             ->with('i', (request()->input('page', 1) - 1) * $compras->perPage());
@@ -286,7 +296,8 @@ class CompromisoController extends Controller
         /*$compra->status = 'AP';
         $compra->save(); */
 
-        $detallesanalisi = Detallesanalisi::find($compra->analisis_id);
+      //  $detallesanalisi = Detallesanalisi::find($compra->analisis_id);
+      $detallesanalisi = Detallesanalisi::where('analisis_id',$compra->analisis_id)->first();
         $beneficiario = $detallesanalisi->beneficiario_id;
        // $proveedor = 1;
 
@@ -341,6 +352,82 @@ class CompromisoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function pdf($id)
+    {
+      
+        $compromiso = Compromiso::find($id);
+        $concepto = 'Es Null';
+
+       // $detallescompromisos = Detallescompromiso::where('compromiso_id','=',$id)->paginate();
+       
+        /*
+        $detallescompromisos = Detallescompromiso::where('compromiso_id', $id)
+        ->join('ejecuciones', 'ejecuciones.id', '=', 'detallescompromisos.ejecucion_id') 
+        ->join('clasificadorpresupuestarios', 'clasificadorpresupuestarios.cuenta', '=', 'ejecuciones.clasificadorpresupuestario')
+        ->orderBy('clasificadorpresupuestarios.cuenta','ASC')
+        ->get();
+        */
+
+        $detallescompromisos = Detallescompromiso::where('compromiso_id',$id)->get();
+
+        $totalcompromiso = $detallescompromisos->sum('montocompromiso');
+
+        $datos = array();
+
+        if($compromiso->precompromiso_id != NULL){
+
+            $concepto = $compromiso->precompromiso->concepto;
+
+        }
+        elseif($compromiso->ayuda_id != NULL){
+
+            $concepto = $compromiso->ayudassociale->concepto;
+
+            
+        }
+        elseif($compromiso->compra_id != NULL){
+
+            $compra_id = $compromiso->compra_id;
+            $rs_compra = Compra::find($compra_id);
+            $analisis_id = $rs_compra->analisis_id;
+            $rs_analisis = Analisi::find($analisis_id);
+            $requisicion_id = $rs_analisis->requisicion_id;
+            $rs_requisicion = Requisicione::find($requisicion_id);
+            $concepto = $rs_requisicion->concepto;   
+        }
+        foreach($detallescompromisos as $rows){
+            //Obtener la denominacion a partir de la cuenta
+            $ejecucion = Ejecucione::find($rows->ejecucion_id);
+            $cuenta = Clasificadorpresupuestario::where('cuenta', $ejecucion->clasificadorpresupuestario)->first();
+            $datos = Arr::add($datos, $rows->ejecucion_id, $cuenta->denominacion);
+
+        }
+
+        $status=null;
+        
+        if($compromiso->status=='AP'){
+            $status='Aprobado';
+        }
+        elseif($compromiso->status=='PR'){
+            $status='Procesado';    
+        }
+        elseif($compromiso->status=='EP'){
+            $status='En proceso';    
+        }
+        elseif($compromiso->status=='AN'){
+            $status='Anulado';    
+        }
+        elseif($compromiso->status=='RV '){
+            $status='Reservado';    
+        }
+
+
+        $pdf = PDF::loadView('compromiso.pdf', ['compromiso'=>$compromiso, 'detallescompromisos'=>$detallescompromisos, 'datos'=>$datos, 'totalcompromiso'=>$totalcompromiso, 'concepto'=>$concepto, 'status'=> $status]);
+        $pdf->setPaper('letter', 'portrait');
+        return $pdf->stream();
+ 
+    }
+
+    public function pdf_old($id)
     {
       
         $compromiso = Compromiso::find($id);
@@ -412,7 +499,6 @@ class CompromisoController extends Controller
         return $pdf->stream();
  
     }
-
     //Metodo para aprobar un analisis de cotizacion
     /**
      * @param int $id   CAMBIAR EL ESTATUS A PROCESADO CUANDO YA ESTA aprobada la requisicion
@@ -662,9 +748,9 @@ class CompromisoController extends Controller
     public function modificar($id)
     {
 
-        return redirect()->route('compromisos.index')->with('success', 'Proceso de restauracion en curso, vuelva a intentarlo. ID. ' . $id);
+       // return redirect()->route('compromisos.index')->with('success', 'Proceso de restauracion en curso, vuelva a intentarlo. ID. ' . $id);
 
-        /*
+        
         $compromiso = Compromiso::find($id);
 
         if($compromiso->status == 'EP')
@@ -695,7 +781,7 @@ class CompromisoController extends Controller
 
         }
 
-        */
+        
      
     }
 
@@ -990,8 +1076,104 @@ class CompromisoController extends Controller
 
         return redirect()->route('compromisos.index')
             ->with('success', 'Compromiso Actualizado exitosamente.');
+   
+    }
+
+    public function reportes()
+    {
+       
+        $unidades = Unidadadministrativa::select(
+            DB::raw("CONCAT(sector,'.',programa,'.',subprograma,'.',proyecto,'.',actividad,' ',unidadejecutora) AS name"),'id')
+            ->orderBy('name','ASC')
+            ->pluck('name', 'id'); 
+    
+
+        $usuarios = User::orderBy('name', 'ASC')->pluck('name' , 'id'); 
+
+        $fecha_actual = Carbon::now();
+      
+
+        return view('compromiso.reportes', compact('fecha_actual','usuarios','unidades'));
 
             
+    }
+
+    public function reporte_pdf(Request $request)
+    {
+      
+       
+        //Buscar por institucion
+        $rif = $request->rif;
+
+        //Obtener Beneficiario
+        $beneficiario_id = false;
+        $nombre_beneficiario = '';
+        $rs_beneficiario = Beneficiario::where('rif', $rif)->first();
+        if($rs_beneficiario){
+            $beneficiario_id = $rs_beneficiario->id;
+            $nombre_beneficiario = $rs_beneficiario->nombre;
+        }
+        
+        $unidadAdministrativa = $request->unidadadministrativa_id;
+        
+        $estatus = $request->status;
+        $nombre_estatus = '';
+        if($estatus == 'EP')
+        {
+            $nombre_estatus = 'EN PROCESO';
+        }elseif($estatus == 'AP'){
+            $nombre_estatus = 'APROBADO';
+        }elseif($estatus == 'PR'){
+            $nombre_estatus = 'PROCESADO';
+        }elseif($estatus == 'AN'){
+            $nombre_estatus = 'ANULADO';
+        }
+        $usuario = $request->usuario_id;
+        $inicio = $request->fecha_inicio;
+        $fin = $request->fecha_fin;
+        
+        $nombre_usuario = '';
+        $rs_usuario = User::find($usuario);
+        if($rs_usuario){
+            $nombre_usuario = $rs_usuario->name;
+        }
+
+        $nombre_unidad = '';
+        $rs_unidad= Unidadadministrativa::find($unidadAdministrativa);
+        if($rs_unidad){
+            $nombre_unidad = $rs_unidad->unidadejecutora;
+        }
+        
+        $compromisos = Compromiso::beneficiarios($beneficiario_id)->unidad($unidadAdministrativa)->estatus($estatus)->usuarios($usuario)->fechaInicio($inicio)->fechaFin($fin)->get();
+        $total_bs = $compromisos->sum('montocompromiso');
+        $aprobadas = Compromiso::where('status', 'AP')->beneficiarios($beneficiario_id)->unidad($unidadAdministrativa)->estatus($estatus)->usuarios($usuario)->fechaInicio($inicio)->fechaFin($fin)->count();
+        $procesadas = Compromiso::where('status', 'PR')->beneficiarios($beneficiario_id)->unidad($unidadAdministrativa)->estatus($estatus)->usuarios($usuario)->fechaInicio($inicio)->fechaFin($fin)->count();
+        $enproceso = Compromiso::where('status', 'EP')->beneficiarios($beneficiario_id)->unidad($unidadAdministrativa)->estatus($estatus)->usuarios($usuario)->fechaInicio($inicio)->fechaFin($fin)->count();
+        $anuladas = Compromiso::where('status', 'AN')->beneficiarios($beneficiario_id)->unidad($unidadAdministrativa)->estatus($estatus)->usuarios($usuario)->fechaInicio($inicio)->fechaFin($fin)->count();
+        $total = Compromiso::beneficiarios($beneficiario_id)->unidad($unidadAdministrativa)->estatus($estatus)->usuarios($usuario)->fechaInicio($inicio)->fechaFin($fin)->count();
+       
+        $datos = [
+            
+            'aprobadas' => $aprobadas,
+            'procesadas' => $procesadas,
+            'enproceso' => $enproceso,
+            'anuladas' => $anuladas,
+            'total' => $total, 
+            
+            
+            'inicio' => $inicio,
+            'fin' => $fin,  
+            'usuario' =>$nombre_usuario,  
+            'estatus' =>$nombre_estatus,  
+            'unidad' => $nombre_unidad,
+            'beneficiario' => $nombre_beneficiario,
+            'total_bs' => $total_bs
+            ]; 
+
+        $pdf = PDF::setPaper('letter', 'landscape')->loadView('compromiso.reportepdf', ['datos'=>$datos, 'compromisos'=>$compromisos]);
+        return $pdf->stream();
+        
+         
     }
 
 }

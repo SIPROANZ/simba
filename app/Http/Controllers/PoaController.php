@@ -11,11 +11,15 @@ use App\Objetivosestrategico;
 use App\Objetivogenerale;
 use App\Objetivomunicipale;
 use App\Objetivopei;
+use App\Configuracione;
+use App\Models\User;
 use App\Unidadadministrativa;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use PDF;
+
+
 
 /**
  * Class PoaController
@@ -23,6 +27,11 @@ use PDF;
  */
 class PoaController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:admin.poa')->only('index', 'edit', 'update', 'create', 'store');
+        
+    }
     /**
      * Display a listing of the resource.
      *
@@ -30,18 +39,35 @@ class PoaController extends Controller
      */
     public function index()
     {
+
+       // LAS BUSQUEDAS ESTAN SOLAMENTE PARA EL ID POA EJERCIO, TANTO LA PRIMERA BUSQUEDA,
+       // CASO QUE NO HAGA EL WHEN, O PARA CUANDO BUSCA POR PROYECTO, EN LOS OTROS CASO
+       // POR UNIDAD ADMINISTRATIVA O POR USUARIO.
        // $poas = Poa::paginate();
+       
+       //Obtener el id del ejercio para el POA que quiero mostrar
+       $rs_poa = Configuracione::where('nombre', 'poa_ejercicio')->first();
+       $poa_id = 1;
+       if($rs_poa){
+        $poa_id = $rs_poa->valor;
+       }
 
         $poas = Poa::query()
-        ->when(request('search'), function($query){
-            return $query->where ('proyecto', 'like', '%'.request('search').'%')
-                         ->orWhere('objetivoproyecto', 'like', '%'.request('search').'%')
+        ->when(request('search'), function($query) use ($poa_id) {
+            return $query->where('ejercicio_id', $poa_id)
+                        ->where ('proyecto', 'like', '%'.request('search').'%')
+                         //->orWhere('objetivoproyecto', 'like', '%'.request('search').'%')
                          ->orWhereHas('unidadadministrativa', function($q){
                           $q->where('unidadejecutora', 'like', '%'.request('search').'%');
                           })
                            ->orWhereHas('usuario', function($qa){
                              $qa->where('name', 'like', '%'.request('search').'%');
                          });
+         },
+         function ($query) use ($poa_id) {
+             $query->where('id', '>', 0)
+             ->where('ejercicio_id', $poa_id)
+             ->orderBy('id', 'DESC');
          })
         ->paginate(25)
         ->withQueryString();
@@ -163,5 +189,77 @@ class PoaController extends Controller
 
         return redirect()->route('poas.index')
             ->with('success', 'Plan operativo anual eliminado exitosamente.');
+    }
+
+    public function reportes()
+    {
+       $unidades = Unidadadministrativa::select(
+            DB::raw("CONCAT(sector,'.',programa,'.',subprograma,'.',proyecto,'.',actividad,' ',unidadejecutora) AS name"),'id')
+            ->orderBy('name','ASC')
+            ->pluck('name', 'id'); 
+       
+
+        $usuarios = User::orderBy('name', 'ASC')->pluck('name' , 'id'); 
+
+        $ejercicios = Ejercicio::pluck('nombreejercicio','id');
+        
+        $instituciones = Institucione::pluck('institucion', 'id');
+
+        return view('poa.reportes', compact('usuarios','unidades', 'ejercicios', 'instituciones'));   
+    }
+
+    public function reporte_pdf(Request $request)
+    {
+      
+        $unidadAdministrativa = $request->unidadadministrativa_id;
+
+        $institucion = $request->institucion_id;
+        $ejercicio = $request->ejercicio_id;
+        
+        $usuario = $request->usuario_id;
+        $inicio = $request->fecha_inicio;
+        $fin = $request->fecha_fin;
+        
+        $nombre_usuario = '';
+        $rs_usuario = User::find($usuario);
+        if($rs_usuario){
+            $nombre_usuario = $rs_usuario->name;
+        }
+
+        $nombre_unidad = '';
+        $rs_unidad= Unidadadministrativa::find($unidadAdministrativa);
+        if($rs_unidad){
+            $nombre_unidad = $rs_unidad->unidadejecutora;
+        }
+
+        $nombre_ejercicio = '';
+        $rs_ejercicio = Ejercicio::find($ejercicio);
+        if($rs_ejercicio){
+            $nombre_ejercicio = $rs_ejercicio->ejercicioejecucion;
+        }
+
+        $nombre_institucion = '';
+        $rs_institucion = Institucione::find($institucion);
+        if($rs_institucion){
+            $nombre_institucion = $rs_institucion->institucion;
+        }
+
+        //
+        $poas = Poa::institucion($institucion)->ejercicio($ejercicio)->unidad($unidadAdministrativa)->usuarios($usuario)->fechaInicio($inicio)->fechaFin($fin)->get();
+        $total_poa = count($poas);
+        $total_monto_proyecto = $poas->sum('montoproyecto');
+        $datos = [
+            'total_poa' => $total_poa,
+            'monto_proyecto' => $total_monto_proyecto,
+            'usuario' =>$nombre_usuario,  
+            'unidad' => $nombre_unidad,
+            'ejercicio' => $nombre_ejercicio,
+            'institucion' => $nombre_institucion,
+            'inicio' => $inicio,
+            'fin' => $fin,  
+            ]; 
+
+        $pdf = PDF::setPaper('letter', 'landscape')->loadView('poa.reportepdf', ['datos'=>$datos, 'poas'=>$poas]);
+        return $pdf->stream();
     }
 }

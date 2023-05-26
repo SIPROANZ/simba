@@ -34,9 +34,7 @@ class Pagado extends Model
 		'ordenpago_id' => 'required',
 		'beneficiario_id' => 'required',
         'tipomovimiento_id' => 'required',
-		'montopagado' => 'required',
 		'status' => 'required',
-        'correlativo' => 'required',
 		'tipoordenpago' => 'required',
        
     ];
@@ -48,7 +46,7 @@ class Pagado extends Model
      *
      * @var array
      */
-    protected $fillable = ['ordenpago_id','beneficiario_id', 'tipomovimiento_id','montopagado','montoordenpago','fechaanulacion','status','tipoordenpago' ,'correlativo','usuario_id'];
+    protected $fillable = ['ordenpago_id','beneficiario_id', 'tipomovimiento_id','montopagado','montoordenpago','fechaanulacion','status','tipoordenpago' ,'correlativo','usuario_id', 'created_at'];
 
 
     /**
@@ -94,6 +92,36 @@ class Pagado extends Model
     public function usuario()
     {
         return $this->hasOne('App\Models\User', 'id', 'usuario_id');
+    }
+
+    public function scopeBeneficiarios($query, $beneficiario) {
+    	if ($beneficiario) {
+    		return $query->where('beneficiario_id','like',"$beneficiario");
+    	}
+    }
+
+    public function scopeEstatus($query, $estatus) {
+    	if ($estatus) {
+    		return $query->where('status','like',"$estatus");
+    	}
+    }
+
+    public function scopeUsuarios($query, $usuario) {
+    	if ($usuario) {
+    		return $query->where('usuario_id','like',"$usuario");
+    	}
+    }
+
+    public function scopeFechaInicio($query, $inicio) {
+    	if ($inicio) {
+    		return $query->where('created_at','>=',"$inicio");
+    	}
+    }
+
+    public function scopeFechaFin($query, $fin) {
+    	if ($fin) {
+    		return $query->where('created_at','<=',"$fin");
+    	}
     }
     
 

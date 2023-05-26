@@ -8,9 +8,12 @@ use App\Compromiso;
 use App\Detallescompromiso;
 use App\Detallesajuste;
 use App\Ejecucione;
+use PDF;
 //use App\Http\Controllers\Auth;
 
 use Illuminate\Http\Request;
+use App\Models\User;
+use Carbon\Carbon;
 
 /**
  * Class AjustescompromisoController
@@ -18,6 +21,11 @@ use Illuminate\Http\Request;
  */
 class AjustescompromisoController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:admin.ajustecompromiso')->only('index', 'edit', 'update', 'pdf', 'create', 'store', 'indexanuladas', 'indexprocesadas');
+        
+    }
     /**
      * Display a listing of the resource.
      *
@@ -331,10 +339,21 @@ class AjustescompromisoController extends Controller
         //Obtener los datos de la tabla ajustescompromisos
         $ajustescompromiso = Ajustescompromiso::find($id);
 
+        
+
         //Obtener los datos del ajuste del compromiso
         $detallesajustes = Detallesajuste::where('ajustes_id', $ajustescompromiso->id)->get();
 
-        //Consultar que tipo de ajuste es, si es 1 q es aumento, consultar primero disponibilidad
+
+
+        //Antes de continuar validar que el monto del ajuste sea igual al monto del detalle ajuste
+        //En caso contrario generar un error
+        $to_ajuste =  $ajustescompromiso->montoajuste;
+        $to_det_ajuste = $detallesajustes->sum('montoajuste');
+
+        if(bccomp($to_ajuste, $to_det_ajuste, 2)==0)
+        { 
+            //Consultar que tipo de ajuste es, si es 1 q es aumento, consultar primero disponibilidad
         //Si es 2 que es disminucion proceder a hacer el ajuste.
         if($ajustescompromiso->tipo==1){
             //Chequeo si hay disponibilidad en las partidas
@@ -406,14 +425,20 @@ class AjustescompromisoController extends Controller
 
 
 
-
-
         if($aprobado == 1){
             return redirect()->route('ajustescompromisos.index')
             ->with('success', 'Compromiso Aprobado Exitosamente. ');
         }else{
             return redirect()->route('ajustescompromisos.index')
             ->with('success', 'No Aprobado. No hay Disponibilidad o ha ocurrido un error en el registro');
+        }
+
+
+        }
+        else{
+            return redirect()->route('ajustescompromisos.index')
+            ->with('success', 'No Aprobado. El monto del Ajuste no coincide con el detalle del ajuste del compromiso');
+        
         }
 
     }
@@ -503,5 +528,106 @@ class AjustescompromisoController extends Controller
             ->with('success', 'No Aprobado. No hay Disponibilidad o ha ocurrido un error en el registro');
         }
 
+    }
+
+    public function pdf($id)
+    {
+        
+        $ajustescompromiso = Ajustescompromiso::find($id);
+
+        $detallesajustes = Detallesajuste::where('ajustes_id', $id)->get();
+
+        $total = $detallesajustes->sum('montoajuste');
+
+        $pdf = PDF::loadView('ajustescompromiso.pdf', ['total'=>$total, 'ajustescompromiso'=>$ajustescompromiso,'detallesajustes'=>$detallesajustes]);
+        $pdf->setPaper('letter', 'portrait');
+         return $pdf->stream();
+
+        
+    }
+
+    public function reportes()
+    {
+       
+        $usuarios = User::orderBy('name', 'ASC')->pluck('name' , 'id'); 
+
+        $fecha_actual = Carbon::now();
+      
+
+        return view('ajustescompromiso.reportes', compact('fecha_actual','usuarios'));
+
+            
+    }
+
+    public function reporte_pdf(Request $request)
+    {
+      
+        $tipos = $request->tipo;
+        $nombre_tipo = '';
+        if($tipos == 1)
+        {
+            $nombre_tipo = 'AUMENTAR';
+        }elseif($tipos == 2){
+            $nombre_tipo = 'DISMINUIR';
+        }
+
+        $estatus = $request->status;
+        $nombre_estatus = '';
+        if($estatus == 'EP')
+        {
+            $nombre_estatus = 'EN PROCESO';
+        }elseif($estatus == 'AP'){
+            $nombre_estatus = 'APROBADO';
+        }elseif($estatus == 'PR'){
+            $nombre_estatus = 'PROCESADO';
+        }elseif($estatus == 'AN'){
+            $nombre_estatus = 'ANULADO';
+        }
+        $usuario = $request->usuario_id;
+        $inicio = $request->fecha_inicio;
+        $fin = $request->fecha_fin;
+        
+        $nombre_usuario = '';
+        $rs_usuario = User::find($usuario);
+        if($rs_usuario){
+            $nombre_usuario = $rs_usuario->name;
+        }
+
+       
+
+        
+
+
+        //
+        
+        $ajustescompromisos = Ajustescompromiso::tipos($tipos)->estatus($estatus)->usuarios($usuario)->fechaInicio($inicio)->fechaFin($fin)->get();
+        $montoajuste = $ajustescompromisos->sum('montoajuste');
+        $aprobadas = Ajustescompromiso::where('status', 'AP')->tipos($tipos)->estatus($estatus)->usuarios($usuario)->fechaInicio($inicio)->fechaFin($fin)->count();
+        $procesadas = Ajustescompromiso::where('status', 'PR')->tipos($tipos)->estatus($estatus)->usuarios($usuario)->fechaInicio($inicio)->fechaFin($fin)->count();
+        $enproceso = Ajustescompromiso::where('status', 'EP')->tipos($tipos)->estatus($estatus)->usuarios($usuario)->fechaInicio($inicio)->fechaFin($fin)->count();
+        $anuladas = Ajustescompromiso::where('status', 'AN')->tipos($tipos)->estatus($estatus)->usuarios($usuario)->fechaInicio($inicio)->fechaFin($fin)->count();
+        $total = Ajustescompromiso::tipos($tipos)->estatus($estatus)->usuarios($usuario)->fechaInicio($inicio)->fechaFin($fin)->count();
+       
+        $datos = [
+            
+            'aprobadas' => $aprobadas,
+            'procesadas' => $procesadas,
+            'enproceso' => $enproceso,
+            'anuladas' => $anuladas,
+            'total' => $total, 
+            
+            'inicio' => $inicio,
+            'fin' => $fin,  
+            'usuario' =>$nombre_usuario,  
+            'estatus' =>$nombre_estatus,
+            'tipo' => $nombre_tipo,
+            'montoajuste' => $montoajuste,
+              
+            ]; 
+
+        $pdf = PDF::setPaper('letter', 'landscape')->loadView('ajustescompromiso.reportepdf', ['datos'=>$datos, 'ajustescompromisos'=>$ajustescompromisos]);
+        return $pdf->stream();
+        
+         
     }
 }

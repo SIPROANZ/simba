@@ -17,6 +17,7 @@ use App\Ejecucione;
 use App\Ordenpago;
 use App\Requisicione;
 use App\Factura;
+use App\Beneficiario;
 use PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
@@ -24,12 +25,21 @@ use Illuminate\Support\Facades\DB;
 use NumeroALetras\NumeroALetras;
 use Carbon\Carbon;
 
+
+use App\Models\User;
+
 /**
  * Class OrdenpagoController
  * @package App\Http\Controllers
  */
 class OrdenpagoController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('can:admin.causados')->only('index', 'edit', 'update', 'pdf', 'create', 'store', 'indexanuladas', 'indexprocesadas', 'indexaprobadas', 'indexcompromisos');
+        
+    }
     /**
      * Display a listing of the resource.
      *
@@ -62,10 +72,63 @@ class OrdenpagoController extends Controller
             ->with('i', (request()->input('page', 1) - 1) * $ordenpagos->perPage());
     }
 
+    public function indexconimputacion(){
+        // $ordenpagos = Ordenpago::where('status', 'EP')->paginate();
+
+        $ordenpagos = Ordenpago::query()
+       ->when(request('search'), function($query){
+           return $query->where ('nordenpago', 'like', '%'.request('search').'%')
+                        ->where('tipoorden', 'like', '1')
+                        ->orWhereHas('compromiso', function($q){
+                         $q->where('ncompromiso', 'like', '%'.request('search').'%');
+                         })->where('tipoorden', 'like', '1')
+                          ->orWhereHas('beneficiario', function($qa){
+                            $qa->where('nombre', 'like', '%'.request('search').'%');
+                        })
+                        ->where('tipoorden', 'like', '1');
+        },
+        function ($query) {
+            $query->where('tipoorden', 'like', '1')
+            ->orderBy('nordenpago', 'DESC');
+        })
+       ->paginate(25)
+       ->withQueryString();
+
+        return view('ordenpago.conimputacion', compact('ordenpagos'))
+            ->with('i', (request()->input('page', 1) - 1) * $ordenpagos->perPage());
+    }
+
+    public function indexfinancieras()
+    {
+       // $ordenpagos = Ordenpago::where('status', 'EP')->paginate();
+
+        $ordenpagos = Ordenpago::query()
+       ->when(request('search'), function($query){
+           return $query->where ('nordenpago', 'like', '%'.request('search').'%')
+                        ->where('tipoorden', 'like', '2')
+                        ->orWhereHas('compromiso', function($q){
+                         $q->where('ncompromiso', 'like', '%'.request('search').'%');
+                         })->where('tipoorden', 'like', '2')
+                          ->orWhereHas('beneficiario', function($qa){
+                            $qa->where('nombre', 'like', '%'.request('search').'%');
+                        })
+                        ->where('tipoorden', 'like', '2');
+        },
+        function ($query) {
+            $query->where('tipoorden', 'like', '2')
+            ->orderBy('nordenpago', 'DESC');
+        })
+       ->paginate(25)
+       ->withQueryString();
+
+        return view('ordenpago.financieras', compact('ordenpagos'))
+            ->with('i', (request()->input('page', 1) - 1) * $ordenpagos->perPage());
+    }
+
     public function indexcompromisos()
     {
        // $compras = Compra::paginate();
-        $compromisos = Compromiso::where('status', 'PR')->paginate();
+        $compromisos = Compromiso::where('status', 'PR')->orderBy('id', 'DESC')->paginate();
 
 
         return view('ordenpago.compromisos', compact('compromisos'))
@@ -83,6 +146,48 @@ class OrdenpagoController extends Controller
         return view('ordenpago.create', compact('ordenpago'));
     }
 
+    public function crearfinanciera()
+    {
+        $ordenpago = new Ordenpago();
+        $beneficiarios = Beneficiario::select(
+            DB::raw("CONCAT(nombre,' - ',rif) AS name"),'id')
+            ->orderBy('name', 'ASC')
+            ->pluck('name', 'id');
+        return view('ordenpago.crear', compact('ordenpago', 'beneficiarios'));
+    }
+
+    public function storefinanciera(Request $request)
+    {
+        request()->validate(Ordenpago::$rules);
+         //Agregar el id del usuario
+         $id_usuario = $request->user()->id;
+         $request->merge(['usuario_id'=>$id_usuario]);
+
+       // $max_correlativo = DB::table('ordenpagos')->max('nordenpago');
+       // $numero_correlativo = $max_correlativo + 1;
+       // $request->merge(['nordenpago'=>$numero_correlativo]);
+
+        //Validar que el numero de orden de pago ya no este registrado en el sistema
+        $validar_numero_orden = Ordenpago::where('nordenpago', $request->nordenpago)->exists();
+
+        if($validar_numero_orden!=true){
+
+        $request->merge(['status'=>'PR']);
+        $request->merge(['compromiso_id'=>0]);
+
+
+        $nordenpago = Ordenpago::create($request->all());
+        
+
+        return redirect()->route('ordenpagos.financieras')
+            ->with('success', 'Orden Financiera creada exitosamente.');
+
+        } else {
+            return redirect()->route('ordenpagos.financieras')
+            ->with('success', 'Error, el numero de orden de pago que intenta registrar, ya se encuentra incluido en el sistema.');
+
+        }
+    }
     /**
      * Store a newly created resource in storage.
      *
@@ -569,9 +674,9 @@ class OrdenpagoController extends Controller
         $aprobado = 1;
 
         $ordenpago = Ordenpago::find($id);
-       // $ordenpago->status = 'PR';
-      //  $ordenpago->save();
-        //Obtener la compra y tambien actualizar su estado
+       //  $ordenpago->status = 'PR';
+       //  $ordenpago->save();
+       //  Obtener la compra y tambien actualizar su estado
         $compromiso = Compromiso::find($ordenpago->compromiso_id);
         $compromiso->status = 'AP';
         $compromiso->save();
@@ -714,8 +819,19 @@ class OrdenpagoController extends Controller
      * @throws \Exception
      */
     public function anular($id)
-    {
+    { 
+        $ordenpago = Ordenpago::find($id);
+        $fecha = Carbon::now();
+        $ordenpago->fechaanulacion = $fecha;
+        $ordenpago->status = 'AN';
+        $ordenpago->save();
 
+        return redirect()->route('ordenpagos.index')
+            ->with('success', 'Orden de Pago Anulada exitosamente.');
+    }
+
+    public function anular_old($id)
+    {
         $ordenpago = Ordenpago::find($id);
         $fecha = Carbon::now();
         $ordenpago->fechaanulacion = $fecha;
@@ -755,7 +871,8 @@ class OrdenpagoController extends Controller
         $ordenpago = Ordenpago::find($id);
         
         //Obtener la compra y tambien actualizar su estado
-       $compromiso = Compromiso::find($ordenpago->compromiso_id);
+        $compromiso = Compromiso::find($ordenpago->compromiso_id);
+
        
        // Obtener el detalle de compromiso para aplicar en la ejecucion
        // $detallescompromiso = Detallescompromiso::where('compromiso_id','=',$compromiso->id)->get();
@@ -777,7 +894,13 @@ class OrdenpagoController extends Controller
             //Hacer el if
             // if($rows->montocompromiso <= $ejecucion->monto_por_causar){
                 $ejecucion->decrement('monto_causado', $rows->monto);
-                $ejecucion->increment('monto_por_causar', $rows->monto);
+                /** Aqui es donde esta el detalle, para que no cause y deje un monto alli que no corresponde
+                 * al ajuste del compromiso.
+                 */
+                $rs_det_compromiso = Detallescompromiso::where('compromiso_id', $compromiso->id)->where('ejecucion_id', $rows->ejecucion_id)->first();
+                $to_monto = $rs_det_compromiso->montocompromiso;
+
+                $ejecucion->increment('monto_por_causar', $to_monto);
                 $ejecucion->decrement('monto_por_pagar', $rows->monto);
                 //$ejecucion->save();
 /*             }else{
@@ -849,5 +972,91 @@ class OrdenpagoController extends Controller
             ->with('success', 'No Reversada.');
         }
 
+    }
+
+    public function reportes()
+    {
+    
+        $usuarios = User::orderBy('name', 'ASC')->pluck('name' , 'id'); 
+
+        $fecha_actual = Carbon::now();
+      
+
+        return view('ordenpago.reportes', compact('fecha_actual','usuarios'));
+
+            
+    }
+
+    public function reporte_pdf(Request $request)
+    {
+        //Buscar por institucion
+        $rif = $request->rif;
+
+        //Obtener Beneficiario
+        $beneficiario_id = false;
+        $nombre_beneficiario = '';
+        $rs_beneficiario = Beneficiario::where('rif', $rif)->first();
+        if($rs_beneficiario){
+            $beneficiario_id = $rs_beneficiario->id;
+            $nombre_beneficiario = $rs_beneficiario->nombre;
+        }
+        
+        $estatus = $request->status;
+        $nombre_estatus = '';
+        if($estatus == 'EP')
+        {
+            $nombre_estatus = 'EN PROCESO';
+        }elseif($estatus == 'AP'){
+            $nombre_estatus = 'APROBADO';
+        }elseif($estatus == 'PR'){
+            $nombre_estatus = 'PROCESADO';
+        }elseif($estatus == 'AN'){
+            $nombre_estatus = 'ANULADO';
+        }
+        $usuario = $request->usuario_id;
+        $inicio = $request->fecha_inicio;
+        $fin = $request->fecha_fin;
+        
+        $nombre_usuario = '';
+        $rs_usuario = User::find($usuario);
+        if($rs_usuario){
+            $nombre_usuario = $rs_usuario->name;
+        }
+
+        $ordenpagos = Ordenpago::beneficiarios($beneficiario_id)->estatus($estatus)->usuarios($usuario)->fechaInicio($inicio)->fechaFin($fin)->get();
+        $base = $ordenpagos->sum('montobase');
+        $retencion = $ordenpagos->sum('montoretencion');
+        $iva = $ordenpagos->sum('montoiva');
+        $neto = $ordenpagos->sum('montoneto');
+        $aprobadas = Ordenpago::where('status', 'AP')->beneficiarios($beneficiario_id)->estatus($estatus)->usuarios($usuario)->fechaInicio($inicio)->fechaFin($fin)->count();
+        $procesadas = Ordenpago::where('status', 'PR')->beneficiarios($beneficiario_id)->estatus($estatus)->usuarios($usuario)->fechaInicio($inicio)->fechaFin($fin)->count();
+        $enproceso = Ordenpago::where('status', 'EP')->beneficiarios($beneficiario_id)->estatus($estatus)->usuarios($usuario)->fechaInicio($inicio)->fechaFin($fin)->count();
+        $anuladas = Ordenpago::where('status', 'AN')->beneficiarios($beneficiario_id)->estatus($estatus)->usuarios($usuario)->fechaInicio($inicio)->fechaFin($fin)->count();
+        $total = Ordenpago::beneficiarios($beneficiario_id)->estatus($estatus)->usuarios($usuario)->fechaInicio($inicio)->fechaFin($fin)->count();
+       
+        $datos = [
+            
+            'aprobadas' => $aprobadas,
+            'procesadas' => $procesadas,
+            'enproceso' => $enproceso,
+            'anuladas' => $anuladas,
+            'total' => $total, 
+            
+            
+            'inicio' => $inicio,
+            'fin' => $fin,  
+            'usuario' =>$nombre_usuario,  
+            'estatus' =>$nombre_estatus,  
+            'beneficiario' => $nombre_beneficiario,
+            'base' => $base,
+            'retencion' => $retencion,
+            'iva' => $iva,
+            'neto' => $neto
+            ]; 
+
+        $pdf = PDF::setPaper('letter', 'landscape')->loadView('ordenpago.reportepdf', ['datos'=>$datos, 'ordenpagos'=>$ordenpagos]);
+        return $pdf->stream();
+        
+         
     }
 }

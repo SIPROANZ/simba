@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Objetivoshistorico;
 use Illuminate\Http\Request;
+use PDF;
 
 /**
  * Class ObjetivoshistoricoController
@@ -11,6 +12,11 @@ use Illuminate\Http\Request;
  */
 class ObjetivoshistoricoController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:admin.poa')->only('index', 'edit', 'update', 'create', 'store');
+        
+    }
     /**
      * Display a listing of the resource.
      *
@@ -18,7 +24,14 @@ class ObjetivoshistoricoController extends Controller
      */
     public function index()
     {
-        $objetivoshistoricos = Objetivoshistorico::paginate();
+        //$objetivoshistoricos = Objetivoshistorico::paginate();
+
+        $objetivoshistoricos = Objetivoshistorico::query()
+        ->when(request('search'), function($query) {
+            return $query->where ('objetivo', 'like', '%'.request('search').'%');
+         })
+        ->paginate(25)
+        ->withQueryString();
 
         return view('objetivoshistorico.index', compact('objetivoshistoricos'))
             ->with('i', (request()->input('page', 1) - 1) * $objetivoshistoricos->perPage());
@@ -105,5 +118,32 @@ class ObjetivoshistoricoController extends Controller
 
         return redirect()->route('objetivoshistoricos.index')
             ->with('success', 'Objetivoshistorico deleted successfully');
+    }
+
+    public function reportes()
+    {
+        return view('objetivoshistorico.reportes');   
+    }
+
+    public function reporte_pdf(Request $request)
+    {
+      
+        $objetivo = $request->objetivo;
+        $inicio = $request->fecha_inicio;
+        $fin = $request->fecha_fin;
+        
+        //
+        $objetivoshistoricos = Objetivoshistorico::objetivos($objetivo)->fechaInicio($inicio)->fechaFin($fin)->get();
+        $total_objetivo = count($objetivoshistoricos);
+       
+        $datos = [
+            'total_objetivo' => $total_objetivo,
+            'objetivo' => $objetivo,
+            'inicio' => $inicio,
+            'fin' => $fin,  
+            ]; 
+
+        $pdf = PDF::setPaper('letter', 'landscape')->loadView('objetivoshistorico.reportepdf', ['datos'=>$datos, 'objetivoshistoricos'=>$objetivoshistoricos]);
+        return $pdf->stream();
     }
 }

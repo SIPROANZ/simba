@@ -40,7 +40,7 @@
 
                         <div class="col-md-3">
                         <div class="form-group">
-                            <strong>Unidadadministrativa:</strong>
+                            <strong>Unidad administrativa:</strong>
                             {{ $ejecucione->unidadadministrativa->unidadejecutora }}
                         </div>
                         </div>
@@ -180,7 +180,7 @@
 
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-striped table-hover">
+                                  <table class="table table-hover  small table-bordered table-striped">
                                 <thead class="thead">
                                     <tr>
                                         <th>No</th>
@@ -246,7 +246,7 @@
 
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-striped table-hover">
+                                  <table class="table table-hover  small table-bordered table-striped">
                                 <thead class="thead">
                                     <tr>
                                         <th>No</th>
@@ -307,7 +307,7 @@
 
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-striped table-hover">
+                                  <table class="table table-hover  small table-bordered table-striped">
                                 <thead class="thead">
                                     <tr>
                                         <th>No</th>
@@ -371,7 +371,7 @@
 
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-striped table-hover">
+                                  <table class="table table-hover  small table-bordered table-striped">
                                 <thead class="thead">
                                     <tr>
                                         <th>No</th>

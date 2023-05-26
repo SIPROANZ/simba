@@ -11,6 +11,11 @@ use Illuminate\Http\Request;
  */
 class DetallepagadoController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:admin.pagados')->only('index', 'edit', 'update', 'create', 'store');
+        
+    }
     /**
      * Display a listing of the resource.
      *

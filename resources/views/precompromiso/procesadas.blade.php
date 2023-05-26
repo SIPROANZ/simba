@@ -15,23 +15,23 @@
                         <div style="display: flex; justify-content: space-between; align-items: center;">
 
                             <span id="card_title">
-                                {{ __('Precompromisos Procesados') }}
+                                {{ __('') }}
                             </span>
 
                              <div class="float-right">
-                                <a href="{{ route('precompromisos.create') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
+                                <a href="{{ route('precompromisos.create') }}" class="btn btn-outline-dark btn-sm float-right"  data-placement="left">
                                   {{ __('Crear Nuevo Precompromiso') }}
                                 </a>
-                                <a href="{{ route('precompromisos.aprobadas') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
+                                <a href="{{ route('precompromisos.aprobadas') }}" class="btn btn-outline-dark btn-sm float-right"  data-placement="left">
                                   {{ __('Aprobadas') }}
                                 </a>
-                                <a href="{{ route('precompromisos.index') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
+                                <a href="{{ route('precompromisos.index') }}" class="btn btn-outline-dark btn-sm float-right"  data-placement="left">
                                   {{ __('En Proceso') }}
                                 </a>
-                                <a href="{{ route('precompromisos.procesadas') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
+                                <a href="{{ route('precompromisos.procesadas') }}" class="btn btn-outline-dark btn-sm float-right"  data-placement="left">
                                   {{ __('Procesadas') }}
                                 </a>
-                                <a href="{{ route('precompromisos.anuladas') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
+                                <a href="{{ route('precompromisos.anuladas') }}" class="btn btn-outline-dark btn-sm float-right"  data-placement="left">
                                   {{ __('Anuladas') }}
                                 </a>
                               </div>
@@ -52,7 +52,7 @@
 </form>
 
                         <div class="table-responsive">
-                            <table class="table table-striped table-hover">
+                                  <table class="table table-hover  small table-bordered table-striped">
                                 <thead class="thead">
                                     <tr>
                                         <th>No. Precompromiso</th>
@@ -79,7 +79,7 @@
 											<td>{{ $precompromiso->documento }}</td>
 											<td>{{ number_format($precompromiso->montototal,2,',','.') }}</td>
 											
-											<td>{{ $precompromiso->concepto }}</td>
+											<td>{!! substr($precompromiso->concepto,0,120) !!}</td>
 											<td>{{ $precompromiso->unidadadministrativa->unidadejecutora }}</td>
 											<td>{{ $precompromiso->tipodecompromiso->nombre}}</td>
 											<td>{{ $precompromiso->beneficiario->nombre }}</td>
@@ -96,14 +96,17 @@
                                                 <td>{{ $precompromiso->usuario->name }}</td>
 
                                             <td>
-                                            <br>  
-                                            <form action="{{ route('precompromisos.modificar',$precompromiso->id) }}" method="POST">
-                                            <a class="btn btn-sm btn-primary " href="{{ route('precompromisos.pdf',$precompromiso->id) }}" data-toggle="tooltip" data-placement="top" title="Imprimir Precompromiso"><i class="fas fa-print"></i> Imprimir</a>
+                                            <br> 
+                                            <a class="btn btn-sm btn-block btn btn-outline-dark btn-block" href="{{ route('precompromisos.pdf',$precompromiso->id) }}" data-toggle="tooltip" data-placement="top" title="Imprimir Precompromiso"><i class="fas fa-print"></i> Imprimir</a>
+                                            
+                                            @can('admin.reversar')
+                                            <form action="{{ route('precompromisos.modificar',$precompromiso->id) }}" method="POST" class="submit-prevent-form">
                                             
                                                     @csrf
                                                     @method('PATCH')
-                                                    <button type="submit" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="top" title="Reversa el precompromiso, afectando la ejecucion presupuestaria, es decir, descuenta el precompromiso de la ejecucion"><i class="fa fa-fw fa-check"></i> Modificar</button>
+                                                    <button type="submit" class="btn btn-sm btn-block btn btn-outline-success btn-block" data-toggle="tooltip" data-placement="top" title="Reversa el precompromiso, afectando la ejecucion presupuestaria, es decir, descuenta el precompromiso de la ejecucion"><i class="fa fa-fw fa-check"></i> Modificar</button>
                                                 </form>
+                                                @endcan
                                             
                                             </td>
                                         </tr>
@@ -121,6 +124,15 @@
     </div>
     @stop
 
-@section('css')
-    <link rel="stylesheet" href="/css/admin_custom.css">
-@stop
+ @section('css')
+    
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="{{ asset('css/submit.css') }}">
+        
+    @stop
+    
+    @section('js')
+    <script src="{{ asset('js/submit.js') }}"></script>
+    
+    
+    @stop

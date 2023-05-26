@@ -1,115 +1,15 @@
 @extends('adminlte::page')
 
 @section('template_title')
-    Ejecucione
+    Ejecuciones
 @endsection
 
 @section('content')
 <!-- Cajas estadisticas de la ejecucion presupuestaria -->
 <!-- Total Presupuestario -->
+
+
 <br>
-<div class="container-fluid">
-        <div class="row">
-        <div class="col-sm-4">
-<div class="info-box">
-  <span class="info-box-icon bg-info"><i class="far fa-bookmark"></i></span>
-  <div class="info-box-content">
-    <span class="info-box-text">Total Inicial</span>
-    <span class="info-box-number">{{ $datos['total_presupuestario'] }}</span>
-    <div class="progress">
-      <div class="progress-bar bg-info" style="width: 100%"></div>
-    </div>
-    <span class="progress-description">
-    </span>
-  </div>
-  </div>
-  </div>
-
-  <div class="col-sm-4">
-<div class="info-box">
-  <span class="info-box-icon bg-info"><i class="far fa-bookmark"></i></span>
-  <div class="info-box-content">
-    <span class="info-box-text">Total Modificado</span>
-    <span class="info-box-number">{{ $datos['total_modificacion'] }}</span>
-    <div class="progress">
-      <div class="progress-bar bg-info" style="width: 100%"></div>
-    </div>
-    <span class="progress-description">
-    </span>
-  </div>
-  </div>
-  </div>
-
-  <div class="col-sm-4">
-<div class="info-box">
-  <span class="info-box-icon bg-info"><i class="far fa-bookmark"></i></span>
-  <div class="info-box-content">
-    <span class="info-box-text">Total Ajustado</span>
-    <span class="info-box-number">{{ $datos['total_ajustado'] }}</span>
-    <div class="progress">
-      <div class="progress-bar bg-info" style="width: 100%"></div>
-    </div>
-    <span class="progress-description">
-    </span>
-  </div>
-  </div>
-  </div>
-
-
-</div>
-</div>
-
-<div class="row">
-            <div class="col-sm-4">
-            <div class="info-box bg-success">
-  <span class="info-box-icon"><i class="far fa-thumbs-up"></i></span>
-  <div class="info-box-content">
-    <span class="info-box-text">Comprometido</span>
-    <span class="info-box-number">{{ $datos['total_comprometido'] }}</span>
-    <div class="progress">
-      <div class="progress-bar" style="width: {{$datos['tpcomprometido']}}%"></div>
-    </div>
-    <span class="progress-description">
-    Representa el {{ $datos['porc_comprometido'] }}% Comprometido
-    </span>
-  </div>
-</div>
-            </div>  
-
-            <div class="col-sm-4">
-            <div class="info-box bg-gradient-warning">
-  <span class="info-box-icon"><i class="far fa-calendar-alt"></i></span>
-  <div class="info-box-content">
-    <span class="info-box-text">Causado</span>
-    <span class="info-box-number">{{ $datos['total_causado'] }}</span>
-    <div class="progress">
-      <div class="progress-bar" style="width: {{$datos['tpcausado']}}%"></div>
-    </div>
-    <span class="progress-description">
-    Representa el {{ $datos['porc_causado'] }}% Causado
-    </span>
-  </div>
-</div>
-            </div>  
-
-            <div class="col-sm-4">
-            <div class="info-box bg-gradient-info">
-  <span class="info-box-icon"><i class="far fa-caret-square-right"></i></span>
-  <div class="info-box-content">
-    <span class="info-box-text">Pagado</span>
-    <span class="info-box-number">{{ $datos['total_pagado'] }}</span>
-    <div class="progress">
-      <div class="progress-bar" style="width: {{$datos['tppagado']}}%"></div>
-    </div>
-    <span class="progress-description">
-    Representa el {{ $datos['porc_pagado'] }}% Pagado
-    </span>
-  </div>
-</div>
-            </div>  
-</div>
-
-<br><br><br>
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-12">
@@ -123,12 +23,16 @@
 
                              <div class="float-right">
                                  @can('admin.crear')
-                                 <a href="{{ route('ejecuciones.create') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
+                                 <a href="{{ route('ejecuciones.reportes') }}" class="btn btn-outline-dark btn-sm float-right"  data-placement="left">
+                                    {{ __('Reporte') }}
+                                  </a>
+
+                                 <a href="{{ route('ejecuciones.create') }}" class="btn btn-outline-dark btn-sm float-right"  data-placement="left">
                                   {{ __('Crear Nuevo') }}
                                 </a>
                                 @endcan
 
-                                {{--    <a href="{{ route('ejecuciones.pdf') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
+                                {{--    <a href="{{ route('ejecuciones.pdf') }}" class="btn btn-outline-dark btn-sm float-right"  data-placement="left">
                                   {{ __('Exportar') }}
                                 </a>
                                --}}
@@ -151,7 +55,7 @@
 
 
                         <div class="table-responsive">
-                            <table class="table table-hover table-bordered table-striped">
+                            <table class="table table-hover table-bordered table-striped small">
                                 <thead class="thead">
                                     <tr>
                                         <th class="text-center">Nro</th>
@@ -197,10 +101,10 @@
                      
 
                                             <td class="text-center">
-                                            <a class="btn btn-sm btn-primary " href="{{ route('ejecuciones.show',$ejecucione->id) }}"><i class="fa fa-fw fa-eye"></i> Mostrar</a>
+                                            <a class="btn btn-sm btn-block btn btn-outline-dark btn-block" href="{{ route('ejecuciones.show',$ejecucione->id) }}"><i class="fas fa-print"></i> Mostrar</a>
                                               
                                             @can('admin.crear')
-                                            <a class="btn btn-sm btn-success" href="{{ route('ejecuciones.edit',$ejecucione->id) }}"><i class="fa fa-fw fa-edit"></i> Editar</a>
+                                            <a class="btn btn-sm btn-block btn btn-outline-dark btn-block" href="{{ route('ejecuciones.edit',$ejecucione->id) }}"><i class="fa fa-fw fa-edit"></i> Editar</a>
                                              @endcan       
                                             </td>
 

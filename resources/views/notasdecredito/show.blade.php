@@ -83,7 +83,7 @@
                         <div class="col-sm-3">
                         <div class="form-group">
                             <strong>Monto:</strong>
-                            {{ $notasdecredito->monto }}
+                            {{ number_format($notasdecredito->monto,2,',','.') }}
                         </div>
                         </div>
 

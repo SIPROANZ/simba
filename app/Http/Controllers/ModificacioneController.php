@@ -6,6 +6,7 @@ use App\Modificacione;
 use App\Tipomodificacione;
 use App\Detallesmodificacione;
 use App\Ejecucione;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use PDF;
@@ -16,6 +17,11 @@ use PDF;
  */
 class ModificacioneController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:admin.modificacionpresupuestaria')->only('index', 'edit', 'update', 'create', 'store', 'pdf', 'indexprocesadas', 'indexanuladas');
+        
+    }
     /**
      * Display a listing of the resource.
      *
@@ -232,14 +238,63 @@ class ModificacioneController extends Controller
     {
         $modificacion = Modificacione::find($id);
        
-
         $aprobado = 1;
         $procesar = 0;
+        $partida ='';
 
         //Obtener todos los detalles de las modificaciones
         $detallesmodificaciones = Detallesmodificacione::where('modificacion_id', $id)->get();
+
+        //Obtener el monto total de la modificacion y compararlo con la suma del detalle modificacion
+        //hacerlo tanto para el monto que acredita como para el monto debita
+        $total_acredita = 0;
+        $total_debita = 0;
+        $total_detalle_credita = 0;
+        $total_detalle_debita = 0;
+        $total_acredita = $modificacion->montocredita;
+        $total_debita = $modificacion->montodebita;
+        $total_detalle_credita = $detallesmodificaciones->sum('montoacredita');
+        $total_detalle_debita = $detallesmodificaciones->sum('montodebita');
+
+
+        if(bccomp($total_acredita, $total_detalle_credita, 2)!=0){
+            return redirect()->route('modificaciones.index')
+            ->with('success', 'No Aprobado. Ya que el monto a acreditar es diferente al monto colocado por usted cuando creo la modificacion, para intentarlo nuevamente primero entre en agregar detalles y edite para que el monto sea igual al establecido por usted.');
+        }
+        elseif(bccomp($total_debita, $total_detalle_debita, 2)!=0){
+            return redirect()->route('modificaciones.index')
+            ->with('success', 'No Aprobado. Ya que el monto a debitar es diferente al monto colocado por usted cuando creo la modificacion, para intentarlo nuevamente primero entre en agregar detalles y edite para que el monto sea igual al establecido por usted.');
+       
+        }else {
+
+
         if($detallesmodificaciones->count()>0){
 
+            //comprobar la disponibilidad
+            foreach($detallesmodificaciones as $rows){
+                //Validar que si es null agregar cero a esa variable, ese campo puede venir null
+                $montoacredita=0;
+                $montodebita=0;
+               
+                if($rows->montodebita != NULL)
+                {
+                    $montodebita = $rows->montodebita;  
+                }
+    
+                //Afectar las variables que decrementan
+                $ejecucion = Ejecucione::find($rows->ejecucion_id);
+                $disponibilidad = $ejecucion->monto_por_comprometer;
+                if($montodebita < $disponibilidad || bccomp($montodebita, $disponibilidad, 2)==0){
+                  
+                }else{
+                    $partida .= $ejecucion->clasificadorpresupuestario . ' - ';
+                    $aprobado = 2;
+                }
+    
+    
+            }
+
+            if($aprobado == 1){
         //Ciclo para recorrer todos los detalles e ir modificando la ejecucion presupuestaria
         foreach($detallesmodificaciones as $rows){
             //Validar que si es null agregar cero a esa variable, ese campo puede venir null
@@ -254,7 +309,6 @@ class ModificacioneController extends Controller
                 $montodebita = $rows->montodebita;  
             }
 
-
             //Obtener la ejecucion que voy a modificar
             $ejecucion = Ejecucione::find($rows->ejecucion_id);
             //Afectar las variables que se incrementarian
@@ -266,24 +320,32 @@ class ModificacioneController extends Controller
             $ejecucion->increment('monto_disminuye', $montodebita);
             $ejecucion->decrement('monto_actualizado', $montodebita);
             $ejecucion->decrement('monto_por_comprometer', $montodebita);
+            
         }
+    }
 
 
-        $modificacion->status = 'PR'; //colocar al finalizar las pruebas en PR
-        $modificacion->save();
+        
 
         if($aprobado == 1){
+
+            $modificacion->status = 'PR'; //colocar al finalizar las pruebas en PR
+            $modificacion->save();
+
             return redirect()->route('modificaciones.index')
             ->with('success', 'Modificacion Aprobada Exitosamente. ');
         }else{
             return redirect()->route('modificaciones.index')
-            ->with('success', 'No Aprobado. No se ha podido hacer el ajuste');
+            ->with('success', 'No Aprobado. No se ha podido hacer el ajuste, puede ser que no tenga la disponibilidad suficiente en la partida ' . $partida);
         }
 
     }else {
         return redirect()->route('modificaciones.index')
             ->with('success', 'No Aprobado. No tiene ningun detalle agregado a este credito');
     }
+
+        }
+
 
     }
 
@@ -356,7 +418,7 @@ class ModificacioneController extends Controller
             //Obtener la ejecucion que voy a modificar
             $ejecucion = Ejecucione::find($rows->ejecucion_id);
             //Afectar las variables que se incrementarian
-            $ejecucion->derement('monto_aumento', $montoacredita);
+            $ejecucion->decrement('monto_aumento', $montoacredita);
             $ejecucion->decrement('monto_actualizado', $montoacredita);
             $ejecucion->decrement('monto_por_comprometer', $montoacredita);
 
@@ -374,4 +436,88 @@ class ModificacioneController extends Controller
       
 
     }
+
+
+    public function reportes()
+    {
+        $tiposmodificaciones = Tipomodificacione::pluck('nombre' , 'id'); 
+
+        $usuarios = User::pluck('name' , 'id'); 
+      
+        return view('modificacione.reportes', compact('usuarios','tiposmodificaciones'));
+    }
+
+    public function reporte_pdf(Request $request)
+    {
+        //Buscar por institucion
+        $tipo = $request->tipo;
+        $descripcion = $request->descripcion;
+        
+        $nombre_tipo = '';
+        $rs_tipo = Tipomodificacione::find($tipo);
+        if($rs_tipo)
+        {
+            $nombre_tipo = $rs_tipo->nombre;
+        }
+        
+        $estatus = $request->estatus;
+        $nombre_estatus = '';
+        if($estatus == 'EP')
+        {
+            $nombre_estatus = 'EN PROCESO';
+        }elseif($estatus == 'AP'){
+            $nombre_estatus = 'APROBADO';
+        }elseif($estatus == 'PR'){
+            $nombre_estatus = 'PROCESADO';
+        }elseif($estatus == 'AN'){
+            $nombre_estatus = 'ANULADO';
+        }
+        $usuario = $request->usuario_id;
+        $inicio = $request->fecha_inicio;
+        $fin = $request->fecha_fin;
+        
+        $nombre_usuario = '';
+        $rs_usuario = User::find($usuario);
+        if($rs_usuario){
+            $nombre_usuario = $rs_usuario->name;
+        }
+
+
+        //
+        
+        $modificaciones = Modificacione::tipos($tipo)->descripcion($descripcion)->estatus($estatus)->usuarios($usuario)->fechaInicio($inicio)->fechaFin($fin)->get();
+        $aprobadas = Modificacione::where('status', 'AP')->tipos($tipo)->descripcion($descripcion)->estatus($estatus)->usuarios($usuario)->fechaInicio($inicio)->fechaFin($fin)->count();
+        $procesadas = Modificacione::where('status', 'PR')->tipos($tipo)->descripcion($descripcion)->estatus($estatus)->usuarios($usuario)->fechaInicio($inicio)->fechaFin($fin)->count();
+        $enproceso = Modificacione::where('status', 'EP')->tipos($tipo)->descripcion($descripcion)->estatus($estatus)->usuarios($usuario)->fechaInicio($inicio)->fechaFin($fin)->count();
+        $anuladas = Modificacione::where('status', 'AN')->tipos($tipo)->descripcion($descripcion)->estatus($estatus)->usuarios($usuario)->fechaInicio($inicio)->fechaFin($fin)->count();
+        $total = count($modificaciones);
+        $credito = $modificaciones->sum('montocredita');
+        $debito = $modificaciones->sum('montodebita');
+       
+        $datos = [
+           // 'institucion' => $request->institucion_id,
+           'credito' => $credito,
+           'debito' => $debito,
+           'descripcion' => $descripcion,
+           
+           'aprobadas' => $aprobadas,
+            'aprobadas' => $aprobadas,
+            'procesadas' => $procesadas,
+            'enproceso' => $enproceso,
+            'anuladas' => $anuladas,
+            'total' => $total, 
+            
+            'inicio' => $inicio,
+            'fin' => $fin,  
+            'usuario' =>$nombre_usuario,  
+            'estatus' =>$nombre_estatus,  
+            'tipo' => $nombre_tipo,
+           
+            ]; 
+
+        $pdf = PDF::setPaper('letter', 'landscape')->loadView('modificacione.reportepdf', ['datos'=>$datos, 'modificaciones'=>$modificaciones]);
+        return $pdf->stream();
+         
+    }
+
 }

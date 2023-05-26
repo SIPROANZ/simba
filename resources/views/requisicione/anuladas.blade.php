@@ -1,7 +1,7 @@
 @extends('adminlte::page')
 
 
-@section('title', 'Requisiciones anuladas')
+@section('title', 'Requisiciones Anuladas')
 
 @section('content_header')
     <h1>Requisiciones Anuladas</h1>
@@ -21,23 +21,23 @@
                             </span>
 
                              <div class="float-right">
-                                <a href="{{ route('requisiciones.create') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
+                                <a href="{{ route('requisiciones.create') }}" class="btn btn-outline-dark btn-sm float-right"  data-placement="left">
                                   {{ __('Crear Nueva Requisicion') }}
                                 </a>
 
-                                <a href="{{ route('requisiciones.aprobadas') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
+                                <a href="{{ route('requisiciones.aprobadas') }}" class="btn btn-outline-dark btn-sm float-right"  data-placement="left">
                                   {{ __('Aprobadas') }}
                                 </a>
 
-                                <a href="{{ route('requisiciones.index') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
+                                <a href="{{ route('requisiciones.index') }}" class="btn btn-outline-dark btn-sm float-right"  data-placement="left">
                                   {{ __('En Proceso') }}
                                 </a>
 
-                                <a href="{{ route('requisiciones.procesadas') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
+                                <a href="{{ route('requisiciones.procesadas') }}" class="btn btn-outline-dark btn-sm float-right"  data-placement="left">
                                   {{ __('Procesadas') }}
                                 </a>
 
-                                <a href="{{ route('requisiciones.anuladas') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
+                                <a href="{{ route('requisiciones.anuladas') }}" class="btn btn-outline-dark btn-sm float-right"  data-placement="left">
                                   {{ __('Anuladas') }}
                                 </a>
 
@@ -61,7 +61,7 @@
 
 
                         <div class="table-responsive">
-                            <table class="table table-striped table-hover">
+                 <table class="table table-hover  small table-bordered table-striped">
                                 <thead class="thead">
                                     <tr>
                                         <th style="text-align: center">No. Requisicion</th>
@@ -89,8 +89,8 @@
 										    <td style="text-align: center">{{ $requisicione->ejercicio->nombreejercicio}}</td>
 											<td style="text-align: center">{{ $requisicione->unidadadministrativa->unidadejecutora }}</td>
 											<td style="text-align: center">{{ $requisicione->correlativo }}</td>
-                                            <td style="text-align: center">{{ $requisicione->concepto }}</td>
-											<td style="text-align: center">{{ $requisicione->uso }}</td>
+                                            <td>{!! $requisicione->concepto !!}</td>
+											<td>{!! $requisicione->uso !!}</td>
 											<td style="text-align: center">{{ $requisicione->tipossgp->denominacion }}</td>
 											<td style="text-align: center">
                                             @if ($requisicione->estatus == 'EP')
@@ -106,8 +106,10 @@
 
                                         <td style="text-align: center">{{ $requisicione->usuario->name }}</td>
 
+
+
                                             <td>
-                                                    <a class="btn btn-sm btn-primary " href="{{ route('requisiciones.pdf',$requisicione->id) }}" target="_black"><i class="fa fa-fw fa-eye"></i> Imprimir</a>
+                                                    <a class="btn btn-sm btn-block btn btn-outline-dark btn-block" href="{{ route('requisiciones.pdf',$requisicione->id) }}" target="_black"><i class="fas fa-print"></i> Imprimir</a>
                                             </td>
                                            
                                         </tr>

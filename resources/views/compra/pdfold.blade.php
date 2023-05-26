@@ -140,7 +140,7 @@
     </section>
 
     <!-- Area para colocar los detalles del analisis de cotizacion-->
-    <table class="table table-striped table-hover">
+    <table class="table table-hover  small table-bordered table-striped">
                                 <thead class="thead">
                                     <?php $subtotal=0; $iva=0; $total=0; ?>
                                     <tr>
@@ -208,7 +208,7 @@
                                 </tbody>
                             </table>
     <!-- Tabla con los clasificadores presupuestarios de esta orden de compra -->
-    <table class="table table-striped table-hover">
+    <table class="table table-hover  small table-bordered table-striped">
                                 <thead class="thead">
                                     <tr>
                                       

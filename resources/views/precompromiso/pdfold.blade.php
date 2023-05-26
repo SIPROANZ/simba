@@ -82,7 +82,7 @@
   
     <!-- DETALLES DE LOS COMPROMISO, IMPUTACIONES PRESUPUESTARIAS -->
     <br><br>
-    <table class="table table-striped table-hover">
+          <table class="table table-hover  small table-bordered table-striped">
                                 <thead class="thead">
                                     <tr>
                                         

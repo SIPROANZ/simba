@@ -21,7 +21,10 @@
         <div class="col-md-12">
         <div class="form-group">
             {{ Form::label('concepto') }}
-            {{ Form::text('concepto', $precompromiso->concepto, ['class' => 'form-control' . ($errors->has('concepto') ? ' is-invalid' : ''), 'placeholder' => 'Concepto']) }}
+            {{-- Form::text('concepto', $precompromiso->concepto, ['class' => 'form-control' . ($errors->has('concepto') ? ' is-invalid' : ''), 'placeholder' => 'Concepto']) --}}
+            
+            <textarea class="ckeditor form-control" name="concepto">{{ $precompromiso->concepto }}</textarea>
+            
             {!! $errors->first('concepto', '<div class="invalid-feedback">:message</div>') !!}
             {{ Form::hidden('status', $precompromiso->status, ['class' => 'form-control' . ($errors->has('status') ? ' is-invalid' : ''), 'placeholder' => 'Status']) }}
             
@@ -71,6 +74,6 @@
     </div>
     <br>
     <div class="box-footer mt20">
-        <button type="submit" class="btn btn-primary">Enviar</button>
+        <button type="submit" class="btn btn-primary submit-prevent-button">Crear En Sistema </button>
     </div>
 </div>

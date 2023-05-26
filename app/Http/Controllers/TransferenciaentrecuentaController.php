@@ -5,7 +5,14 @@ namespace App\Http\Controllers;
 use App\Transferenciaentrecuenta;
 use App\Banco;
 use App\Cuentasbancaria;
+use Luecano\NumeroALetras\NumeroALetras;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use PDF;
+
+use App\Transferencia;
+use App\Beneficiario;
+use App\Models\User;
 
 /**
  * Class TransferenciaentrecuentaController
@@ -13,6 +20,11 @@ use Illuminate\Http\Request;
  */
 class TransferenciaentrecuentaController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:admin.pagados')->only('index', 'edit', 'update', 'create', 'store', 'pdf');
+        
+    }
     /**
      * Display a listing of the resource.
      *
@@ -231,4 +243,122 @@ class TransferenciaentrecuentaController extends Controller
         }
 
     }
+
+    public function pdf($id)
+    {
+       // $compromiso = Compromiso::find($id);
+       // $pagado = Pagado::find($id);
+       $transferenciaentrecuenta = Transferenciaentrecuenta::find($id);
+       //Cambiar el total de numeros a letras
+       $formatter = new NumeroALetras();
+       $total_letras = $formatter->toMoney($transferenciaentrecuenta->monto, 2, 'BOLIVARES', 'CTS');
+
+       $pdf = PDF::loadView('transferenciaentrecuenta.pdf', ['total_letras'=> $total_letras, 'transferenciaentrecuenta'=> $transferenciaentrecuenta]);
+       $pdf->setPaper('letter', 'portrait');
+       return $pdf->stream();
+
+    }
+
+
+    public function reportes()
+     {
+        
+         $bancos = Banco::pluck('denominacion' , 'id');
+ 
+         $cuentas = Cuentasbancaria::pluck('cuenta', 'id');
+
+         $bancosdestino = Banco::pluck('denominacion' , 'id');
+ 
+         $cuentasdestino = Cuentasbancaria::pluck('cuenta', 'id');
+ 
+         $usuarios = User::pluck('name' , 'id'); 
+ 
+         $fecha_actual = Carbon::now();
+       
+ 
+         return view('transferenciaentrecuenta.reportes', compact('bancosdestino','cuentasdestino','cuentas','bancos','fecha_actual','usuarios'));
+ 
+             
+     }
+ 
+     public function reporte_pdf(Request $request)
+     {   
+         //Buscar por rif
+         $rif = $request->rif;
+         //Obtener Beneficiario
+         $beneficiario_id = false;
+         $nombre_beneficiario = '';
+         $rs_beneficiario = Beneficiario::where('rif', $rif)->first();
+         if($rs_beneficiario){
+             $beneficiario_id = $rs_beneficiario->id;
+             $nombre_beneficiario = $rs_beneficiario->nombre;
+         }
+ 
+         //Buscar por 
+         $banco = $request->banco;
+         $cuenta = $request->cuenta;
+
+         $banco_dest = $request->banco_dest;
+         $cuenta_dest = $request->cuenta_dest;
+         
+         $usuario = $request->usuario_id;
+         $inicio = $request->fecha_inicio;
+         $fin = $request->fecha_fin;
+         
+         $nombre_usuario = '';
+         $rs_usuario = User::find($usuario);
+         if($rs_usuario){
+             $nombre_usuario = $rs_usuario->name;
+         }
+ 
+         $nombre_banco = '';
+         $rs_banco= Banco::find($banco);
+         if($rs_banco){
+             $nombre_banco = $rs_banco->denominacion;
+         }
+ 
+         $nombre_cuenta = '';
+         $rs_cuenta= Cuentasbancaria::find($cuenta);
+         if($rs_cuenta){
+             $nombre_cuenta = $rs_cuenta->cuenta;
+         }
+
+         $nombre_banco_dest = '';
+         $rs_banco_dest= Banco::find($banco_dest);
+         if($rs_banco_dest){
+             $nombre_banco_dest = $rs_banco_dest->denominacion;
+         }
+ 
+         $nombre_cuenta_dest = '';
+         $rs_cuenta_dest= Cuentasbancaria::find($cuenta_dest);
+         if($rs_cuenta_dest){
+             $nombre_cuenta_dest = $rs_cuenta_dest->cuenta;
+         }
+ 
+         //
+         
+         $transferenciaentrecuentas = Transferenciaentrecuenta::bancos($banco)->cuentas($cuenta)->bancosdest($banco_dest)->cuentasdest($cuenta_dest)->beneficiarios($beneficiario_id)->usuarios($usuario)->fechaInicio($inicio)->fechaFin($fin)->get();
+        
+         
+         $total_transferencias = $transferenciaentrecuentas->sum('monto');
+         
+ 
+         $datos = [
+             'inicio' => $inicio,
+             'fin' => $fin,  
+             'usuario' =>$nombre_usuario,  
+             'nombre_banco' => $nombre_banco,
+             'nombre_cuenta' => $nombre_cuenta,
+             'nombre_banco_dest' => $nombre_banco_dest,
+             'nombre_cuenta_dest' => $nombre_cuenta_dest,
+             'nombre_beneficiario' => $nombre_beneficiario,
+             'total_transferencias' => $total_transferencias,
+             ]; 
+ 
+         $pdf = PDF::setPaper('letter', 'landscape')->loadView('transferenciaentrecuenta.reportepdf', ['datos'=>$datos, 'transferenciaentrecuentas'=>$transferenciaentrecuentas]);
+         return $pdf->stream();
+          
+     }
+
+
 }

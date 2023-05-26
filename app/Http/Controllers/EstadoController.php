@@ -5,12 +5,19 @@ namespace App\Http\Controllers;
 use App\Estado;
 use Illuminate\Http\Request;
 
+use PDF;
+
 /**
  * Class EstadoController
  * @package App\Http\Controllers
  */
 class EstadoController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:admin.instituciones')->only('index', 'edit', 'update', 'create', 'store');
+        
+    }
     /**
      * Display a listing of the resource.
      *
@@ -18,7 +25,14 @@ class EstadoController extends Controller
      */
     public function index()
     {
-        $estados = Estado::paginate();
+        //$estados = Estado::paginate();
+
+        $estados = Estado::query()
+        ->when(request('search'), function($query) {
+            return $query->where ('nombre', 'like', '%'.request('search').'%');
+         })
+        ->paginate(25)
+        ->withQueryString();
 
         return view('estado.index', compact('estados'))
             ->with('i', (request()->input('page', 1) - 1) * $estados->perPage());
@@ -105,5 +119,31 @@ class EstadoController extends Controller
 
         return redirect()->route('estados.index')
             ->with('success', 'Estado deleted successfully');
+    }
+
+    public function reportes()
+    {
+        return view('estado.reportes');   
+    }
+
+    public function reporte_pdf(Request $request)
+    {
+        $estado = $request->estado;
+        $inicio = $request->fecha_inicio;
+        $fin = $request->fecha_fin;
+
+        //
+        $estados = Estado::estados($estado)->fechaInicio($inicio)->fechaFin($fin)->get();
+        $total_objetivo = count($estados);
+       
+        $datos = [
+            'total_objetivo' => $total_objetivo,
+            'estado' => $estado,
+            'inicio' => $inicio,
+            'fin' => $fin,  
+            ]; 
+
+        $pdf = PDF::setPaper('letter', 'portrait')->loadView('estado.reportepdf', ['datos'=>$datos, 'estados'=>$estados]);
+        return $pdf->stream();
     }
 }

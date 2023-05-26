@@ -56,4 +56,42 @@ class Compra extends Model
     {
         return $this->hasOne('App\Models\User', 'id', 'usuario_id');
     }
+
+    public function scopeEstatus($query, $estatus) {
+    	if ($estatus) {
+    		return $query->where('status','like',"$estatus");
+    	}
+    }
+
+    public function scopeUsuarios($query, $usuario) {
+    	if ($usuario) {
+    		return $query->where('usuario_id','like',"$usuario");
+    	}
+    }
+
+    public function scopeFechaInicio($query, $inicio) {
+    	if ($inicio) {
+    		return $query->where('created_at','>=',"$inicio");
+    	}
+    }
+
+    public function scopeFechaFin($query, $fin) {
+    	if ($fin) {
+    		return $query->where('created_at','<=',"$fin");
+    	}
+    }
+
+    public function scopeTiposgp($query, $tiposgp) {
+    	if ($tiposgp) {
+    		//return $query->where('beneficiario_id','like',"$beneficiario");
+
+            return $query->whereHas('analisi', function($qa) use ($tiposgp) {
+                $qa->whereHas('requisicione', function($q) use ($tiposgp) {
+                    $q->where('tiposgp_id', 'like', "$tiposgp");
+                });
+            });
+
+    	}
+    }
+
 }

@@ -4,8 +4,8 @@
     <div class="row">
         <div class="col-md-4">
         <div class="form-group">
-            {{ Form::label('montocompromiso') }}
-            {{ Form::text('montocompromiso', $detallesprecompromiso->montocompromiso, ['class' => 'form-control' . ($errors->has('montocompromiso') ? ' is-invalid' : ''), 'placeholder' => 'Montocompromiso']) }}
+            {{ Form::label('monto compromiso') }}
+            {{ Form::text('montocompromiso', $detallesprecompromiso->montocompromiso, ['class' => 'form-control' . ($errors->has('montocompromiso') ? ' is-invalid' : ''), 'placeholder' => 'Monto compromiso']) }}
             {!! $errors->first('montocompromiso', '<div class="invalid-feedback">:message</div>') !!}
 
             {{ Form::hidden('precompromiso_id', 0, ['class' => 'form-control' . ($errors->has('precompromiso_id') ? ' is-invalid' : ''), 'placeholder' => 'Precompromiso Id']) }}
@@ -58,6 +58,6 @@
     </div>
     <br>
     <div class="box-footer mt20">
-        <button type="submit" class="btn btn-primary">Enviar</button>
+        <button type="submit" class="btn btn-primary submit-prevent-button">Crear En Sistema </button>
     </div>
 </div>

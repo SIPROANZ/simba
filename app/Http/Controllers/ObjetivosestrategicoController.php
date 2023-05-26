@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Objetivosestrategico;
 use App\Objetivonacionale;
 use Illuminate\Http\Request;
+use PDF;
 
 /**
  * Class ObjetivosestrategicoController
@@ -12,6 +13,11 @@ use Illuminate\Http\Request;
  */
 class ObjetivosestrategicoController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:admin.poa')->only('index', 'edit', 'update', 'create', 'store');
+        
+    }
     /**
      * Display a listing of the resource.
      *
@@ -19,7 +25,14 @@ class ObjetivosestrategicoController extends Controller
      */
     public function index()
     {
-        $objetivosestrategicos = Objetivosestrategico::paginate();
+        //$objetivosestrategicos = Objetivosestrategico::paginate();
+
+        $objetivosestrategicos = Objetivosestrategico::query()
+        ->when(request('search'), function($query) {
+            return $query->where ('objetivo', 'like', '%'.request('search').'%');
+         })
+        ->paginate(25)
+        ->withQueryString();
 
         return view('objetivosestrategico.index', compact('objetivosestrategicos'))
             ->with('i', (request()->input('page', 1) - 1) * $objetivosestrategicos->perPage());
@@ -110,5 +123,40 @@ class ObjetivosestrategicoController extends Controller
 
         return redirect()->route('objetivosestrategicos.index')
             ->with('success', 'Objetivosestrategico deleted successfully');
+    }
+
+    public function reportes()
+    {
+        $nacionales = Objetivonacionale::orderBy('objetivo', 'ASC')->pluck('objetivo', 'id');
+        return view('objetivosestrategico.reportes', compact('nacionales'));   
+    }
+
+    public function reporte_pdf(Request $request)
+    {
+        $objetivo = $request->objetivo;
+        $inicio = $request->fecha_inicio;
+        $fin = $request->fecha_fin;
+        $nacional = $request->nacional;
+
+        $nombre_nacional = '';
+        $rs_nacional = Objetivonacionale::find($nacional);
+        if($rs_nacional){
+            $nombre_nacional = $rs_nacional->objetivo;
+        }
+        
+        //
+        $objetivosestrategicos = Objetivosestrategico::nacional($nacional)->objetivos($objetivo)->fechaInicio($inicio)->fechaFin($fin)->get();
+        $total_objetivo = count($objetivosestrategicos);
+       
+        $datos = [
+            'total_objetivo' => $total_objetivo,
+            'objetivo' => $objetivo,
+            'nacional' => $nombre_nacional,
+            'inicio' => $inicio,
+            'fin' => $fin,  
+            ]; 
+
+        $pdf = PDF::setPaper('letter', 'landscape')->loadView('objetivosestrategico.reportepdf', ['datos'=>$datos, 'objetivosestrategicos'=>$objetivosestrategicos]);
+        return $pdf->stream();
     }
 }

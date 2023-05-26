@@ -4,7 +4,7 @@
 @section('title', 'Pagado')
 
 @section('content_header')
-    <h1>Pagado</h1>
+    <h1>Pagado En Proceso</h1>
 @stop
 
 @section('content')
@@ -17,29 +17,29 @@
                         <div style="display: flex; justify-content: space-between; align-items: center;">
 
                             <span id="card_title">
-                                {{ __('Pagado') }}
+                                {{ __('') }}
                             </span>
 
                              <div class="float-right">
 
-                             <a href="{{ route('pagados.agregar') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
+                             <a href="{{ route('pagados.agregar') }}" class="btn btn-outline-dark btn-sm float-right"  data-placement="left">
                                   {{ __('Crear Nuevo Pagado') }}
                                 </a>
 
-                                <a href="{{ route('pagados.index') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
+                                <a href="{{ route('pagados.index') }}" class="btn btn-outline-dark btn-sm float-right"  data-placement="left">
                                   {{ __('En proceso') }}
                                 </a>
 
-                                <a href="{{ route('pagados.procesados') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
-                                  {{ __('Procesadas') }}
+                                <a href="{{ route('pagados.procesados') }}" class="btn btn-outline-dark btn-sm float-right"  data-placement="left">
+                                  {{ __('Procesados') }}
                                 </a>
 
-                                <a href="{{ route('pagados.anulados') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
-                                  {{ __('Anuladas') }}
+                                <a href="{{ route('pagados.anulados') }}" class="btn btn-outline-dark btn-sm float-right"  data-placement="left">
+                                  {{ __('Anulados') }}
                                 </a>
 
-                                <a href="{{ route('pagados.aprobadas') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
-                                    {{ __('Aprobadas') }}
+                                <a href="{{ route('pagados.aprobadas') }}" class="btn btn-outline-dark btn-sm float-right"  data-placement="left">
+                                    {{ __('Aprobados') }}
                                 </a>
 
                               </div>
@@ -59,7 +59,7 @@
 </div>
 </form>
                         <div class="table-responsive">
-                            <table class="table table-striped table-hover">
+                            <table class="table table-hover small table-bordered table-striped">
                                 <thead class="thead">
                                     <tr>
                                         
@@ -116,24 +116,55 @@
                                             </td>  --}}	
                                             
                                             <td>{{ $pagado->usuario->name }}</td>
+                                             <!-- =====Menu Desplegable====================================================== -->
+
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card card-secondary collapsed-card">
+              <div class="card-header">
+                <h3 class="card-title">Ver  </h3>
+
+                <div class="card-tools">
+                  <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-plus"></i>
+                  </button>
+                </div>
+                <!-- /.card-tools -->
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
 
                                                 <td>
-                                                <form action="{{ route('pagados.aprobar',$pagado->id) }}" method="POST">                                                   
-                                                    <a class="btn btn-sm btn-primary " href="{{ route('pagados.show',$pagado->id) }}" data-toggle="tooltip" data-placement="top" title="Mostrar pagado"><i class="fa fa-fw fa-eye"></i> Mostrar</a>
-                                                    <a class="btn btn-sm btn-success" href="{{ route('pagados.edit',$pagado->id) }}" data-toggle="tooltip" data-placement="top" title="Editar pagado"><i class="fa fa-fw fa-edit"></i> Editar</a>
-                                                    {{-- <a class="btn btn-sm btn-danger" href="{{ route('pagados.anular',$pagado->id) }}" data-toggle="tooltip" data-placement="top" title="Anular pagado"><i class="fa fa-fw fa-trash"></i></a> --}}
-                                                   @csrf
-                                                    @method('PATCH')
+                                                <form action="{{ route('pagados.aprobar',$pagado->id) }}" method="POST" class="submit-prevent-form">                                                   
+                                                    <a class="btn btn-sm btn-block btn btn-outline-dark btn-blockbtn-block " href="{{ route('pagados.pdf',$pagado->id) }}" data-toggle="tooltip" data-placement="top" title="Imprimir Pagado" target="_black"><i class="fas fa-print"></i> Imprimir!</a>  
+                                              
+                                                    <a class="btn btn-sm btn-block btn btn-outline-dark btn-blockbtn-block " href="{{ route('pagados.show',$pagado->id) }}" data-toggle="tooltip" data-placement="top" title="Mostrar pagado"><i class="fa fa-fw fa-eye"></i> Mostrar</a>
+                                                    <a class="btn btn-sm btn-block btn btn-outline-dark btn-blockbtn-block" href="{{ route('pagados.edit',$pagado->id) }}" data-toggle="tooltip" data-placement="top" title="Editar pagado"><i class="fa fa-fw fa-edit"></i> Editar</a>
+                                                    {{-- <a class="btn btn-sm btn-block btn-danger" href="{{ route('pagados.anular',$pagado->id) }}" data-toggle="tooltip" data-placement="top" title="Anular pagado"><i class="fa fa-fw fa-trash"></i></a> --}}
+                                                   
+                                                    <a class="btn btn-sm btn-block btn btn-outline-danger btn-block " href="{{ route('pagados.reversar',$pagado->id) }}" data-toggle="tooltip" data-placement="top" title="Reversar Orden de Pago"><i class="fas fa-angle-double-left"></i> Reversar</a>
+   
+                                                    <a class="btn btn-sm btn-block btn btn-outline-success btn-block " href="{{ route('pagados.actualizar',$pagado->id) }}" data-toggle="tooltip" data-placement="top" title="Actualizar Pagado, solo si lo ha reversado previamente"><i class="fas fas fa-history"></i> Actualizar</a>
+   
 
-                                                    <button type="submit" class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="top" title="Aprobar pagado"><i class="fas fa-check-double"></i> Aprobar</button>
-                                                </form>
-                                                <form action="{{ route('pagados.anular',$pagado->id) }}" method="POST">
                                                     @csrf
                                                     @method('PATCH')
-                                                    <button type="submit" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Anular pagado"><i class="fa fa-fw fa-trash"></i> Anular</button>
-                                                </form>
-                                            </td>
 
+                                                    <button type="submit" class="btn btn-info btn-sm btn-block submit-prevent-button" data-toggle="tooltip" data-placement="top" title="Aprobar pagado"><i class="fas fa-check-double"></i> Aprobar</button>
+                                                </form>
+
+                                                @can('admin.reversar')
+                                                <form action="{{ route('pagados.anular',$pagado->id) }}" method="POST" class="submit-prevent-form">
+                                                    @csrf
+                                                    @method('PATCH')
+                                                    <button type="submit" class="btn btn-danger btn-sm btn-block submit-prevent-button" data-toggle="tooltip" data-placement="top" title="Anular pagado"><i class="fa fa-fw fa-trash"></i> Anular</button>
+                                                </form>
+                                                @endcan
+                                            </td>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
                                                 
 
                                             
@@ -150,6 +181,15 @@
     </div>
     @stop
 
-@section('css')
-    <link rel="stylesheet" href="/css/admin_custom.css">
-@stop
+ @section('css')
+    
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="{{ asset('css/submit.css') }}">
+        
+    @stop
+    
+    @section('js')
+    <script src="{{ asset('js/submit.js') }}"></script>
+    
+    
+    @stop

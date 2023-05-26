@@ -48,6 +48,9 @@
         @endif
     @endif
 
+    {{-- Estilos para sweetalert2 --}}
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/5.0.7/sweetalert2.min.css" rel="stylesheet">
+    
     {{-- Custom Stylesheets (post AdminLTE) --}}
     @yield('adminlte_css')
 
@@ -104,6 +107,9 @@
         @endif
     @endif
 
+    {{-- SweetAlert2 Scripts  --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
     {{-- Custom Scripts --}}
     @yield('adminlte_js')
 

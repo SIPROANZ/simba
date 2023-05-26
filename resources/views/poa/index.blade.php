@@ -21,7 +21,11 @@
                             </span>
 
                              <div class="float-right">
-                                <a href="{{ route('poas.create') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
+                             <a href="{{ route('poas.reportes') }}" class="btn btn-outline-dark btn-sm float-right"  data-placement="left">
+                                  {{ __('Reporte') }}
+                                </a>
+
+                                <a href="{{ route('poas.create') }}" class="btn btn-outline-dark btn-sm float-right"  data-placement="left">
                                   {{ __('Crear Nuevo Plan operativo anual') }}
                                 </a>
                               </div>
@@ -44,7 +48,7 @@
 
 
                         <div class="table-responsive">
-                            <table class="table table-striped table-hover">
+                                  <table class="table table-hover  small table-bordered table-striped">
                                 <thead class="thead">
                                     <tr>
                                          
@@ -82,37 +86,58 @@
                                         <tr>
                                             <td>{{ ++$i }}</td>
                                             
-											<td style="text-align: left">{{ $poa->ejercicio->nombreejercicio }}</td>
-                                            <td style="text-align: left">{{ $poa->institucione->institucion }}</td>
-                                            <td style="text-align: left">{{ $poa->objetivoshistorico->objetivo }}</td>
-                                            <td style="text-align: left">{{ $poa->objetivonacionale->objetivonacional }}</td>
-                                            <td style="text-align: left">{{ $poa->objetivosestrategico->objetivo }}</td>
-                                            <td style="text-align: left">{{ $poa->objetivogenerale->objetivo }}</td>
-                                            <td style="text-align: left">{{ $poa->objetivomunicipale->objetivo}}</td>
-                                            <td style="text-align: left">{{ $poa->objetivopei->objetivo }}</td>
-											<td style="text-align: left">{{ $poa->unidadadministrativa->unidadejecutora }}</td>
-                                            <td style="text-align: left">{{ $poa->proyecto }}</td>
-                                            <td style="text-align: left">{{ $poa->objetivoproyecto }}</td>
-                                            <td style="text-align: left">{{ $poa->montoproyecto }}</td>
-											<td style="text-align: left">{{ $poa->responsable }}</td>
-                                            <td style="text-align: left">{{ $poa->tipo }}</td>
-                                            <td style="text-align: left">{{ $poa->sncfestrategico }}</td>
-                                            <td style="text-align: left">{{ $poa->sncfespecifico }}</td>
-                                            <td style="text-align: left">{{ $poa->psocial }}</td>
-                                            <td style="text-align: left">{{ $poa->codigo }}</td>
-                                            <td style="text-align: left">{{ $poa->tipoproyecto }}</td>
-                                            <td style="text-align: left">{{ $poa->central }}</td>
-                                            <td style="text-align: left">{{ $poa->descripcion }}</td>
-                                            <td style="text-align: left">{{ $poa->usuario->name }}</td>
+											<td style="text-align: left">{!!$poa->ejercicio->ejercicioejecucion !!}</td>
+                                            <td style="text-align: left">{!! $poa->institucione->institucion !!}</td>
+                                            <td style="text-align: left">{ !!$poa->objetivoshistorico->objetivo !!}</td>
+                                            <td style="text-align: left">{ !!$poa->objetivonacionale->objetivo !!}</td>
+                                            <td style="text-align: left">{!!$poa->objetivosestrategico->objetivo !!}</td>
+                                            <td style="text-align: left">{!! $poa->objetivogenerale->objetivo !!}</td>
+                                            <td style="text-align: left">{!! $poa->objetivomunicipale->objetivo !!}</td>
+                                            <td style="text-align: left">{!! $poa->objetivopei->objetivo !!}</td>
+											<td style="text-align: left">{!! $poa->unidadadministrativa->unidadejecutora !!}</td>
+                                            <td style="text-align: left">{!! $poa->proyecto !!}</td>
+                                            <td style="text-align: left">{!! $poa->objetivoproyecto !!}</td>
+                                            <td style="text-align: left">{!! $poa->montoproyecto !!}</td>
+											<td style="text-align: left">{!! $poa->responsable !!}</td>
+                                            <td style="text-align: left">{!! $poa->tipo !!}</td>
+                                            <td style="text-align: left">{!! $poa->sncfestrategico !!}</td>
+                                            <td style="text-align: left">{!! $poa->sncfespecifico !!}</td>
+                                            <td style="text-align: left">{!! $poa->psocial!!}</td>
+                                            <td style="text-align: left">{!! $poa->codigo !!}</td>
+                                            <td style="text-align: left">{!! $poa->tipoproyecto }}</td>
+                                            <td style="text-align: left">{!! $poa->central !!}</td>
+                                            <td style="text-align: left">{!!$poa->descripcion !!}</td>
+                                            <td style="text-align: left">{!! $poa->usuario->name!!}</td>
 
                                             <td style="text-align: left">
-                                                <form action="{{ route('poas.destroy',$poa->id) }}" method="POST">
-                                                    <a class="btn btn-sm btn-primary " href="{{ route('poas.show',$poa->id) }}"><i class="fa fa-fw fa-eye"></i> Ver</a>
-                                                    <a class="btn btn-sm btn-success" href="{{ route('poas.edit',$poa->id) }}"><i class="fa fa-fw fa-edit"></i> Editar</a>
+                                                                                                                                        <!-- =========================================================== -->
+
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card card-secondary collapsed-card">
+              <div class="card-header">
+                <h3 class="card-title">Ver </h3>
+
+                <div class="card-tools">
+                  <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-plus"></i>
+                  </button>
+                </div>
+                <!-- /.card-tools -->
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                                                <form action="{{ route('poas.destroy',$poa->id) }}" method="POST" class="submit-prevent-form">
+                                                    <a class="btn btn-sm btn-block btn btn-outline-dark btn-block" href="{{ route('poas.show',$poa->id) }}"><i class="fas fa-print"></i> Ver</a>
+                                                    <a class="btn btn-sm btn-block btn btn-outline-dark btn-block" href="{{ route('poas.edit',$poa->id) }}"><i class="fa fa-fw fa-edit"></i> Editar</a>
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-fw fa-trash"></i> Eliminar</button>
+                                                    <button type="submit" class="btn btn-outline-danger btn-sm btn-block submit-prevent-button"><i class="fa fa-fw fa-trash"></i> Eliminar</button>
                                                 </form>
+                                                                                                           <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
                                             </td>
                                         </tr>
                                     @endforeach
@@ -127,6 +152,15 @@
     </div>
     @stop
 
-@section('css')
-    <link rel="stylesheet" href="/css/admin_custom.css">
-@stop
+ @section('css')
+    
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="{{ asset('css/submit.css') }}">
+        
+    @stop
+    
+    @section('js')
+    <script src="{{ asset('js/submit.js') }}"></script>
+    
+    
+    @stop

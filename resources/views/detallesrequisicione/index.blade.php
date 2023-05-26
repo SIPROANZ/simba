@@ -20,7 +20,7 @@
                             </span>
 
                              <div class="float-right">
-                                <a href="{{ route('detallesrequisiciones.create') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
+                                <a href="{{ route('detallesrequisiciones.create') }}" class="btn btn-outline-dark btn-sm float-right"  data-placement="left">
                                   {{ __('Crear Nuevo Detalles Requisiciones') }}
                                 </a>
                               </div>
@@ -43,7 +43,7 @@
 
 
                         <div class="table-responsive">
-                            <table class="table table-striped table-hover">
+                                  <table class="table table-hover  small table-bordered table-striped">
                                 <thead class="thead">
                                     <tr>
                                         <th>No</th>
@@ -65,12 +65,12 @@
 											<td>{{ $detallesrequisicione->cantidad }}</td>
 
                                             <td>
-                                                <form action="{{ route('detallesrequisiciones.destroy',$detallesrequisicione->id) }}" method="POST">
-                                                    <a class="btn btn-sm btn-primary " href="{{ route('detallesrequisiciones.show',$detallesrequisicione->id) }}"><i class="fa fa-fw fa-eye"></i> Mostrar</a>
-                                                    <a class="btn btn-sm btn-success" href="{{ route('detallesrequisiciones.edit',$detallesrequisicione->id) }}"><i class="fa fa-fw fa-edit"></i> Editar</a>
+                                                <form action="{{ route('detallesrequisiciones.destroy',$detallesrequisicione->id) }}" method="POST" class="submit-prevent-form">
+                                                    <a class="btn btn-sm btn-block btn btn-outline-dark btn-block" href="{{ route('detallesrequisiciones.show',$detallesrequisicione->id) }}"><i class="fas fa-print"></i> Mostrar</a>
+                                                    <a class="btn btn-sm btn-block btn btn-outline-dark btn-block" href="{{ route('detallesrequisiciones.edit',$detallesrequisicione->id) }}"><i class="fa fa-fw fa-edit"></i> Editar</a>
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-fw fa-trash"></i> Eliminar</button>
+                                                    <button type="submit" class="btn btn-outline-danger btn-sm btn-block submit-prevent-button"><i class="fa fa-fw fa-trash"></i> Eliminar</button>
                                                 </form>
                                             </td>
                                         </tr>

@@ -11,7 +11,7 @@
         <div class="col-md-10">
         <div class="form-group">
             {{ Form::label('Objetivo PEI') }}
-            {{ Form::text('objetivo', $objetivopei->objetivo, ['class' => 'form-control' . ($errors->has('objetivo') ? ' is-invalid' : ''), 'placeholder' => 'Objetivo PEI']) }}
+            {{ Form::textarea('objetivo', $objetivopei->objetivo, ['class' => 'ckeditor form-control' . ($errors->has('objetivo') ? ' is-invalid' : ''), 'placeholder' => 'Objetivo PEI']) }}
             {!! $errors->first('objetivo', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         </div>
@@ -33,6 +33,6 @@
     <br>
 
     <div class="box-footer mt20">
-        <button type="submit" class="btn btn-primary">Enviar</button>
+        <button type="submit" class="btn btn-primary submit-prevent-button">Crear En Sistema </button>
     </div>
 </div>

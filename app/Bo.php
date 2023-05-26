@@ -82,6 +82,37 @@ class Bo extends Model
     {
         return $this->hasOne('App\Unidadmedida', 'id', 'unidadmedida_id');
     }
+
+
+    public function scopeDescripcion($query, $descripcion) {
+    	if ($descripcion) {
+    		return $query->where('descripcion','like',"%$descripcion%");
+    	}
+    }
+
+    public function scopeUnidad($query, $unidad) {
+    	if ($unidad) {
+    		return $query->where('unidadmedida_id','like',"$unidad");
+    	}
+    }
+
+    public function scopeTipo($query, $tipo) {
+    	if ($tipo) {
+    		return $query->where('tipobos_id','like',"$tipo");
+    	}
+    }
+
+    public function scopeFechaInicio($query, $inicio) {
+    	if ($inicio) {
+    		return $query->where('created_at','>=',"$inicio");
+    	}
+    }
+
+    public function scopeFechaFin($query, $fin) {
+    	if ($fin) {
+    		return $query->where('created_at','<=',"$fin");
+    	}
+    }
     
 
 }

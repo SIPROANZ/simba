@@ -21,7 +21,7 @@
 @section('auth_header', __('adminlte::adminlte.login_message'))
 
 @section('auth_body')
-    <form action="{{ $login_url }}" method="post">
+    <form action="{{ $login_url }}" method="POST" class="submit-prevent-form">
         @csrf
 
         {{-- Email field --}}
@@ -72,8 +72,8 @@
                 </div>
             </div>
 
-            <div class="col-5">
-                <button type=submit class="btn btn-block {{ config('adminlte.classes_auth_btn', 'btn-flat btn-primary') }}">
+            <div class="col-">
+                <button type=submit class="btn btn-outline-dark{{ config('adminlte.classes_auth_btn', 'btn-flat btn-dark') }}">
                     <span class="fas fa-sign-in-alt"></span>
                     {{ __('adminlte::adminlte.sign_in') }}
                 </button>

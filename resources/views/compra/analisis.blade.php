@@ -20,19 +20,19 @@
                             </span>
 
                             <div class="float-right">
-                                <a href="{{ route('compras.analisis') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
-                                  {{ __('Crear Orden de Compra') }}
+                                <a href="{{ route('compras.analisis') }}" class="btn btn-outline-dark btn-sm float-right"  data-placement="left">
+                                  {{ __('Crear Orden de Compra y Servicios') }}
                                 </a>
 
-                                <a href="{{ route('compras.index') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
+                                <a href="{{ route('compras.index') }}" class="btn btn-outline-dark btn-sm float-right"  data-placement="left">
                                   {{ __('Compras en Proceso') }}
                                 </a>
 
-                                <a href="{{ route('compras.procesadas') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
+                                <a href="{{ route('compras.procesadas') }}" class="btn btn-outline-dark btn-sm float-right"  data-placement="left">
                                   {{ __('Compras Procesadas') }}
                                 </a>
 
-                                <a href="{{ route('compras.anuladas')  }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
+                                <a href="{{ route('compras.anuladas')  }}" class="btn btn-outline-dark btn-sm float-right"  data-placement="left">
                                   {{ __('Compras Anuladas') }}
                                 </a>
 
@@ -52,7 +52,7 @@
 
 
                         <div class="table-responsive">
-                            <table class="table table-striped table-hover">
+                            <table class="table table-hover  small table-bordered table-striped">
                                 <thead class="thead">
                                     <tr>
                                         <th>No. Analisis</th>
@@ -80,7 +80,7 @@
                                             <td>{{ $analisi->estatus }}</td>
 
                                             <td class="float-right">
-                                            <a class="btn btn-sm btn-primary " href="{{ route('compras.agregarcompra',$analisi->id) }}" data-toggle="tooltip" data-placement="top" title="Agregar Compra"><i class="fas fa-check"></i></i> Seleccionar</a>
+                                            <a class="btn btn-sm btn-block btn btn-outline-dark btn-block" href="{{ route('compras.agregarcompra',$analisi->id) }}" data-toggle="tooltip" data-placement="top" title="Agregar Compra"><i class="fas fa-check"></i></i> Seleccionar</a>
                                                 
                                                   
                                                 
@@ -99,6 +99,15 @@
     </div>
     @stop
 
-@section('css')
-    <link rel="stylesheet" href="/css/admin_custom.css">
-@stop
+ @section('css')
+    
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="{{ asset('css/submit.css') }}">
+        
+    @stop
+    
+    @section('js')
+    <script src="{{ asset('js/submit.js') }}"></script>
+    
+    
+    @stop

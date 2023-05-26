@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Producto;
 use App\Clase;
+use App\Models\User;
 use Illuminate\Http\Request;
+use PDF;
 
 /**
  * Class ProductoController
@@ -12,6 +14,11 @@ use Illuminate\Http\Request;
  */
 class ProductoController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:admin.bos')->only('index', 'edit', 'update', 'create', 'store');
+        
+    }
     /**
      * Display a listing of the resource.
      *
@@ -123,4 +130,52 @@ class ProductoController extends Controller
         return redirect()->route('productos.index')
             ->with('success', 'Producto eliminado exitosamente');
     }
+
+    public function reportes()
+    {
+        $clases = Clase::orderBy('nombre', 'ASC')->pluck('nombre','id');
+        $usuarios = User::orderBy('name', 'ASC')->pluck('name', 'id');
+
+        return view('producto.reportes', compact('clases', 'usuarios'));
+    }
+
+    public function reporte_pdf(Request $request)
+    {
+        //Buscar por institucion
+        $descripcion = $request->descripcion;
+        $clase = $request->clase;
+        $usuario = $request->usuario;
+        $inicio = $request->fecha_inicio;
+        $fin = $request->fecha_fin;
+        
+        $nombre_clase = '';
+        $rs_clase = Clase::find($clase);
+        if($rs_clase){
+            $nombre_clase = $rs_clase->nombre;
+        }
+
+        $nombre_usuario = '';
+        $rs_usuario = User::find($usuario);
+        if($rs_usuario){
+            $nombre_usuario = $rs_usuario->name;
+        }
+
+        $productos = Producto::descripcion($descripcion)->clases($clase)->usuarios($usuario)->fechaInicio($inicio)->fechaFin($fin)->get();
+        $total = count($productos);
+        
+        $datos = [
+            'clase' => $nombre_clase,
+            'usuario' => $nombre_usuario,
+            'total' => $total, 
+            'inicio' => $inicio,
+            'fin' => $fin,   
+            'descripcion' =>$descripcion,  
+            ]; 
+
+        $pdf = PDF::setPaper('letter', 'portrait')->loadView('producto.reportepdf', ['datos'=>$datos, 'productos'=>$productos]);
+        return $pdf->stream();
+         
+    }
+
+    
 }

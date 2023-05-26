@@ -1,13 +1,17 @@
 <div class="box box-info padding-1">
     <div class="box-body">
         <div class="row">
-            <div class="col-md-4">
+          
+
+
+            <div class="col-md-12"> 
                 <div class="form-group">
                     {{ Form::label('Descripcion') }}
-                    {{ Form::text('descripcion', $retencione->descripcion, ['class' => 'form-control' . ($errors->has('descripcion') ? ' is-invalid' : ''), 'placeholder' => 'Descripcion']) }}
+                    <textarea class="ckeditor form-control" name="descripcion">{{ $retencione->descripcion }}</textarea>
                     {!! $errors->first('descripcion', '<div class="invalid-feedback">:message</div>') !!}
                 </div>
             </div>
+
             <div class="col-md-4">
                 <div class="form-group">
                     {{ Form::label('Porcentaje') }}
@@ -15,8 +19,7 @@
                     {!! $errors->first('porcentaje', '<div class="invalid-feedback">:message</div>') !!}
                 </div>
             </div>
-        </div>
-        <div class="row">
+        
             <div class="col-md-4">
                 <div class="form-group">
                     {{ Form::label('Tipo de Deducción') }}
@@ -42,7 +45,7 @@
     </div>
     <br>
     <div class="box-footer mt20">
-        <button type="submit" class="btn btn-primary">Enviar</button>
+        <button type="submit" class="btn btn-primary submit-prevent-button">Crear En Sistema </button>
     </div>
 </div>
 

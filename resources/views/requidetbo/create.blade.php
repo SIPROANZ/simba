@@ -16,7 +16,7 @@
                         <span class="card-title">Create Requidetbo</span>
                     </div>
                     <div class="card-body">
-                        <form method="POST" action="{{ route('requidetbos.store') }}"  role="form" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('requidetbos.store') }}"  role="form" enctype="multipart/form-data" class="submit-prevent-form">
                             @csrf
 
                             @include('requidetbo.form')

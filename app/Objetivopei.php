@@ -53,6 +53,30 @@ class Objetivopei extends Model
     {
         return $this->hasMany('App\Poa', 'pei_id', 'id');
     }
+
+    public function scopeObjetivos($query, $objetivo) {
+    	if ($objetivo) {
+    		return $query->where('objetivo','like',"%$objetivo%");
+    	}
+    }
+
+    public function scopeMunicipal($query, $municipal) {
+    	if ($municipal) {
+    		return $query->where('municipal_id','like',"$municipal");
+    	}
+    }
+
+    public function scopeFechaInicio($query, $inicio) {
+    	if ($inicio) {
+    		return $query->where('created_at','>=',"$inicio");
+    	}
+    }
+
+    public function scopeFechaFin($query, $fin) {
+    	if ($fin) {
+    		return $query->where('created_at','<=',"$fin");
+    	}
+    }
     
 
 }

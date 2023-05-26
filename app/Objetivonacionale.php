@@ -53,6 +53,30 @@ class Objetivonacionale extends Model
     {
         return $this->hasOne('App\Objetivoshistorico', 'id', 'historico_id');
     }
+
+    public function scopeObjetivos($query, $objetivo) {
+    	if ($objetivo) {
+    		return $query->where('objetivo','like',"%$objetivo%");
+    	}
+    }
+
+    public function scopeHistoricos($query, $historico) {
+    	if ($historico) {
+    		return $query->where('historico_id','like',"$historico");
+    	}
+    }
+
+    public function scopeFechaInicio($query, $inicio) {
+    	if ($inicio) {
+    		return $query->where('created_at','>=',"$inicio");
+    	}
+    }
+
+    public function scopeFechaFin($query, $fin) {
+    	if ($fin) {
+    		return $query->where('created_at','<=',"$fin");
+    	}
+    }
     
 
 }

@@ -16,7 +16,7 @@
                         <span class="card-title">Editar Proveedor</span>
                     </div>
                     <div class="card-body">
-                        <form method="POST" action="{{ route('proveedores.update', $proveedore->id) }}"  role="form" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('proveedores.update', $proveedore->id) }}"  role="form" enctype="multipart/form-data" class="submit-prevent-form">
                             {{ method_field('PATCH') }}
                             @csrf
 

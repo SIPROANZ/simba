@@ -128,4 +128,34 @@ public function usuario()
     return $this->hasOne('App\Models\User', 'id', 'usuario_id');
 }  
 
+public function scopeUnidad($query, $unidad) {
+    if ($unidad) {
+        return $query->where('unidadejecutora','like',"%$unidad%");
+    }
+}
+
+public function scopeInstitucion($query, $institucion) {
+    if ($institucion) {
+        return $query->where('institucion_id','like',"$institucion");
+    }
+}
+
+public function scopeUsuarios($query, $usuario) {
+    if ($usuario) {
+        return $query->where('usuario_id','like',"$usuario");
+    }
+}
+
+public function scopeFechaInicio($query, $inicio) {
+    if ($inicio) {
+        return $query->where('created_at','>=',"$inicio");
+    }
+}
+
+public function scopeFechaFin($query, $fin) {
+    if ($fin) {
+        return $query->where('created_at','<=',"$fin");
+    }
+}
+
 }

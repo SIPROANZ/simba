@@ -18,7 +18,7 @@
         </div>
     @endif
 
-    <form action="{{ $password_email_url }}" method="post">
+    <form action="{{ $password_email_url }}" method="POST" class="submit-prevent-form">
         @csrf
 
         {{-- Email field --}}

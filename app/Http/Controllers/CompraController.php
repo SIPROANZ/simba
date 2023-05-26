@@ -20,12 +20,20 @@ use Carbon\Carbon;
 use Luecano\NumeroALetras\NumeroALetras;
 use PDF;
 
+use App\Models\User;
+use App\Tipossgp;
+
 /**
  * Class CompraController
  * @package App\Http\Controllers
  */
 class CompraController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:admin.compras')->only('index', 'edit', 'update', 'pdf', 'create', 'store', 'indexanuladas', 'indexprocesadas', 'indexaprobadas');
+        
+    }
     /**
      * Display a listing of the resource.
      *
@@ -45,7 +53,7 @@ class CompraController extends Controller
          },
          function ($query) {
              $query->where('status', 'like', 'EP')
-             ->orderBy('id', 'ASC');
+             ->orderBy('id', 'DESC');
          })
         ->paginate(20)
         ->withQueryString();
@@ -62,7 +70,7 @@ class CompraController extends Controller
     public function indexanalisis()
     {
        // $compras = Compra::paginate();
-        $analisis = Analisi::where('estatus', 'PR')->paginate();
+        $analisis = Analisi::where('estatus', 'PR')->orderBy('id', 'DESC')->paginate();
 
         return view('compra.analisis', compact('analisis'))
             ->with('i', (request()->input('page', 1) - 1) * $analisis->perPage());
@@ -103,8 +111,13 @@ class CompraController extends Controller
         $compra = Compra::create($request->all());
 
         //Obtener el ultimo ID
-        $ultimo = Compra::latest('id')->first();
-        $compra_id = $ultimo->id;
+       // $ultimo = Compra::latest('id')->first();
+       
+       // $ultimo = $compra->id;
+       
+       // $compra_id = $ultimo->id;
+       $compra_id = $compra->id;
+
 
         $comprars = Compra::find($compra_id);
 
@@ -115,10 +128,15 @@ class CompraController extends Controller
         //Obtener el Id del analisis
         $analisis_id = $comprars->analisis_id;
 
+
+        //Obtener el primer proveedor
+        $rs_proveedor = Detallesanalisi::where('analisis_id', $analisis_id)->first();
+        $proveedor_id = $rs_proveedor->beneficiario_id;
+
         
 
         //Obtener todos los productos relaciones al analisis_id en la tabla detalleanalisis
-        $detalles_analisis = Detallesanalisi::where('analisis_id', $analisis_id)->get();
+        $detalles_analisis = Detallesanalisi::where('analisis_id', $analisis_id)->where('beneficiario_id', $proveedor_id)->get();
         //cad_analisis para mostrar todos los productos relacionados con el analisis id
         $iva = 0;
         $cad_analisis ='';
@@ -131,8 +149,6 @@ class CompraController extends Controller
         //Obtener Requisicion_id y con este valor vamos a obtener el clasificador presupuestario
         //que viene desde la requisicion
         $analisis = Analisi::find($analisis_id);
-
-        
 
         
         $requisicion_id = $analisis->requisicion_id;
@@ -171,7 +187,7 @@ class CompraController extends Controller
             $ejecucion_id = $rows->ejecucion_id;
             //inicio
             $detallescomprascps = DB::table('detallesanalisis')
-            ->where('analisis_id', $analisis_id)
+            ->where('analisis_id', $analisis_id)->where('beneficiario_id', $proveedor_id)//Agrego el proveedor ganador que es el primero q se registra en el analisis
             ->join('bos', 'bos.id', '=', 'detallesanalisis.bos_id') 
             ->join('productoscps', 'productoscps.producto_id', '=', 'bos.producto_id')
             ->where('productoscps.clasificadorp_id', $clasificadorpresupuestario->id)
@@ -347,13 +363,19 @@ class CompraController extends Controller
         $total_base = 0;
         $total_iva = 0;
         $total = 0;
+        //Obtener el primer proveedor que es el ganador de la orden de compra
+        $proveedor_id = 0;
+        $rs_proveedor = Detallesanalisi::where('analisis_id', $analisis_id)->first();
+        $proveedor_id = $rs_proveedor->beneficiario_id;
+
+
 
         //Cambiar el estatus del analisis para que no salga mas en el listado de las compras a realizar
         $estado = 'AP';  //UNA VEZ LISTO EL CODIGO COLOCARLO EN AP
         $analisi = Analisi::find($analisis_id);
         
-       
-        $detalles_analisis = Detallesanalisi::where('analisis_id', $analisis_id)->get();
+                                                                                //Solo me escoja los datos del proveedor seleccionado
+        $detalles_analisis = Detallesanalisi::where('analisis_id', $analisis_id)->where('beneficiario_id', $proveedor_id)->get();
 
         foreach($detalles_analisis as $row){
             $total_base += $row->subtotal;
@@ -636,7 +658,7 @@ class CompraController extends Controller
 
         //Para ver los detalles de la compra
         //Consulto los datos especificos para la requisicion seleccionada
-        $detallesanalisis = Detallesanalisi::where('analisis_id',$analisis->id)->get();
+        $detallesanalisis = Detallesanalisi::where('analisis_id',$analisis->id)->where('beneficiario_id', $proveedor_id)->get();
         $total = $detallesanalisis->sum('total');
         $iva = $detallesanalisis->sum('iva');
         $subtotal = $detallesanalisis->sum('subtotal');
@@ -644,10 +666,20 @@ class CompraController extends Controller
         //Cambiar el total de numeros a letras
         $formatter = new NumeroALetras();
         $total_letras = $formatter->toMoney($total , 2, 'BOLIVARES', 'CTS');
-      
 
-        $pdf = PDF::loadView('compra.pdf', ['fecha'=>$fecha,'iva'=>$iva,'subtotal'=>$subtotal,'total_letras'=>$total_letras, 'total'=>$total, 'compra'=>$compra, 'detallesanalisis'=>$detallesanalisis , 'comprascps'=>$comprascps, 'correlativo'=>$correlativo, 'departamento'=>$departamento, 'uso'=>$uso, 'sub_sector'=>$sub_sector, 'sector'=>$sector, 'rif'=>$rif, 'razon_social'=>$razon_social]);
+    if ($compra->analisi->requisicione->tiposgp_id==1 || $compra->analisi->requisicione->tiposgp_id==3)
+    {   $pdf = PDF::loadView('compra.pdf', ['fecha'=>$fecha,'iva'=>$iva,'subtotal'=>$subtotal,'total_letras'=>$total_letras, 'total'=>$total, 'compra'=>$compra, 'detallesanalisis'=>$detallesanalisis , 'comprascps'=>$comprascps, 'correlativo'=>$correlativo, 'departamento'=>$departamento, 'uso'=>$uso, 'sub_sector'=>$sub_sector, 'sector'=>$sector, 'rif'=>$rif, 'razon_social'=>$razon_social]);
         return $pdf->stream();
+    
+
+    } else if (        $compra->analisi->requisicione->tiposgp_id==2    )
+     {
+        $pdf = PDF::loadView('compra.pdfservicio', ['fecha'=>$fecha,'iva'=>$iva,'subtotal'=>$subtotal,'total_letras'=>$total_letras, 'total'=>$total, 'compra'=>$compra, 'detallesanalisis'=>$detallesanalisis , 'comprascps'=>$comprascps, 'correlativo'=>$correlativo, 'departamento'=>$departamento, 'uso'=>$uso, 'sub_sector'=>$sub_sector, 'sector'=>$sector, 'rif'=>$rif, 'razon_social'=>$razon_social]);
+        return $pdf->stream();
+
+    }
+
+      
 
     }
 
@@ -670,8 +702,12 @@ class CompraController extends Controller
 
         //Cambiar el estatus del analisis para que no salga mas en el listado de las compras a realizar
         $analisi = Analisi::find($analisis_id);
+
+        //Obtener el primer proveedor
+        $rs_proveedor = Detallesanalisi::where('analisis_id', $analisis_id)->first();
+        $proveedor_id = $rs_proveedor->beneficiario_id;
         
-        $detalles_analisis = Detallesanalisi::where('analisis_id', $analisis_id)->get();
+        $detalles_analisis = Detallesanalisi::where('analisis_id', $analisis_id)->where('beneficiario_id',$proveedor_id)->get();
 
         foreach($detalles_analisis as $row){
             $total_base += $row->subtotal;
@@ -710,7 +746,7 @@ class CompraController extends Controller
         //$analisis_id = $comprars->analisis_id;
 
         //Obtener todos los productos relaciones al analisis_id en la tabla detalleanalisis
-        $detalles_analisis = Detallesanalisi::where('analisis_id', $analisis_id)->get();
+        $detalles_analisis = Detallesanalisi::where('analisis_id', $analisis_id)->where('beneficiario_id',$proveedor_id)->get();
         //cad_analisis para mostrar todos los productos relacionados con el analisis id
         $iva = 0;
         $cad_analisis ='';
@@ -758,7 +794,7 @@ class CompraController extends Controller
             $ejecucion_id = $rows->ejecucion_id;
             //inicio
             $detallescomprascps = DB::table('detallesanalisis')
-            ->where('analisis_id', $analisis_id)
+            ->where('analisis_id', $analisis_id)->where('beneficiario_id',$proveedor_id)
             ->join('bos', 'bos.id', '=', 'detallesanalisis.bos_id') 
             ->join('productoscps', 'productoscps.producto_id', '=', 'bos.producto_id')
             ->where('productoscps.clasificadorp_id', $clasificadorpresupuestario->id)
@@ -808,5 +844,153 @@ class CompraController extends Controller
             ->with('success', 'Compra Actualizada exitosamente.');
 
             
+    }
+
+    public function pdfdepurar($id)
+    {
+        
+        $compra = Compra::find($id);
+
+        $fecha = $compra->created_at->year;
+
+        $comprascps = Comprascp::where('compra_id','=',$id)->paginate();
+
+        //Obtener el numero de la requisicion
+        $analisis = Analisi::find($compra->analisis_id);
+        $requisicion_id = $analisis->requisicion_id;
+        $unidadadministrativa_id = $analisis->unidadadministrativa_id;
+        $requisicion = Requisicione::find($requisicion_id);
+        $correlativo = $requisicion->correlativo;
+        $uso = $requisicion->uso;
+        $undadm = Unidadadministrativa::find($unidadadministrativa_id);
+        $departamento = $undadm->unidadejecutora;
+        $sub_sector = $undadm->denominacion;
+        $sector_actual = $undadm->sector;
+
+        //Para obtener el sector
+        $nuevo_sector = Unidadadministrativa::where('sector', $sector_actual )->where('programa', '00')->first();
+        $sector = $nuevo_sector->unidadejecutora;
+
+        //PARA OBTENER EL ID DEL PROVEEDOR
+        $proveedor = Detallesanalisi::where('analisis_id', $analisis->id)->where('aprobado', 'SI')->first();
+        $proveedor_id = $proveedor->beneficiario_id;
+        //Ahora busco la razon social y el rif
+        $beneficiario = Beneficiario::find($proveedor_id);
+        $rif =$beneficiario->caracterbeneficiario . '-' . $beneficiario->rif;
+        $razon_social = $beneficiario->nombre;
+
+        //Para ver los detalles de la compra
+        //Consulto los datos especificos para la requisicion seleccionada
+        $detallesanalisis = Detallesanalisi::where('analisis_id',$analisis->id)->get();
+        $total = $detallesanalisis->sum('total');
+        $iva = $detallesanalisis->sum('iva');
+        $subtotal = $detallesanalisis->sum('subtotal');
+
+        //Cambiar el total de numeros a letras
+        $formatter = new NumeroALetras();
+        $total_letras = $formatter->toMoney($total , 2, 'BOLIVARES', 'CTS');
+
+    if ($compra->analisi->requisicione->tiposgp_id==1 || $compra->analisi->requisicione->tiposgp_id==3)
+    {   $pdf = PDF::loadView('compra.pdf', ['fecha'=>$fecha,'iva'=>$iva,'subtotal'=>$subtotal,'total_letras'=>$total_letras, 'total'=>$total, 'compra'=>$compra, 'detallesanalisis'=>$detallesanalisis , 'comprascps'=>$comprascps, 'correlativo'=>$correlativo, 'departamento'=>$departamento, 'uso'=>$uso, 'sub_sector'=>$sub_sector, 'sector'=>$sector, 'rif'=>$rif, 'razon_social'=>$razon_social]);
+        return $pdf->stream();
+    
+
+    } else if (        $compra->analisi->requisicione->tiposgp_id==2    )
+     {
+        $pdf = PDF::loadView('compra.pdfservicio', ['fecha'=>$fecha,'iva'=>$iva,'subtotal'=>$subtotal,'total_letras'=>$total_letras, 'total'=>$total, 'compra'=>$compra, 'detallesanalisis'=>$detallesanalisis , 'comprascps'=>$comprascps, 'correlativo'=>$correlativo, 'departamento'=>$departamento, 'uso'=>$uso, 'sub_sector'=>$sub_sector, 'sector'=>$sector, 'rif'=>$rif, 'razon_social'=>$razon_social]);
+        return $pdf->stream();
+
+    }
+
+      
+
+    }
+
+    public function reportes()
+    {
+       
+        $usuarios = User::orderBy('name', 'ASC')->pluck('name' , 'id'); 
+        $tipos = Tipossgp::orderBy('denominacion', 'ASC')->pluck('denominacion' , 'id'); 
+
+        $fecha_actual = Carbon::now();
+      
+
+        return view('compra.reportes', compact('fecha_actual','usuarios', 'tipos'));
+
+            
+    }
+
+    public function reporte_pdf(Request $request)
+    {
+      
+        $estatus = $request->status;
+        $nombre_estatus = '';
+        if($estatus == 'EP')
+        {
+            $nombre_estatus = 'EN PROCESO';
+        }elseif($estatus == 'AP'){
+            $nombre_estatus = 'APROBADO';
+        }elseif($estatus == 'PR'){
+            $nombre_estatus = 'PROCESADO';
+        }elseif($estatus == 'AN'){
+            $nombre_estatus = 'ANULADO';
+        }
+        $usuario = $request->usuario_id;
+        $inicio = $request->fecha_inicio;
+        $fin = $request->fecha_fin;
+        
+        $nombre_usuario = '';
+        $rs_usuario = User::find($usuario);
+        if($rs_usuario){
+            $nombre_usuario = $rs_usuario->name;
+        }
+
+
+        $tipos = $request->tipo_id;
+        $rs_tipo = Tipossgp::find($tipos);
+        $nombre_tipo = '';
+        if($rs_tipo){
+            $nombre_tipo = $rs_tipo->denominacion;
+        }
+       
+
+        
+
+
+        //
+        
+        $compras = Compra::tiposgp($tipos)->estatus($estatus)->usuarios($usuario)->fechaInicio($inicio)->fechaFin($fin)->get();
+        $base = $compras->sum('montobase');
+        $iva = $compras->sum('montoiva');
+        $total_bs = $compras->sum('montototal');
+        $aprobadas = Compra::where('status', 'AP')->tiposgp($tipos)->estatus($estatus)->usuarios($usuario)->fechaInicio($inicio)->fechaFin($fin)->count();
+        $procesadas = Compra::where('status', 'PR')->tiposgp($tipos)->estatus($estatus)->usuarios($usuario)->fechaInicio($inicio)->fechaFin($fin)->count();
+        $enproceso = Compra::where('status', 'EP')->tiposgp($tipos)->estatus($estatus)->usuarios($usuario)->fechaInicio($inicio)->fechaFin($fin)->count();
+        $anuladas = Compra::where('status', 'AN')->tiposgp($tipos)->estatus($estatus)->usuarios($usuario)->fechaInicio($inicio)->fechaFin($fin)->count();
+        $total = Compra::estatus($estatus)->tiposgp($tipos)->usuarios($usuario)->fechaInicio($inicio)->fechaFin($fin)->count();
+       
+        $datos = [
+            
+            'aprobadas' => $aprobadas,
+            'procesadas' => $procesadas,
+            'enproceso' => $enproceso,
+            'anuladas' => $anuladas,
+            'total' => $total, 
+            'nombre_tipo' => $nombre_tipo,
+            
+            'inicio' => $inicio,
+            'fin' => $fin,  
+            'usuario' =>$nombre_usuario,  
+            'estatus' =>$nombre_estatus,
+            'base' => $base,
+            'iva' => $iva,
+            'total_bs' => $total_bs,
+              
+            ]; 
+
+        $pdf = PDF::setPaper('letter', 'landscape')->loadView('compra.reportepdf', ['datos'=>$datos, 'compras'=>$compras]);
+        return $pdf->stream();
+        
+         
     }
 }

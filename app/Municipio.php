@@ -53,6 +53,31 @@ class Municipio extends Model
     {
         return $this->hasMany('App\Institucione', 'municipio_id', 'id');
     }
+
+    public function scopeMunicipios($query, $municipio) {
+    	if ($municipio) {
+    		return $query->where('nombre','like',"%$municipio%");
+    	}
+    }
+
+    public function scopeEstados($query, $estado) {
+    	if ($estado) {
+    		return $query->where('estado_id','like',"$estado");
+    	}
+    }
+
+    public function scopeFechaInicio($query, $inicio) {
+    	if ($inicio) {
+    		return $query->where('created_at','>=',"$inicio");
+    	}
+    }
+
+    public function scopeFechaFin($query, $fin) {
+    	if ($fin) {
+    		return $query->where('created_at','<=',"$fin");
+    	}
+    }
+
     
 
 }

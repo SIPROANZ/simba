@@ -16,7 +16,7 @@
                         <span class="card-title">Crear Tipo de Retenciones</span>
                     </div>
                     <div class="card-body">
-                        <form method="POST" action="{{ route('tiporetenciones.store') }}"  role="form" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('tiporetenciones.store') }}"  role="form" enctype="multipart/form-data" class="submit-prevent-form">
                             @csrf
 
                             @include('tiporetencione.form')

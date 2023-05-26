@@ -4,7 +4,7 @@
     <div class="row">
         <div class="col-md-4">
         <div class="form-group">
-            {{ Form::label('montocompromiso') }}
+            {{ Form::label('monto compromiso') }}
             {{ Form::text('montocompromiso', $detallesayuda->montocompromiso, ['class' => 'form-control' . ($errors->has('montocompromiso') ? ' is-invalid' : ''), 'placeholder' => 'Montocompromiso']) }}
             {!! $errors->first('montocompromiso', '<div class="invalid-feedback">:message</div>') !!}
             {{ Form::hidden('ayuda_id', 0, ['class' => 'form-control' . ($errors->has('ayuda_id') ? ' is-invalid' : ''), 'placeholder' => 'Ayuda']) }}
@@ -60,6 +60,6 @@
     </div>
     <br>
     <div class="box-footer mt20">
-        <button type="submit" class="btn btn-primary">Enviar</button>
+        <button type="submit" class="btn btn-primary submit-prevent-button">Crear En Sistema </button>
     </div>
 </div>

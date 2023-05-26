@@ -16,12 +16,20 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use PDF;
 
+
+use App\Models\User;
+
 /**
  * Class PrecompromisoController
  * @package App\Http\Controllers
  */
 class PrecompromisoController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:admin.precompromisos')->only('index', 'edit', 'update', 'pdf', 'create', 'store', 'indexanuladas', 'indexprocesadas', 'indexaprobadas');
+        
+    }
     /**
      * Display a listing of the resource.
      *
@@ -34,6 +42,8 @@ class PrecompromisoController extends Controller
        $precompromisos = Precompromiso::query()
        ->when(request('search'), function($query){
            return $query->where ('id', 'like', '%'.request('search').'%')
+                        ->where('status', 'like', 'EP')
+                        ->orWhere('documento', 'like', '%'.request('search').'%')
                         ->where('status', 'like', 'EP')
                         ->orWhereHas('unidadadministrativa', function($q){
                          $q->where('unidadejecutora', 'like', '%'.request('search').'%');
@@ -53,6 +63,8 @@ class PrecompromisoController extends Controller
         $precompromisos = Precompromiso::query()
        ->when(request('search'), function($query){
            return $query->where ('id', 'like', '%'.request('search').'%')
+                        ->where('status', 'like', 'EP')
+                        ->orWhere('documento', 'like', '%'.request('search').'%')
                         ->where('status', 'like', 'EP')
                         ->where('unidadadministrativa_id', 'like', Auth::user()->unidad_id)
                         ->orWhereHas('unidadadministrativa', function($q){
@@ -138,6 +150,8 @@ class PrecompromisoController extends Controller
        ->when(request('search'), function($query){
            return $query->where ('id', 'like', '%'.request('search').'%')
                         ->where('status', 'like', 'PR')
+                        ->orWhere('documento', 'like', '%'.request('search').'%')
+                        ->where('status', 'like', 'PR')
                         ->orWhereHas('unidadadministrativa', function($q){
                          $q->where('unidadejecutora', 'like', '%'.request('search').'%');
                          })->where('status', 'like', 'PR')
@@ -157,6 +171,8 @@ class PrecompromisoController extends Controller
         ->when(request('search'), function($query){
             return $query->where ('id', 'like', '%'.request('search').'%')
                          ->where('status', 'like', 'PR')
+                         ->orWhere('documento', 'like', '%'.request('search').'%')
+                        ->where('status', 'like', 'PR')
                          ->where('unidadadministrativa_id', 'like', Auth::user()->unidad_id)
                          ->orWhereHas('unidadadministrativa', function($q){
                           $q->where('unidadejecutora', 'like', '%'.request('search').'%');
@@ -196,6 +212,8 @@ class PrecompromisoController extends Controller
        ->when(request('search'), function($query){
            return $query->where ('id', 'like', '%'.request('search').'%')
                              ->where('status', 'like', 'AN')
+                             ->orWhere('documento', 'like', '%'.request('search').'%')
+                        ->where('status', 'like', 'AN')
                         ->orWhereHas('unidadadministrativa', function($q){
                          $q->where('unidadejecutora', 'like', '%'.request('search').'%');
                          })
@@ -216,6 +234,8 @@ class PrecompromisoController extends Controller
         ->when(request('search'), function($query){
             return $query->where ('id', 'like', '%'.request('search').'%')
                          ->where('status', 'like', 'AN')
+                         ->orWhere('documento', 'like', '%'.request('search').'%')
+                        ->where('status', 'like', 'AN')
                          ->where('unidadadministrativa_id', 'like', Auth::user()->unidad_id)
                          ->orWhereHas('unidadadministrativa', function($q){
                           $q->where('unidadejecutora', 'like', '%'.request('search').'%');
@@ -254,6 +274,8 @@ class PrecompromisoController extends Controller
        ->when(request('search'), function($query){
            return $query->where ('id', 'like', '%'.request('search').'%')
                              ->where('status', 'like', 'AP')
+                             ->orWhere('documento', 'like', '%'.request('search').'%')
+                        ->where('status', 'like', 'AP')
                         ->orWhereHas('unidadadministrativa', function($q){
                          $q->where('unidadejecutora', 'like', '%'.request('search').'%');
                          })
@@ -274,6 +296,8 @@ class PrecompromisoController extends Controller
         ->when(request('search'), function($query){
             return $query->where ('id', 'like', '%'.request('search').'%')
                          ->where('status', 'like', 'AP')
+                         ->orWhere('documento', 'like', '%'.request('search').'%')
+                        ->where('status', 'like', 'AP')
                          ->where('unidadadministrativa_id', 'like', Auth::user()->unidad_id)
                          ->orWhereHas('unidadadministrativa', function($q){
                           $q->where('unidadejecutora', 'like', '%'.request('search').'%');
@@ -672,6 +696,107 @@ class PrecompromisoController extends Controller
 
 }
 
+    }
+
+
+    public function reportes()
+    {
+       
+        $unidades = Unidadadministrativa::select(
+            DB::raw("CONCAT(sector,'.',programa,'.',subprograma,'.',proyecto,'.',actividad,' ',unidadejecutora) AS name"),'id')
+            ->orderBy('name','ASC')
+            ->pluck('name', 'id'); 
+    
+
+        $usuarios = User::orderBy('name', 'ASC')->pluck('name' , 'id'); 
+
+        $fecha_actual = Carbon::now();
+      
+
+        return view('precompromiso.reportes', compact('fecha_actual','usuarios','unidades'));
+
+            
+    }
+
+    public function reporte_pdf(Request $request)
+    {
+      
+       
+        //Buscar por institucion
+        $rif = $request->rif;
+
+        //Obtener Beneficiario
+        $beneficiario_id = false;
+        $nombre_beneficiario = '';
+        $rs_beneficiario = Beneficiario::where('rif', $rif)->first();
+        if($rs_beneficiario){
+            $beneficiario_id = $rs_beneficiario->id;
+            $nombre_beneficiario = $rs_beneficiario->nombre;
+        }
+        
+        $unidadAdministrativa = $request->unidadadministrativa_id;
+        
+        $estatus = $request->status;
+        $nombre_estatus = '';
+        if($estatus == 'EP')
+        {
+            $nombre_estatus = 'EN PROCESO';
+        }elseif($estatus == 'AP'){
+            $nombre_estatus = 'APROBADO';
+        }elseif($estatus == 'PR'){
+            $nombre_estatus = 'PROCESADO';
+        }elseif($estatus == 'AN'){
+            $nombre_estatus = 'ANULADO';
+        }
+        $usuario = $request->usuario_id;
+        $inicio = $request->fecha_inicio;
+        $fin = $request->fecha_fin;
+        
+        $nombre_usuario = '';
+        $rs_usuario = User::find($usuario);
+        if($rs_usuario){
+            $nombre_usuario = $rs_usuario->name;
+        }
+
+        $nombre_unidad = '';
+        $rs_unidad= Unidadadministrativa::find($unidadAdministrativa);
+        if($rs_unidad){
+            $nombre_unidad = $rs_unidad->unidadejecutora;
+        }
+        
+        $precompromisos = Precompromiso::beneficiarios($beneficiario_id)->unidad($unidadAdministrativa)->estatus($estatus)->usuarios($usuario)->fechaInicio($inicio)->fechaFin($fin)->get();
+        $total_bs = $precompromisos->sum('montototal');
+        $aprobadas = Precompromiso::where('status', 'AP')->beneficiarios($beneficiario_id)->unidad($unidadAdministrativa)->estatus($estatus)->usuarios($usuario)->fechaInicio($inicio)->fechaFin($fin)->count();
+        $procesadas = Precompromiso::where('status', 'PR')->beneficiarios($beneficiario_id)->unidad($unidadAdministrativa)->estatus($estatus)->usuarios($usuario)->fechaInicio($inicio)->fechaFin($fin)->count();
+        $enproceso = Precompromiso::where('status', 'EP')->beneficiarios($beneficiario_id)->unidad($unidadAdministrativa)->estatus($estatus)->usuarios($usuario)->fechaInicio($inicio)->fechaFin($fin)->count();
+        $anuladas = Precompromiso::where('status', 'AN')->beneficiarios($beneficiario_id)->unidad($unidadAdministrativa)->estatus($estatus)->usuarios($usuario)->fechaInicio($inicio)->fechaFin($fin)->count();
+        $total = Precompromiso::beneficiarios($beneficiario_id)->unidad($unidadAdministrativa)->estatus($estatus)->usuarios($usuario)->fechaInicio($inicio)->fechaFin($fin)->count();
+       
+     
+
+
+        $datos = [
+            
+            'aprobadas' => $aprobadas,
+            'procesadas' => $procesadas,
+            'enproceso' => $enproceso,
+            'anuladas' => $anuladas,
+            'total' => $total, 
+            
+            
+            'inicio' => $inicio,
+            'fin' => $fin,  
+            'usuario' =>$nombre_usuario,  
+            'estatus' =>$nombre_estatus,  
+            'unidad' => $nombre_unidad,
+            'beneficiario' => $nombre_beneficiario,
+            'total_bs' => $total_bs
+            ]; 
+
+        $pdf = PDF::setPaper('letter', 'landscape')->loadView('precompromiso.reportepdf', ['datos'=>$datos, 'precompromisos'=>$precompromisos]);
+        return $pdf->stream();
+        
+         
     }
 
 

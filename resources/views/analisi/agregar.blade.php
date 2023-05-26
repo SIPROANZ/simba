@@ -4,7 +4,7 @@
 @section('title', 'Analisis de Cotizacion')
 
 @section('content_header')
-    <h1>Analisis de Cotizacion</h1>
+    <h1>Analisis de Cotizacion EN EDICION</h1>
 @stop
 
 @section('content')
@@ -79,7 +79,7 @@
                         <div style="display: flex; justify-content: space-between; align-items: center;">
 
                             <span id="card_title">
-                                {{ __('Detalles de la requisicion') }}
+                                {{ __('Incluir precio unitario a los productos') }}
                             </span>
 
                              
@@ -94,35 +94,84 @@
 
 
                         <div class="table-responsive">
-                            <table class="table table-striped table-hover">
-                                <thead class="thead">
-                                    <tr>
-                                        <th>No</th>
-                                        
-										<th>Bos</th>
-										<th>Cantidad</th>
+                            <table class="table table-hover  small table-bordered table-striped small">
+                                <form method="POST" action="{{ route('detallesanalisis.storetres') }}"  role="form" enctype="multipart/form-data" class="submit-prevent-form">
+                                    
+                             
 
-                                        <th>Opciones</th>
+                                <thead class="thead">
+
+                                       <!-- Obtener el id del proveedor -->
+<tr>
+    <td colspan="4">
+        <div class="col-md-12">
+           <div class="form-group">
+                {{ Form::label('proveedor') }}
+                {{ Form::select('proveedor_id', $proveedores, null, ['class' => 'form-control' . ($errors->has('proveedor_id') ? ' is-invalid' : ''), 'placeholder' => 'Seleccione un Proveedor']) }}
+                {!! $errors->first('proveedor_id', '<div class="invalid-feedback">:message</div>') !!}
+          
+            </div>
+            </div>
+    </td>
+</tr>
+
+<!-- Fin Id del Proveedor -->
+
+
+
+                                    <tr>
+                                        <th style="text-align: center">ID</th>
+                                        
+										<th style="text-align: center">Descripcion del Producto BOS</th>
+										<th style="text-align: center">Cantidad</th>
+
+                                        <th style="text-align: center">Precio Unitario</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                      
+
+
                                     @foreach ($detallesrequisiciones as $detallesrequisicione)
                                         <tr>
-                                            <td>{{ ++$i }}</td>
+                                            <td>{{ $detallesrequisicione->id }}
+                                                {{ Form::hidden('precio[]', $detallesrequisicione->id, ['class' => 'form-control' . ($errors->has('precio') ? ' is-invalid' : ''), 'placeholder' => 'Precio']) }}
+                                            </td>
                                             
 											<td>{{ $detallesrequisicione->bo->descripcion }}</td>
 											<td>{{ $detallesrequisicione->cantidad }}</td>
 
-                                            <td>
-                                                <form action="{{ route('detallesrequisiciones.destroy',$detallesrequisicione->id) }}" method="POST">
-                                                    
-                                                    <a class="btn btn-sm btn-success" href="{{ route('detallesanalisis.createwithbos', $detallesrequisicione->id) }}"><i class="fa fa-fw fa-edit"></i> Agregar</a>
-                                                    @csrf
-                                                 </form>
+                                            <td style="text-align: right">
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        
+                                                        {{ Form::text('precio[]', $GET['precio'] ?? NULL, ['class' => 'form-control' . ($errors->has('precio') ? ' is-invalid' : ''), 'placeholder' => 'Precio']) }}
+                                                        {!! $errors->first('precio', '<div class="invalid-feedback">:message</div>') !!}
+                                                    </div>
+                                                    </div>
+
+                                                  {{--  <a class="btn btn-sm btn-block btn btn-outline-dark btn-block" href="{{ route('detallesanalisis.createwithbos', $detallesrequisicione->id) }}"><i class="fa fa-fw fa-edit"></i> Agregar</a>
+                                                   --}}    @csrf
+                                                
                                             </td>
                                         </tr>
                                     @endforeach
+
+                                    
+
+                                    <tr>
+                                       
+                                        <td style="text-align: right" colspan="4">
+                                            <div class="box-footer mt20">
+                                                <button type="submit" class="btn btn-primary submit-prevent-button">Crear En Sistema </button>
+                                            </div>
+                                            
+                                        </td>
+                                    </tr>
+
+                                
                                 </tbody>
+                            </form>
                             </table>
                         </div>
                     </div>
@@ -158,7 +207,7 @@
 
 
                         <div class="table-responsive">
-                            <table class="table table-striped table-hover">
+                            <table class="table table-hover  small table-bordered table-striped small">
                                 <thead class="thead">
                                     <tr>
                                         <th>No</th>
@@ -192,12 +241,12 @@
                                             <td>{{ $detallesanalisi->aprobado }}</td>
 
                                             <td>
-                                                <form action="{{ route('detallesanalisis.destroy',$detallesanalisi->id) }}" method="POST">
+                                                <form action="{{ route('detallesanalisis.destroy',$detallesanalisi->id) }}" method="POST" class="submit-prevent-form">
                                                     
-                                                    <a class="btn btn-sm btn-success" href="{{ route('detallesanalisis.edit',$detallesanalisi->id) }}" data-toggle="tooltip" data-placement="top" title="Editar Analisis"><i class="fa fa-fw fa-edit"></i> Editar</a>
+                                                    <a class="btn btn-sm btn-block btn btn-outline-dark btn-block" href="{{ route('detallesanalisis.edit',$detallesanalisi->id) }}" data-toggle="tooltip" data-placement="top" title="Editar Analisis"><i class="fa fa-fw fa-edit"></i> Editar</a>
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Eliminar Analisis"><i class="fa fa-fw fa-trash"></i> Eliminar</button>
+                                                    <button type="submit" class="btn btn-outline-danger btn-sm btn-block submit-prevent-button" data-toggle="tooltip" data-placement="top" title="Eliminar Analisis"><i class="fa fa-fw fa-trash"></i> Eliminar</button>
                                                 </form>
                                             </td>
                                         </tr>
@@ -214,6 +263,15 @@
 
     @stop
 
-@section('css')
-    <link rel="stylesheet" href="/css/admin_custom.css">
-@stop
+ @section('css')
+    
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="{{ asset('css/submit.css') }}">
+        
+    @stop
+    
+    @section('js')
+    <script src="{{ asset('js/submit.js') }}"></script>
+    
+    
+    @stop

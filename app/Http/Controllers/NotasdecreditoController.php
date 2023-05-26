@@ -8,7 +8,17 @@ use App\Beneficiario;
 use App\Institucione;
 use App\Banco;
 use App\Cuentasbancaria;
+use Luecano\NumeroALetras\NumeroALetras;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use PDF;
+
+use App\Unidadadministrativa;
+use App\Tipossgp;
+use Illuminate\Support\Facades\DB;
+use App\Models\User;
+
+
 
 /**
  * Class NotasdecreditoController
@@ -16,6 +26,11 @@ use Illuminate\Http\Request;
  */
 class NotasdecreditoController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:admin.pagados')->only('index', 'edit', 'update', 'create', 'store', 'pdf');
+        
+    }
     /**
      * Display a listing of the resource.
      *
@@ -197,5 +212,125 @@ class NotasdecreditoController extends Controller
 
     }
 
+    public function pdf($id)
+    {
+       // $compromiso = Compromiso::find($id);
+       // $pagado = Pagado::find($id);
+       $notasdecredito = Notasdecredito::find($id);
+       $total_transferencia = $notasdecredito->monto;
+       //Cambiar el total de numeros a letras
+       $formatter = new NumeroALetras();
+       $total_letras = $formatter->toMoney($total_transferencia , 2, 'BOLIVARES', 'CTS');
+
+       $pdf = PDF::loadView('notasdecredito.pdf', ['total_letras'=> $total_letras, 'notasdecredito'=> $notasdecredito]);
+       $pdf->setPaper('letter', 'portrait');
+       return $pdf->stream();
+
+    }
+
     
+    public function reportes()
+    {
+       
+        $ejercicios = Ejercicio::pluck('nombreejercicio','id');
+        $unidades = Unidadadministrativa::select(
+            DB::raw("CONCAT(sector,'.',programa,'.',subprograma,'.',proyecto,'.',actividad,' ',unidadejecutora) AS name"),'id')
+            ->orderBy('name','ASC')
+            ->pluck('name', 'id'); 
+        $instituciones = Institucione::pluck('institucion', 'id');
+
+        $tipossgps = Tipossgp::pluck('denominacion' , 'id'); 
+
+        $bancos = Banco::pluck('denominacion' , 'id');
+
+        $cuentas = Cuentasbancaria::pluck('cuenta', 'id');
+
+        $usuarios = User::pluck('name' , 'id'); 
+
+        $fecha_actual = Carbon::now();
+      
+
+        return view('notasdecredito.reportes', compact('cuentas','bancos','fecha_actual','usuarios','tipossgps','instituciones','unidades','ejercicios'));
+
+            
+    }
+
+    public function reporte_pdf(Request $request)
+    {   
+        //Buscar por institucion
+        $rif = $request->rif;
+        //Obtener Beneficiario
+        $beneficiario_id = false;
+        $nombre_beneficiario = '';
+        $rs_beneficiario = Beneficiario::where('rif', $rif)->first();
+        if($rs_beneficiario){
+            $beneficiario_id = $rs_beneficiario->id;
+            $nombre_beneficiario = $rs_beneficiario->nombre;
+        }
+
+        //Buscar por institucion
+        $institucion = $request->institucion_id;
+        $banco = $request->banco;
+        $cuenta = $request->cuenta;
+        $ejercicio = $request->ejercicio_id;
+        
+        
+        $usuario = $request->usuario_id;
+        $inicio = $request->fecha_inicio;
+        $fin = $request->fecha_fin;
+        
+        $nombre_usuario = '';
+        $rs_usuario = User::find($usuario);
+        if($rs_usuario){
+            $nombre_usuario = $rs_usuario->name;
+        }
+
+        $nombre_banco = '';
+        $rs_banco= Banco::find($banco);
+        if($rs_banco){
+            $nombre_banco = $rs_banco->denominacion;
+        }
+
+        $nombre_cuenta = '';
+        $rs_cuenta= Cuentasbancaria::find($cuenta);
+        if($rs_cuenta){
+            $nombre_cuenta = $rs_cuenta->cuenta;
+        }
+
+        $nombre_ejercicio = '';
+        $rs_ejercicio = Ejercicio::find($ejercicio);
+        if($rs_ejercicio){
+            $nombre_ejercicio = $rs_ejercicio->ejercicioejecucion;
+        }
+
+        $nombre_institucion = '';
+        $rs_institucion = Institucione::find($institucion);
+        if($rs_institucion){
+            $nombre_institucion = $rs_institucion->institucion;
+        }
+
+
+        //
+        
+        $notasdecreditos = Notasdecredito::institucion($institucion)->ejercicio($ejercicio)->bancos($banco)->cuentas($cuenta)->beneficiarios($beneficiario_id)->usuarios($usuario)->fechaInicio($inicio)->fechaFin($fin)->get();
+        $total_creditos = $notasdecreditos->sum('monto');
+
+        $datos = [
+           
+            'inicio' => $inicio,
+            'fin' => $fin,  
+            'usuario' =>$nombre_usuario,  
+            'ejercicio' => $nombre_ejercicio,
+            'institucion' => $nombre_institucion,
+            'nombre_banco' => $nombre_banco,
+            'nombre_cuenta' => $nombre_cuenta,
+            'nombre_beneficiario' => $nombre_beneficiario,
+            'total_creditos' => $total_creditos
+            ]; 
+
+        $pdf = PDF::setPaper('letter', 'landscape')->loadView('notasdecredito.reportepdf', ['datos'=>$datos, 'notasdecreditos'=>$notasdecreditos]);
+        return $pdf->stream();
+         
+    }
+
 }

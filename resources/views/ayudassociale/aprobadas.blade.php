@@ -15,23 +15,23 @@
                         <div style="display: flex; justify-content: space-between; align-items: center;">
 
                             <span id="card_title">
-                                {{ __('Ayudas Sociales Aprobadas') }}
+                                {{ __('') }}
                             </span>
 
                              <div class="float-right">
-                                <a href="{{ route('ayudassociales.create') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
+                                <a href="{{ route('ayudassociales.create') }}" class="btn btn-outline-dark btn-sm float-right"  data-placement="left">
                                   {{ __('Crear Nueva Ayuda Social') }}
                                 </a>
-                                <a href="{{ route('ayudassociales.aprobadas') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
+                                <a href="{{ route('ayudassociales.aprobadas') }}" class="btn btn-outline-dark btn-sm float-right"  data-placement="left">
                                   {{ __('Aprobadas') }}
                                 </a>
-                                <a href="{{ route('ayudassociales.index') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
+                                <a href="{{ route('ayudassociales.index') }}" class="btn btn-outline-dark btn-sm float-right"  data-placement="left">
                                   {{ __('En Proceso') }}
                                 </a>
-                                <a href="{{ route('ayudassociales.procesadas') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
+                                <a href="{{ route('ayudassociales.procesadas') }}" class="btn btn-outline-dark btn-sm float-right"  data-placement="left">
                                   {{ __('Procesadas') }}
                                 </a>
-                                <a href="{{ route('ayudassociales.anuladas') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
+                                <a href="{{ route('ayudassociales.anuladas') }}" class="btn btn-outline-dark btn-sm float-right"  data-placement="left">
                                   {{ __('Anuladas') }}
                                 </a>
                               </div>
@@ -46,15 +46,15 @@
                     <div class="card-body">
 
                     <form method="GET">
-<div class="input-group mb-3">
-  <input type="text" name="search" class="form-control" placeholder="Buscar">
-  <button class="btn btn-outline-primary" type="submit" id="button-addon2">Buscar</button>
-</div>
-</form>
+                <div class="input-group mb-3">
+                <input type="text" name="search" class="form-control" placeholder="Buscar">
+                <button class="btn btn-outline-primary" type="submit" id="button-addon2">Buscar</button>
+                </div>
+                </form>
 
 
                         <div class="table-responsive">
-                            <table class="table table-striped table-hover">
+                                  <table class="table table-hover  small table-bordered table-striped">
                                 <thead class="thead">
                                     <tr>
                                         <th>No. Ayuda</th>
@@ -78,7 +78,7 @@
                                             
 											<td>{{ $ayudassociale->documento }}</td>
 											<td style="text-align: right">{{ number_format($ayudassociale->montototal,2,',','.') }}</td>
-											<td>{{ $ayudassociale->concepto }}</td>
+											<td>{!! $ayudassociale->concepto !!}</td>
 											<td>{{ $ayudassociale->unidadadministrativa->denominacion }}</td>
 											<td>{{ $ayudassociale->tipodecompromiso->nombre }}</td>
 											<td>{{ $ayudassociale->beneficiario->nombre }}</td>
@@ -96,14 +96,14 @@
 
                                             <td>
                                                
-                                            <a class="btn btn-sm btn-primary " href="{{ route('ayudassociales.pdf',$ayudassociale->id) }}" data-toggle="tooltip" data-placement="top" title="Imprimir Ayuda Social"><i class="fas fa-print"></i> Imprimir</a>
+                                            <a class="btn btn-sm btn-block btn btn-outline-dark btn-block" href="{{ route('ayudassociales.pdf',$ayudassociale->id) }}" data-toggle="tooltip" data-placement="top" title="Imprimir Ayuda Social" target="_black"><i class="fas fa-print"></i> Imprimir</a>
                                             
                                             <!--
-                                            <form action="{{ route('ayudassociales.modificar',$ayudassociale->id) }}" method="POST">
+                                            <form action="{{ route('ayudassociales.modificar',$ayudassociale->id) }}" method="POST" class="submit-prevent-form">
                                                
                                                     @csrf
                                                     @method('PATCH')
-                                                    <button type="submit" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="top" title="Modificar Ayuda Social"><i class="fa fa-fw fa-check"></i></button>
+                                                    <button type="submit" class="btn btn-sm btn-block btn btn-outline-dark btn-block" data-toggle="tooltip" data-placement="top" title="Modificar Ayuda Social"><i class="fa fa-fw fa-check"></i></button>
                                             </form> -->
                                             
                                         </td>
@@ -120,6 +120,15 @@
     </div>
 @stop
 
-@section('css')
-    <link rel="stylesheet" href="/css/admin_custom.css">
-@stop
+ @section('css')
+    
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="{{ asset('css/submit.css') }}">
+        
+    @stop
+    
+    @section('js')
+    <script src="{{ asset('js/submit.js') }}"></script>
+    
+    
+    @stop

@@ -92,6 +92,14 @@
                             {{ $pagado->tipomovimiento->descripcion}}
                         </div>
                         </div>
+
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <strong>Fecha:</strong>
+                                {{ $pagado->created_at->toDateString()}}
+                            </div>
+                            </div>
+
                         </div>
 
                     </div>
@@ -101,6 +109,15 @@
     </section>
     @stop
 
-@section('css')
-    <link rel="stylesheet" href="/css/admin_custom.css">
-@stop
+ @section('css')
+    
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="{{ asset('css/submit.css') }}">
+        
+    @stop
+    
+    @section('js')
+    <script src="{{ asset('js/submit.js') }}"></script>
+    
+    
+    @stop

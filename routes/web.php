@@ -24,67 +24,223 @@ Route::get('/', function () {
 
 Auth::routes(['register' => false]);
 
+
+//reportes
+Route::get('users/reportes', [App\Http\Controllers\UserController::class, 'reportes'])->name('users.reportes')->middleware('auth');
+
+Route::post('users/reporte_pdf', [App\Http\Controllers\UserController::class, 'reporte_pdf'])->name('users.reporte_pdf')->middleware('auth');
+
 Route::resource('users', App\Http\Controllers\UserController::class)->middleware('auth');
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('auth');
 
+
+//reportes
+Route::get('tipobos/reportes', [App\Http\Controllers\TipoboController::class, 'reportes'])->name('tipobos.reportes')->middleware('auth');
+
+Route::post('tipobos/reporte_pdf', [App\Http\Controllers\TipoboController::class, 'reporte_pdf'])->name('tipobos.reporte_pdf')->middleware('auth');
+
 Route::resource('tipobos', App\Http\Controllers\TipoboController::class)->middleware('auth');
+
+
+//reportes
+Route::get('bos/reportes', [App\Http\Controllers\BoController::class, 'reportes'])->name('bos.reportes')->middleware('auth');
+
+Route::post('bos/reporte_pdf', [App\Http\Controllers\BoController::class, 'reporte_pdf'])->name('bos.reporte_pdf')->middleware('auth');
+
 
 Route::resource('bos', App\Http\Controllers\BoController::class)->middleware('auth');
 
 Route::resource('tipossgps', App\Http\Controllers\TipossgpController::class)->middleware('auth');
 
+//reportes
+Route::get('estados/reportes', [App\Http\Controllers\EstadoController::class, 'reportes'])->name('estados.reportes')->middleware('auth');
+
+Route::post('estados/reporte_pdf', [App\Http\Controllers\EstadoController::class, 'reporte_pdf'])->name('estados.reporte_pdf')->middleware('auth');
+
 Route::resource('estados', App\Http\Controllers\EstadoController::class)->middleware('auth');
+
+
+//reportes
+Route::get('instituciones/reportes', [App\Http\Controllers\InstitucioneController::class, 'reportes'])->name('instituciones.reportes')->middleware('auth');
+
+Route::post('instituciones/reporte_pdf', [App\Http\Controllers\InstitucioneController::class, 'reporte_pdf'])->name('instituciones.reporte_pdf')->middleware('auth');
 
 Route::resource('instituciones', App\Http\Controllers\InstitucioneController::class)->middleware('auth');
 
 Route::resource('financiamientos', App\Http\Controllers\FinanciamientoController::class)->middleware('auth');
 
+
+//reportes
+Route::get('municipios/reportes', [App\Http\Controllers\MunicipioController::class, 'reportes'])->name('municipios.reportes')->middleware('auth');
+
+Route::post('municipios/reporte_pdf', [App\Http\Controllers\MunicipioController::class, 'reporte_pdf'])->name('municipios.reporte_pdf')->middleware('auth');
+
 Route::resource('municipios', App\Http\Controllers\MunicipioController::class)->middleware('auth');
 
 Route::resource('ejecuciondetalles', App\Http\Controllers\EjecuciondetalleController::class)->middleware('auth');
 
+
+//reportes
+Route::get('objetivoshistoricos/reportes', [App\Http\Controllers\ObjetivoshistoricoController::class, 'reportes'])->name('objetivoshistoricos.reportes')->middleware('auth');
+
+Route::post('objetivoshistoricos/reporte_pdf', [App\Http\Controllers\ObjetivoshistoricoController::class, 'reporte_pdf'])->name('objetivoshistoricos.reporte_pdf')->middleware('auth');
+
 Route::resource('objetivoshistoricos', App\Http\Controllers\ObjetivoshistoricoController::class)->middleware('auth');
+
+
+//reportes
+Route::get('objetivosestrategicos/reportes', [App\Http\Controllers\ObjetivosestrategicoController::class, 'reportes'])->name('objetivosestrategicos.reportes')->middleware('auth');
+
+Route::post('objetivosestrategicos/reporte_pdf', [App\Http\Controllers\ObjetivosestrategicoController::class, 'reporte_pdf'])->name('objetivosestrategicos.reporte_pdf')->middleware('auth');
 
 Route::resource('objetivosestrategicos', App\Http\Controllers\ObjetivosestrategicoController::class)->middleware('auth');
 
+
+//reportes
+Route::get('objetivonacionales/reportes', [App\Http\Controllers\ObjetivonacionaleController::class, 'reportes'])->name('objetivonacionales.reportes')->middleware('auth');
+
+Route::post('objetivonacionales/reporte_pdf', [App\Http\Controllers\ObjetivonacionaleController::class, 'reporte_pdf'])->name('objetivonacionales.reporte_pdf')->middleware('auth');
+
 Route::resource('objetivonacionales', App\Http\Controllers\ObjetivonacionaleController::class)->middleware('auth');
+
+
+//reportes
+Route::get('objetivopeis/reportes', [App\Http\Controllers\ObjetivopeiController::class, 'reportes'])->name('objetivopeis.reportes')->middleware('auth');
+
+Route::post('objetivopeis/reporte_pdf', [App\Http\Controllers\ObjetivopeiController::class, 'reporte_pdf'])->name('objetivopeis.reporte_pdf')->middleware('auth');
 
 Route::resource('objetivopeis', App\Http\Controllers\ObjetivopeiController::class)->middleware('auth');
 
+
+//reportes
+Route::get('unidadmedidas/reportes', [App\Http\Controllers\UnidadmedidaController::class, 'reportes'])->name('unidadmedidas.reportes')->middleware('auth');
+
+Route::post('unidadmedidas/reporte_pdf', [App\Http\Controllers\UnidadmedidaController::class, 'reporte_pdf'])->name('unidadmedidas.reporte_pdf')->middleware('auth');
+
 Route::resource('unidadmedidas', App\Http\Controllers\UnidadmedidaController::class)->middleware('auth');
+
+
+//reportes
+Route::get('clasificadorpresupuestarios/reportes', [App\Http\Controllers\ClasificadorpresupuestarioController::class, 'reportes'])->name('clasificadorpresupuestarios.reportes')->middleware('auth');
+
+Route::post('clasificadorpresupuestarios/reporte_pdf', [App\Http\Controllers\ClasificadorpresupuestarioController::class, 'reporte_pdf'])->name('clasificadorpresupuestarios.reporte_pdf')->middleware('auth');
 
 Route::resource('clasificadorpresupuestarios', App\Http\Controllers\ClasificadorpresupuestarioController::class)->middleware('auth');
 
+
+//reportes
+Route::get('productos/reportes', [App\Http\Controllers\ProductoController::class, 'reportes'])->name('productos.reportes')->middleware('auth');
+
+Route::post('productos/reporte_pdf', [App\Http\Controllers\ProductoController::class, 'reporte_pdf'])->name('productos.reporte_pdf')->middleware('auth');
+
 Route::resource('productos', App\Http\Controllers\ProductoController::class)->middleware('auth');
+
+
+//reportes
+Route::get('productoscps/reportes', [App\Http\Controllers\ProductoscpController::class, 'reportes'])->name('productoscps.reportes')->middleware('auth');
+
+Route::post('productoscps/reporte_pdf', [App\Http\Controllers\ProductoscpController::class, 'reporte_pdf'])->name('productoscps.reporte_pdf')->middleware('auth');
 
 Route::resource('productoscps', App\Http\Controllers\ProductoscpController::class)->middleware('auth');
 
 //Route::resource('requisiciones', App\Http\Controllers\RequisicioneController::class)->middleware('auth');
 
+//reportes
+Route::get('poas/reportes', [App\Http\Controllers\PoaController::class, 'reportes'])->name('poas.reportes')->middleware('auth');
+
+Route::post('poas/reporte_pdf', [App\Http\Controllers\PoaController::class, 'reporte_pdf'])->name('poas.reporte_pdf')->middleware('auth');
+
+
 Route::resource('poas', App\Http\Controllers\PoaController::class)->middleware('auth');
+
+//reportes
+Route::get('metas/reportes', [App\Http\Controllers\MetaController::class, 'reportes'])->name('metas.reportes')->middleware('auth');
+
+Route::post('metas/reporte_pdf', [App\Http\Controllers\MetaController::class, 'reporte_pdf'])->name('metas.reporte_pdf')->middleware('auth');
 
 Route::resource('metas', App\Http\Controllers\MetaController::class)->middleware('auth');
 
+
+//reportes
+Route::get('ejercicios/reportes', [App\Http\Controllers\EjercicioController::class, 'reportes'])->name('ejercicios.reportes')->middleware('auth');
+
+Route::post('ejercicios/reporte_pdf', [App\Http\Controllers\EjercicioController::class, 'reporte_pdf'])->name('ejercicios.reporte_pdf')->middleware('auth');
+
 Route::resource('ejercicios', App\Http\Controllers\EjercicioController::class)->middleware('auth');
+
+
+//reportes
+Route::get('segmentos/reportes', [App\Http\Controllers\SegmentoController::class, 'reportes'])->name('segmentos.reportes')->middleware('auth');
+
+Route::post('segmentos/reporte_pdf', [App\Http\Controllers\SegmentoController::class, 'reporte_pdf'])->name('segmentos.reporte_pdf')->middleware('auth');
 
 Route::resource('segmentos', App\Http\Controllers\SegmentoController::class)->middleware('auth');
 
+
+//reportes
+Route::get('clases/reportes', [App\Http\Controllers\ClaseController::class, 'reportes'])->name('clases.reportes')->middleware('auth');
+
+Route::post('clases/reporte_pdf', [App\Http\Controllers\ClaseController::class, 'reporte_pdf'])->name('clases.reporte_pdf')->middleware('auth');
+
 Route::resource('clases', App\Http\Controllers\ClaseController::class)->middleware('auth');
+
+
+//reportes
+Route::get('unidadadministrativas/reportes', [App\Http\Controllers\UnidadadministrativaController::class, 'reportes'])->name('unidadadministrativas.reportes')->middleware('auth');
+
+Route::post('unidadadministrativas/reporte_pdf', [App\Http\Controllers\UnidadadministrativaController::class, 'reporte_pdf'])->name('unidadadministrativas.reporte_pdf')->middleware('auth');
 
 Route::resource('unidadadministrativas', App\Http\Controllers\UnidadadministrativaController::class)->middleware('auth');
 
+Route::get('ejecuciones/formular', [App\Http\Controllers\EjecucioneController::class, 'formular'])->name('ejecuciones.formular')->middleware('auth');
+
+Route::post('ejecuciones/store_formular', [App\Http\Controllers\EjecucioneController::class, 'store_formular'])->name('ejecuciones.store_formular')->middleware('auth');
+
+Route::get('ejecuciones/create_formular', [App\Http\Controllers\EjecucioneController::class, 'create_formular'])->name('ejecuciones.create_formular')->middleware('auth');
+
 Route::get('ejecuciones/pdf', [App\Http\Controllers\EjecucioneController::class, 'pdf'])->name('ejecuciones.pdf')->middleware('auth');
+
+
+//reportes
+Route::get('ejecuciones/reportes', [App\Http\Controllers\EjecucioneController::class, 'reportes'])->name('ejecuciones.reportes')->middleware('auth');
+
+Route::post('ejecuciones/reporte_pdf', [App\Http\Controllers\EjecucioneController::class, 'reporte_pdf'])->name('ejecuciones.reporte_pdf')->middleware('auth');
 
 Route::resource('ejecuciones', App\Http\Controllers\EjecucioneController::class)->middleware('auth');
 
+
+//reportes
+Route::get('objetivogenerales/reportes', [App\Http\Controllers\ObjetivogeneraleController::class, 'reportes'])->name('objetivogenerales.reportes')->middleware('auth');
+
+Route::post('objetivogenerales/reporte_pdf', [App\Http\Controllers\ObjetivogeneraleController::class, 'reporte_pdf'])->name('objetivogenerales.reporte_pdf')->middleware('auth');
+
 Route::resource('objetivogenerales', App\Http\Controllers\ObjetivogeneraleController::class)->middleware('auth');
 
+
+//reportes
+Route::get('objetivomunicipales/reportes', [App\Http\Controllers\ObjetivomunicipaleController::class, 'reportes'])->name('objetivomunicipales.reportes')->middleware('auth');
+
+Route::post('objetivomunicipales/reporte_pdf', [App\Http\Controllers\ObjetivomunicipaleController::class, 'reporte_pdf'])->name('objetivomunicipales.reporte_pdf')->middleware('auth');
+
 Route::resource('objetivomunicipales', App\Http\Controllers\ObjetivomunicipaleController::class)->middleware('auth');
+
+
+//reportes
+Route::get('familias/reportes', [App\Http\Controllers\FamiliaController::class, 'reportes'])->name('familias.reportes')->middleware('auth');
+
+Route::post('familias/reporte_pdf', [App\Http\Controllers\FamiliaController::class, 'reporte_pdf'])->name('familias.reporte_pdf')->middleware('auth');
 
 Route::resource('familias', App\Http\Controllers\FamiliaController::class)->middleware('auth');
 
 Route::resource('tipodecompromisos', App\Http\Controllers\TipodecompromisoController::class)->middleware('auth');
+
+
+//reportes
+Route::get('beneficiarios/reportes', [App\Http\Controllers\BeneficiarioController::class, 'reportes'])->name('beneficiarios.reportes')->middleware('auth');
+
+Route::post('beneficiarios/reporte_pdf', [App\Http\Controllers\BeneficiarioController::class, 'reporte_pdf'])->name('beneficiarios.reporte_pdf')->middleware('auth');
+
 
 Route::resource('beneficiarios', App\Http\Controllers\BeneficiarioController::class)->middleware('auth');
 
@@ -109,6 +265,10 @@ Route::get('ayudassociales/procesadas', [App\Http\Controllers\AyudassocialeContr
 Route::get('ayudassociales/anuladas', [App\Http\Controllers\AyudassocialeController::class, 'indexanuladas'])->name('ayudassociales.anuladas')->middleware('auth');
 
 Route::get('ayudassociales/aprobadas', [App\Http\Controllers\AyudassocialeController::class, 'indexaprobadas'])->name('ayudassociales.aprobadas')->middleware('auth');
+
+Route::get('ayudassociales/reportes', [App\Http\Controllers\AyudassocialeController::class, 'reportes'])->name('ayudassociales.reportes')->middleware('auth');
+
+Route::post('ayudassociales/reporte_pdf', [App\Http\Controllers\AyudassocialeController::class, 'reporte_pdf'])->name('ayudassociales.reporte_pdf')->middleware('auth');
 
 Route::resource('ayudassociales', App\Http\Controllers\AyudassocialeController::class)->middleware('auth');
 
@@ -139,10 +299,16 @@ Route::post('analisis/requisicion', [App\Http\Controllers\AnalisiController::cla
 
 Route::post('analisis/{analisis}/requisicion', [App\Http\Controllers\AnalisiController::class, 'requisicion']);
 
+Route::get('analisis/reportes', [App\Http\Controllers\AnalisiController::class, 'reportes'])->name('analisis.reportes')->middleware('auth');
+
+Route::post('analisis/reporte_pdf', [App\Http\Controllers\AnalisiController::class, 'reporte_pdf'])->name('analisis.reporte_pdf')->middleware('auth');
+
 
 Route::resource('analisis', App\Http\Controllers\AnalisiController::class)->middleware('auth');
 
 Route::post('/detallesanalisis/storedos', [App\Http\Controllers\DetallesanalisiController::class, 'storedos'])->name('detallesanalisis.storedos')->middleware('auth');
+
+Route::post('/detallesanalisis/storetres', [App\Http\Controllers\DetallesanalisiController::class, 'storetres'])->name('detallesanalisis.storetres')->middleware('auth');
 
 Route::get('/detallesanalisis/createwithbos/{analisi}', [App\Http\Controllers\DetallesanalisiController::class, 'createwithbos'])->name('detallesanalisis.createwithbos')->middleware('auth');
 
@@ -171,6 +337,10 @@ Route::get('compras/analisis', [App\Http\Controllers\CompraController::class, 'i
 
 Route::get('compras/pdf/{compra}', [App\Http\Controllers\CompraController::class, 'pdf'])->name('compras.pdf')->middleware('auth');
 
+Route::get('compras/reportes', [App\Http\Controllers\CompraController::class, 'reportes'])->name('compras.reportes')->middleware('auth');
+
+Route::post('compras/reporte_pdf', [App\Http\Controllers\CompraController::class, 'reporte_pdf'])->name('compras.reporte_pdf')->middleware('auth');
+
 
 Route::resource('compras', App\Http\Controllers\CompraController::class)->middleware('auth');
 
@@ -182,7 +352,14 @@ Route::get('/requisiciones/agregar/{requisicione}', [App\Http\Controllers\Requis
 
 Route::get('requisiciones/pdf/{requisicione}', [App\Http\Controllers\RequisicioneController::class, 'pdf'])->name('requisiciones.pdf')->middleware('auth');
 
+
+Route::get('requisiciones/pdfdepurar/{requisicione}', [App\Http\Controllers\RequisicioneController::class, 'pdfdepurar'])->name('requisiciones.pdfdepurar')->middleware('auth');
+
 Route::get('requisiciones/procesadas', [App\Http\Controllers\RequisicioneController::class, 'indexprocesadas'])->name('requisiciones.procesadas')->middleware('auth');
+
+Route::get('requisiciones/reportes', [App\Http\Controllers\RequisicioneController::class, 'reportes'])->name('requisiciones.reportes')->middleware('auth');
+
+Route::post('requisiciones/reporte_pdf', [App\Http\Controllers\RequisicioneController::class, 'reporte_pdf'])->name('requisiciones.reporte_pdf')->middleware('auth');
 
 Route::get('requisiciones/anuladas', [App\Http\Controllers\RequisicioneController::class, 'indexanuladas'])->name('requisiciones.anuladas')->middleware('auth');
 
@@ -214,9 +391,24 @@ Route::get('ordenpagos/aprobadas', [App\Http\Controllers\OrdenpagoController::cl
 
 Route::get('ordenpagos/procesados', [App\Http\Controllers\OrdenpagoController::class, 'indexprocesadas'])->name('ordenpagos.procesados')->middleware('auth');
 
+Route::get('ordenpagos/financieras', [App\Http\Controllers\OrdenpagoController::class, 'indexfinancieras'])->name('ordenpagos.financieras')->middleware('auth');
+
+Route::get('ordenpagos/conimputacion', [App\Http\Controllers\OrdenpagoController::class, 'indexconimputacion'])->name('ordenpagos.conimputacion')->middleware('auth');
+
 Route::get('ordenpagos/anulados', [App\Http\Controllers\OrdenpagoController::class, 'indexanuladas'])->name('ordenpagos.anulados')->middleware('auth');
 
 Route::patch('/ordenpagos/anular/{ordenpago}', [App\Http\Controllers\OrdenpagoController::class, 'anular'])->name('ordenpagos.anular')->middleware('auth');
+
+Route::get('ordenpagos/crear', [App\Http\Controllers\OrdenpagoController::class, 'crearfinanciera'])->name('ordenpagos.crear')->middleware('auth');
+
+Route::post('ordenpagos/storefinanciera', [App\Http\Controllers\OrdenpagoController::class, 'storefinanciera'])->name('ordenpagos.storefinanciera')->middleware('auth');
+
+
+//reportes
+Route::get('ordenpagos/reportes', [App\Http\Controllers\OrdenpagoController::class, 'reportes'])->name('ordenpagos.reportes')->middleware('auth');
+
+Route::post('ordenpagos/reporte_pdf', [App\Http\Controllers\OrdenpagoController::class, 'reporte_pdf'])->name('ordenpagos.reporte_pdf')->middleware('auth');
+
 
 Route::resource('ordenpagos', App\Http\Controllers\OrdenpagoController::class)->middleware('auth');
 
@@ -227,6 +419,11 @@ Route::resource('tiporetenciones', App\Http\Controllers\TiporetencioneController
 Route::resource('retenciones', App\Http\Controllers\RetencioneController::class)->middleware('auth');
 
 Route::resource('bancos', App\Http\Controllers\BancoController::class)->middleware('auth');
+//reportes
+Route::get('cuentasbancarias/reportes', [App\Http\Controllers\CuentasbancariaController::class, 'reportes'])->name('cuentasbancarias.reportes')->middleware('auth');
+
+Route::post('cuentasbancarias/reporte_pdf', [App\Http\Controllers\CuentasbancariaController::class, 'reporte_pdf'])->name('cuentasbancarias.reporte_pdf')->middleware('auth');
+
 
 Route::resource('cuentasbancarias', App\Http\Controllers\CuentasbancariaController::class)->middleware('auth');
 
@@ -252,13 +449,22 @@ Route::get('pagados/anulados', [App\Http\Controllers\PagadoController::class, 'i
 
 Route::patch('/pagados/anular/{pagado}', [App\Http\Controllers\PagadoController::class, 'anular'])->name('pagados.anular')->middleware('auth');
 
-//Route::get('/pagados/reversar/{pagado}', [App\Http\Controllers\PagadoController::class, 'reversar'])->name('pagados.reversar')->middleware('auth');
+Route::get('/pagados/reversar/{pagado}', [App\Http\Controllers\PagadoController::class, 'reversar'])->name('pagados.reversar')->middleware('auth');
+
+Route::get('/pagados/actualizar/{pagado}', [App\Http\Controllers\PagadoController::class, 'actualizar'])->name('pagados.actualizar')->middleware('auth');
 
 Route::patch('/pagados/aprobar/{pagado}', [App\Http\Controllers\PagadoController::class, 'aprobar'])->name('pagados.aprobar')->middleware('auth');
 
 Route::get('/pagados/agregarorden/{pagado}', [App\Http\Controllers\PagadoController::class, 'agregarorden'])->name('pagados.agregarorden')->middleware('auth');
 
 Route::get('/pagados/agregartransferencia/{pagado}', [App\Http\Controllers\PagadoController::class, 'agregartransferencia'])->name('pagados.agregartransferencia')->middleware('auth');
+
+
+//reportes
+Route::get('pagados/reportes', [App\Http\Controllers\PagadoController::class, 'reportes'])->name('pagados.reportes')->middleware('auth');
+
+Route::post('pagados/reporte_pdf', [App\Http\Controllers\PagadoController::class, 'reporte_pdf'])->name('pagados.reporte_pdf')->middleware('auth');
+
 
 Route::resource('pagados', App\Http\Controllers\PagadoController::class)->middleware('auth');
 
@@ -294,7 +500,13 @@ Route::get('/compromisos/reversarprecompromiso/{precompromiso}', [App\Http\Contr
 
 Route::get('compromisos/aprobadas', [App\Http\Controllers\CompromisoController::class, 'indexaprobadas'])->name('compromisos.aprobadas')->middleware('auth');
 
-Route::patch('/compromisos/modificar/{compromiso}', [App\Http\Controllers\CompromisoController::class, 'modificar'])->name('compromisos.modificar')->middleware('auth');
+Route::get('/compromisos/modificar/{compromiso}', [App\Http\Controllers\CompromisoController::class, 'modificar'])->name('compromisos.modificar')->middleware('auth');
+
+//reportes
+Route::get('compromisos/reportes', [App\Http\Controllers\CompromisoController::class, 'reportes'])->name('compromisos.reportes')->middleware('auth');
+
+Route::post('compromisos/reporte_pdf', [App\Http\Controllers\CompromisoController::class, 'reporte_pdf'])->name('compromisos.reporte_pdf')->middleware('auth');
+
 
 Route::resource('compromisos', App\Http\Controllers\CompromisoController::class)->middleware('auth');
 
@@ -320,6 +532,13 @@ Route::get('ajustescompromisos/anulados', [App\Http\Controllers\Ajustescompromis
 
 Route::get('/ajustescompromisos/agregarcompromiso/{ajustecompromiso}', [App\Http\Controllers\AjustescompromisoController::class, 'agregarcompromiso'])->name('ajustescompromisos.agregarcompromiso')->middleware('auth');
 
+
+//reportes
+Route::get('ajustescompromisos/reportes', [App\Http\Controllers\AjustescompromisoController::class, 'reportes'])->name('ajustescompromisos.reportes')->middleware('auth');
+
+Route::post('ajustescompromisos/reporte_pdf', [App\Http\Controllers\AjustescompromisoController::class, 'reporte_pdf'])->name('ajustescompromisos.reporte_pdf')->middleware('auth');
+
+
 Route::resource('ajustescompromisos', App\Http\Controllers\AjustescompromisoController::class)->middleware('auth');
 
 Route::get('/modificaciones/agregar/{modificacion}', [App\Http\Controllers\ModificacioneController::class, 'agregarmodificacion'])->name('modificaciones.agregarmodificacion')->middleware('auth');
@@ -336,6 +555,11 @@ Route::get('modificaciones/pdf/{modificacion}', [App\Http\Controllers\Modificaci
 
 Route::get('/modificaciones/reversar/{modificacion}', [App\Http\Controllers\ModificacioneController::class, 'reversar'])->name('modificaciones.reversar')->middleware('auth');
 
+
+//reportes
+Route::get('modificaciones/reportes', [App\Http\Controllers\ModificacioneController::class, 'reportes'])->name('modificaciones.reportes')->middleware('auth');
+
+Route::post('modificaciones/reporte_pdf', [App\Http\Controllers\ModificacioneController::class, 'reporte_pdf'])->name('modificaciones.reporte_pdf')->middleware('auth');
 
 Route::resource('modificaciones', App\Http\Controllers\ModificacioneController::class)->middleware('auth');
 
@@ -370,6 +594,12 @@ Route::get('precompromisos/anuladas', [App\Http\Controllers\PrecompromisoControl
 
 Route::get('/precompromisos/pdf/{precompromiso}', [App\Http\Controllers\PrecompromisoController::class, 'pdf'])->name('precompromisos.pdf')->middleware('auth');
 
+//reportes
+Route::get('precompromisos/reportes', [App\Http\Controllers\PrecompromisoController::class, 'reportes'])->name('precompromisos.reportes')->middleware('auth');
+
+Route::post('precompromisos/reporte_pdf', [App\Http\Controllers\PrecompromisoController::class, 'reporte_pdf'])->name('precompromisos.reporte_pdf')->middleware('auth');
+
+
 Route::resource('precompromisos', App\Http\Controllers\PrecompromisoController::class)->middleware('auth');
 
 Route::post('detallesprecompromisos/ejecucionpre', [App\Http\Controllers\DetallesprecompromisoController::class, 'ejecucionpre']);
@@ -384,6 +614,8 @@ Route::resource('detallesprecompromisos', App\Http\Controllers\Detallesprecompro
 //Route::resource('notadebitos', App\Http\Controllers\NotadebitoController::class)->middleware('auth');
 
 Route::get('transferencias/pdf/{transf}', [App\Http\Controllers\TransferenciaController::class, 'pdf'])->name('transferencias.pdf')->middleware('auth');
+
+Route::get('transferencias/reversar/{transf}', [App\Http\Controllers\TransferenciaController::class, 'reversar'])->name('transferencias.reversar')->middleware('auth');
 
 
 Route::get('transferencias/miagregar', [App\Http\Controllers\TransferenciaController::class, 'miagregar'])->name('transferencias.miagregar')->middleware('auth');
@@ -400,6 +632,12 @@ Route::get('/transferencias/agregar', [App\Http\Controllers\TransferenciaControl
 
 Route::get('/transferencias/agregartransferencia', [App\Http\Controllers\TransferenciaController::class, 'agregartransferencia'])->name('transferencias.agregartransferencia')->middleware('auth');
 
+//reportes
+Route::get('transferencias/reportes', [App\Http\Controllers\TransferenciaController::class, 'reportes'])->name('transferencias.reportes')->middleware('auth');
+
+Route::post('transferencias/reporte_pdf', [App\Http\Controllers\TransferenciaController::class, 'reporte_pdf'])->name('transferencias.reporte_pdf')->middleware('auth');
+
+
 Route::resource('transferencias', App\Http\Controllers\TransferenciaController::class)->middleware('auth');
 
 Route::resource('facturas', App\Http\Controllers\FacturaController::class)->middleware('auth');
@@ -408,11 +646,27 @@ Route::post('notasdecreditos/cuentas', [App\Http\Controllers\NotasdecreditoContr
 
 Route::post('notasdecreditos/{notas}/cuentas', [App\Http\Controllers\NotasdecreditoController::class, 'cuentas']);
 
+Route::get('notasdecreditos/pdf/{transf}', [App\Http\Controllers\NotasdecreditoController::class, 'pdf'])->name('notasdecreditos.pdf')->middleware('auth');
+
+//reportes
+Route::get('notasdecreditos/reportes', [App\Http\Controllers\NotasdecreditoController::class, 'reportes'])->name('notasdecreditos.reportes')->middleware('auth');
+
+Route::post('notasdecreditos/reporte_pdf', [App\Http\Controllers\NotasdecreditoController::class, 'reporte_pdf'])->name('notasdecreditos.reporte_pdf')->middleware('auth');
+
+
 Route::resource('notasdecreditos', App\Http\Controllers\NotasdecreditoController::class)->middleware('auth');
 
 Route::post('notasdedebitos/cuentasdeb', [App\Http\Controllers\NotasdedebitoController::class, 'cuentasdeb']);
 
 Route::post('notasdedebitos/{notas}/cuentasdeb', [App\Http\Controllers\NotasdedebitoController::class, 'cuentasdeb']);
+
+Route::get('notasdedebitos/pdf/{transf}', [App\Http\Controllers\NotasdedebitoController::class, 'pdf'])->name('notasdedebitos.pdf')->middleware('auth');
+
+//reportes
+Route::get('notasdedebitos/reportes', [App\Http\Controllers\NotasdedebitoController::class, 'reportes'])->name('notasdedebitos.reportes')->middleware('auth');
+
+Route::post('notasdedebitos/reporte_pdf', [App\Http\Controllers\NotasdedebitoController::class, 'reporte_pdf'])->name('notasdedebitos.reporte_pdf')->middleware('auth');
+
 
 Route::resource('notasdedebitos', App\Http\Controllers\NotasdedebitoController::class)->middleware('auth');
 
@@ -424,10 +678,27 @@ Route::post('transferenciaentrecuentas/cuentasorigen', [App\Http\Controllers\Tra
 
 Route::post('transferenciaentrecuentas/{transferencia}/cuentasorigen', [App\Http\Controllers\TransferenciaentrecuentaController::class, 'cuentasorigen']);
 
+Route::get('transferenciaentrecuentas/pdf/{transf}', [App\Http\Controllers\TransferenciaentrecuentaController::class, 'pdf'])->name('transferenciaentrecuentas.pdf')->middleware('auth');
+
+//reportes
+Route::get('transferenciaentrecuentas/reportes', [App\Http\Controllers\TransferenciaentrecuentaController::class, 'reportes'])->name('transferenciaentrecuentas.reportes')->middleware('auth');
+
+Route::post('transferenciaentrecuentas/reporte_pdf', [App\Http\Controllers\TransferenciaentrecuentaController::class, 'reporte_pdf'])->name('transferenciaentrecuentas.reporte_pdf')->middleware('auth');
+
+
+
 Route::resource('transferenciaentrecuentas', App\Http\Controllers\TransferenciaentrecuentaController::class)->middleware('auth');
+
+Route::get('comprobantesretenciones/islrpdf/{comprobante}', [App\Http\Controllers\ComprobantesretencioneController::class, 'islrpdf'])->name('comprobantesretenciones.islrpdf')->middleware('auth');
+
+//reportes
+Route::get('comprobantesretenciones/reportes', [App\Http\Controllers\ComprobantesretencioneController::class, 'reportes'])->name('comprobantesretenciones.reportes')->middleware('auth');
+
+Route::post('comprobantesretenciones/reporte_pdf', [App\Http\Controllers\ComprobantesretencioneController::class, 'reporte_pdf'])->name('comprobantesretenciones.reporte_pdf')->middleware('auth');
 
 Route::resource('comprobantesretenciones', App\Http\Controllers\ComprobantesretencioneController::class)->middleware('auth');
 
 Route::resource('detallesajustes', App\Http\Controllers\DetallesajusteController::class)->middleware('auth');
 
+Route::resource('configuraciones', App\Http\Controllers\ConfiguracioneController::class)->middleware('auth');
 

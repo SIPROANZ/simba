@@ -21,19 +21,19 @@
                             </span>
 
                              <div class="float-right">
-                                <a href="{{ route('ordenpagos.compromisos') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
+                                <a href="{{ route('ordenpagos.compromisos') }}" class="btn btn-outline-dark btn-sm float-right"  data-placement="left">
                                   {{ __('Crear Orden de Pago') }}
                                 </a>
-                                <a href="{{ route('ordenpagos.index') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
+                                <a href="{{ route('ordenpagos.index') }}" class="btn btn-outline-dark btn-sm float-right"  data-placement="left">
                                 {{ __('En Proceso') }}
                                 </a>
-                                <a href="{{ route('ordenpagos.procesados') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
+                                <a href="{{ route('ordenpagos.procesados') }}" class="btn btn-outline-dark btn-sm float-right"  data-placement="left">
                                 {{ __('Procesados') }}
                                 </a>
-                                <a href="{{ route('ordenpagos.aprobados') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
+                                <a href="{{ route('ordenpagos.aprobados') }}" class="btn btn-outline-dark btn-sm float-right"  data-placement="left">
                                 {{ __('Aprobados') }}
                                 </a>
-                                <a href="{{ route('ordenpagos.anulados') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
+                                <a href="{{ route('ordenpagos.anulados') }}" class="btn btn-outline-dark btn-sm float-right"  data-placement="left">
                                 {{ __('Anulados') }}
                                 </a>
                               </div>
@@ -55,7 +55,7 @@
 
 
                         <div class="table-responsive">
-                            <table class="table table-striped table-hover">
+                                  <table class="table table-hover  small table-bordered table-striped">
                                 <thead class="thead">
                                     <tr>
                                        
@@ -111,13 +111,15 @@
                                                     
                                                 
                                                     
-                                                    <a class="btn btn-sm btn-dark " href="{{ route('ordenpagos.pdf',$ordenpago->id) }}" data-toggle="tooltip" data-placement="top" title="Imprimir Orden de Pago" target="_black"><i class="fas fa-print"></i> Imprimir</a>
-                                                    <a class="btn btn-sm btn-info " href="{{ route('ordenpagos.reversar',$ordenpago->id) }}" data-toggle="tooltip" data-placement="top" title="Reversar Orden de Pago"><i class="fas fa-check"></i> Reversar</a>
-                                                      
-                                                  {{--  <form action="{{ route('ordenpagos.anular',$ordenpago->id) }}" method="POST">
+                                                    <a class="btn btn-sm btn-block btn btn-outline-dark btn-block " href="{{ route('ordenpagos.pdf',$ordenpago->id) }}" data-toggle="tooltip" data-placement="top" title="Imprimir Orden de Pago" target="_black"><i class="fas fa-print"></i> Imprimir</a>
+                                                   
+                                                    @can('admin.reversar')
+                                                    <a class="btn btn-sm btn-block btn btn-outline-dark btn-block " href="{{ route('ordenpagos.reversar',$ordenpago->id) }}" data-toggle="tooltip" data-placement="top" title="Reversar Orden de Pago"><i class="fas fa-check"></i> Reversar</a>
+                                                     @endcan 
+                                                  {{--  <form action="{{ route('ordenpagos.anular',$ordenpago->id) }}" method="POST" class="submit-prevent-form">
                                                     @csrf
                                                     @method('PATCH')
-                                                    <button type="submit" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Anular Orden de pago"><i class="fa fa-fw fa-trash"></i> Anular</button>
+                                                    <button type="submit" class="btn btn-outline-danger btn-sm btn-block submit-prevent-button" data-toggle="tooltip" data-placement="top" title="Anular Orden de pago"><i class="fa fa-fw fa-trash"></i> Anular</button>
                                                 </form>
                                                 --}}
 
@@ -136,6 +138,15 @@
     </div>
     @stop
 
-@section('css')
-    <link rel="stylesheet" href="/css/admin_custom.css">
-@stop
+ @section('css')
+    
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="{{ asset('css/submit.css') }}">
+        
+    @stop
+    
+    @section('js')
+    <script src="{{ asset('js/submit.js') }}"></script>
+    
+    
+    @stop

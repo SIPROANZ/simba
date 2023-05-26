@@ -53,6 +53,30 @@ class Clase extends Model
     {
         return $this->hasMany('App\Producto', 'clase_id', 'id');
     }
+
+    public function scopeDescripcion($query, $descripcion) {
+    	if ($descripcion) {
+    		return $query->where('nombre','like',"%$descripcion%");
+    	}
+    }
+
+    public function scopeFamilias($query, $familia) {
+    	if ($familia) {
+    		return $query->where('familia_id','like',"$familia");
+    	}
+    }
+
+    public function scopeFechaInicio($query, $inicio) {
+    	if ($inicio) {
+    		return $query->where('created_at','>=',"$inicio");
+    	}
+    }
+
+    public function scopeFechaFin($query, $fin) {
+    	if ($fin) {
+    		return $query->where('created_at','<=',"$fin");
+    	}
+    }
     
 
 }

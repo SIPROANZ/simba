@@ -4,8 +4,8 @@
 
         <div class="col-md-4">
         <div class="form-group">
-            {{ Form::label('Orden de pago') }}
-            {{ Form::text('ordenpago_id', $ordenpagos->id, ['class' => 'form-control' . ($errors->has('ordenpago_id') ? ' is-invalid' : ''), 'placeholder' => 'Ordenpago Id']) }}
+            {{ Form::label('Numero Orden de pago: ' . $ordenpagos->nordenpago) }}
+            {{ Form::hidden('ordenpago_id', $ordenpagos->id, ['class' => 'form-control' . ($errors->has('ordenpago_id') ? ' is-invalid' : ''), 'placeholder' => 'Ordenpago Id']) }}
             {!! $errors->first('ordenpago_id', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         </div>
@@ -13,7 +13,7 @@
         <div class="col-md-4">
         <div class="form-group">
             {{ Form::label('Beneficiario') }}
-            {{ Form::text('beneficiario_name', $ordenpagos->beneficiario->nombre,['class' => 'form-control' . ($errors->has('beneficiario_name') ? ' is-invalid' : ''), 'placeholder' => 'Beneficiario']) }}
+            {{ Form::text('beneficiario_name', $ordenpagos->beneficiario->nombre,['class' => 'form-control' . ($errors->has('beneficiario_name') ? ' is-invalid' : ''),'readonly', 'placeholder' => 'Beneficiario']) }}
             {!! $errors->first('beneficiario_name', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         </div>
@@ -21,24 +21,34 @@
         <div class="col-md-4">
         <div class="form-group">
             {{ Form::label('monto orden de pago') }}
-            {{ Form::number('montoordenpago', $ordenpagos->montoneto, ['class' => 'form-control' . ($errors->has('montoordenpago') ? ' is-invalid' : ''), 'placeholder' => 'monto orden de pago']) }}
+            {{ Form::text('montoordenpago', $ordenpagos->montoneto, ['class' => 'form-control' . ($errors->has('montoordenpago') ? ' is-invalid' : ''),'readonly', 'placeholder' => 'monto orden de pago']) }}
             {!! $errors->first('montoordenpago', '<div class="invalid-feedback">:message</div>') !!}
 
             
         </div>
         </div>
 
-        <div class="col-md-4">
+        
         <div class="form-group">
-            {{ Form::label('monto pagado') }}
-            {{ Form::number('montopagado', 0, ['class' => 'form-control' . ($errors->has('montopagado') ? ' is-invalid' : ''), 'placeholder' => 'Monto pagado']) }}
+         
+            {{ Form::hidden('montopagado', $pagado->montopagado, ['class' => 'form-control' . ($errors->has('montopagado') ? ' is-invalid' : ''), 'readonly', 'placeholder' => 'Monto pagado']) }}
             {!! $errors->first('montopagado', '<div class="invalid-feedback">:message</div>') !!}
 
-            {{ Form::hidden('correlativo', 1, ['class' => 'form-control' . ($errors->has('correlativo') ? ' is-invalid' : ''), 'placeholder' => 'Correlativo']) }}
+            {{ Form::hidden('correlativo', $pagado->correlativo, ['class' => 'form-control' . ($errors->has('correlativo') ? ' is-invalid' : ''), 'placeholder' => 'Correlativo']) }}
             {!! $errors->first('correlativo', '<div class="invalid-feedback">:message</div>') !!}
        
         </div>
-        </div>
+        
+
+        <div class="col-md-4">
+            <div class="form-group">
+                {{ Form::label('Fecha') }}
+                {{ Form::date('created_at', $pagado->created_at, ['class' => 'form-control' . ($errors->has('created_at') ? ' is-invalid' : ''), 'placeholder' => 'Fecha']) }}
+                {!! $errors->first('created_at', '<div class="invalid-feedback">:message</div>') !!}
+               
+           
+            </div>
+            </div>
 
             
         <div class="col-md-4">
@@ -73,11 +83,13 @@
         </div>
 
        
+
+       
         </div>
 
     </div>
     <br>
     <div class="box-footer mt20">
-        <button type="submit" class="btn btn-primary">Enviar</button>
+        <button type="submit" class="btn btn-primary submit-prevent-button">Enviar</button>
     </div>
 </div>

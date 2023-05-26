@@ -22,23 +22,23 @@
                              <div class="float-right">
                                
 
-                                <a href="{{ route('compras.analisis') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
-                                  {{ __('Crear Orden de Compra') }}
+                                <a href="{{ route('compras.analisis') }}" class="btn btn-outline-dark btn-sm float-right"  data-placement="left">
+                                  {{ __('Crear Orden de Compra y Servicios') }}
                                 </a>
 
-                                <a href="{{ route('compras.index') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
+                                <a href="{{ route('compras.index') }}" class="btn btn-outline-dark btn-sm float-right"  data-placement="left">
                                   {{ __('Compras en Proceso') }}
                                 </a>
 
-                                <a href="{{ route('compras.procesadas') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
+                                <a href="{{ route('compras.procesadas') }}" class="btn btn-outline-dark btn-sm float-right"  data-placement="left">
                                   {{ __('Compras Procesadas') }}
                                 </a>
 
-                                <a href="{{ route('compras.anuladas')  }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
+                                <a href="{{ route('compras.anuladas')  }}" class="btn btn-outline-dark btn-sm float-right"  data-placement="left">
                                   {{ __('Compras Anuladas') }}
                                 </a>
 
-                                <a href="{{ route('compras.aprobadas')  }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
+                                <a href="{{ route('compras.aprobadas')  }}" class="btn btn-outline-dark btn-sm float-right"  data-placement="left">
                                   {{ __('Compras Aprobadas') }}
                                 </a>
 
@@ -62,7 +62,7 @@
 
 
                         <div class="table-responsive">
-                            <table class="table table-striped table-hover">
+   <table class="table table-hover  small table-bordered table-striped">
                                 <thead class="thead">
                                     <tr>
                                     <th>Numero Compra</th>
@@ -103,14 +103,35 @@
 
                                             <td>{{ $compra->usuario->name }}</td>
                                             <td>
-                                            <a class="btn btn-sm btn-primary " href="{{ route('compras.pdf',$compra->id) }}" data-toggle="tooltip" data-placement="top" title="Imprimir Compra" target="_black"><i class="fa fa-fw fa-print"></i> Imprimir</a>
-                                            
+                                            <!-- =========================================================== -->
+
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card card-secondary collapsed-card">
+              <div class="card-header">
+                <h2 class="card-title">Ver</h2>
+
+                <div class="card-tools">
+                  <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-plus"></i>
+                  </button>
+                </div>
+                <!-- /.card-tools -->
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                                            <a class="btn btn-sm btn-block btn btn-outline-dark btn-block" href="{{ route('compras.pdf',$compra->id) }}" data-toggle="tooltip" data-placement="top" title="Imprimir Compra" target="_black"><i class="fa fa-fw fa-print"></i> Imprimir</a>
+                                                  </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
                                             {{-- 
-                                            <form action="{{ route('compras.modificar',$compra->id) }}" method="POST">
+                                            <form action="{{ route('compras.modificar',$compra->id) }}" method="POST" class="submit-prevent-form">
                                                   
                                                    @csrf
                                                     @method('PATCH')
-                                                    <button type="submit" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="top" title="Modificar Compra"><i class="fa fa-fw fa-check"></i></button>
+                                                    <button type="submit" class="btn btn-sm btn-block btn btn-outline-dark btn-block" data-toggle="tooltip" data-placement="top" title="Modificar Compra"><i class="fa fa-fw fa-check"></i></button>
                                                 </form>
 
                                                 --}}
@@ -130,6 +151,15 @@
     </div>
     @stop
 
-@section('css')
-    <link rel="stylesheet" href="/css/admin_custom.css">
-@stop
+ @section('css')
+    
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="{{ asset('css/submit.css') }}">
+        
+    @stop
+    
+    @section('js')
+    <script src="{{ asset('js/submit.js') }}"></script>
+    
+    
+    @stop

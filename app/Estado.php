@@ -42,6 +42,25 @@ class Estado extends Model
     {
         return $this->hasMany('App\Municipio', 'estado_id', 'id');
     }
+
+    public function scopeEstados($query, $estado) {
+    	if ($estado) {
+    		return $query->where('nombre','like',"%$estado%");
+    	}
+    }
+
+    public function scopeFechaInicio($query, $inicio) {
+    	if ($inicio) {
+    		return $query->where('created_at','>=',"$inicio");
+    	}
+    }
+
+    public function scopeFechaFin($query, $fin) {
+    	if ($fin) {
+    		return $query->where('created_at','<=',"$fin");
+    	}
+    }
+
     
 
 }

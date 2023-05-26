@@ -2,6 +2,28 @@
     <div class="box-body">
 
     <div class="row">
+
+        <div class="col-md-12"> 
+            <div class="form-group">
+                {{ Form::label('Concepto') }}
+                <textarea class="ckeditor form-control" name="concepto">{{ $requisicione->concepto }}</textarea>
+            
+               
+                {!! $errors->first('concepto', '<div class="invalid-feedback">:message</div>') !!}
+            </div>
+        </div>
+
+        <div class="col-md-12"> 
+            <div class="form-group">
+                {{ Form::label('Uso') }}
+                <textarea class="ckeditor form-control" name="uso">{{ $requisicione->uso }}</textarea>
+            
+               
+                {!! $errors->first('uso', '<div class="invalid-feedback">:message</div>') !!}
+            </div>
+        </div>
+
+
         <div class="col-md-4">    
         <div class="form-group">
             {{ Form::label('Ejercicio') }}
@@ -29,6 +51,7 @@
         </div>
         </div>
        
+        {{--
         <div class="col-md-4">  
         <div class="form-group">
             {{ Form::label('concepto') }}
@@ -43,6 +66,8 @@
             {!! $errors->first('uso', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         </div>  
+
+        --}}
         <div class="col-md-4">
         <div class="form-group">
             {{ Form::label('Tipo requisicion') }}
@@ -60,8 +85,6 @@
             {{ Form::label('Fecha') }}
             {{ Form::date('created_at', $requisicione->created_at, ['class' => 'form-control' . ($errors->has('created_at') ? ' is-invalid' : ''), 'placeholder' => 'Fecha']) }}
             {!! $errors->first('created_at', '<div class="invalid-feedback">:message</div>') !!}
-           
-       
         </div>
         </div>
        
@@ -74,6 +97,6 @@
     <br>
 
     <div class="box-footer mt20">
-        <button type="submit" class="btn btn-primary">Enviar</button>
+        <button type="submit" class="btn btn-primary submit-prevent-button"><i class="spinner fas fa-spinner fa-spin"></i> Crear En Sistema </button>
     </div>
 </div>

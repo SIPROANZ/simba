@@ -21,19 +21,19 @@
                             </span>
 
                              <div class="float-right">
-                                <a href="{{ route('ordenpagos.compromisos') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
+                                <a href="{{ route('ordenpagos.compromisos') }}" class="btn btn-outline-dark btn-sm float-right"  data-placement="left">
                                   {{ __('Crear Orden de Pago') }}
                                 </a>
-                                <a href="{{ route('ordenpagos.index') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
+                                <a href="{{ route('ordenpagos.index') }}" class="btn btn-outline-dark btn-sm float-right"  data-placement="left">
                                 {{ __('En Proceso') }}
                                 </a>
-                                <a href="{{ route('ordenpagos.procesados') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
+                                <a href="{{ route('ordenpagos.procesados') }}" class="btn btn-outline-dark btn-sm float-right"  data-placement="left">
                                 {{ __('Procesados') }}
                                 </a>
-                                <a href="{{ route('ordenpagos.aprobados') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
+                                <a href="{{ route('ordenpagos.aprobados') }}" class="btn btn-outline-dark btn-sm float-right"  data-placement="left">
                                 {{ __('Aprobados') }}
                                 </a>
-                                <a href="{{ route('ordenpagos.anulados') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
+                                <a href="{{ route('ordenpagos.anulados') }}" class="btn btn-outline-dark btn-sm float-right"  data-placement="left">
                                 {{ __('Anulados') }}
                                 </a>
                               </div>
@@ -55,12 +55,13 @@
 
 
                         <div class="table-responsive">
-                            <table class="table table-striped table-hover">
+                                  <table class="table table-hover  small table-bordered table-striped">
                                 <thead class="thead">
                                     <tr>
                                         
 										<th class="col-md-1" style="text-align: left">N° Orden de pago</th>
 										<th class="col-md-1" style="text-align: left">Numero Compromiso </th>
+                                        <th class="col-md-1" style="text-align: left">Fecha </th>
 										<th class="col-md-4" style="text-align: left">Beneficiario</th>{{--
 										<th style="text-align: left">Monto base</th>
 										<th style="text-align: left">Monto retencion</th> --}}
@@ -82,6 +83,7 @@
 
 											<td style="text-align: left">{{ $ordenpago->nordenpago }}</td>
 											<td style="text-align: left">{{ $ordenpago->compromiso->ncompromiso  }}</td>
+                                            <td style="text-align: left">{{ $ordenpago->created_at->toDateString()  }}</td>
 											<td style="text-align: left">{{ $ordenpago->beneficiario->nombre }}</td>{{--
 											<td style="text-align: left">{{ $ordenpago->montobase }}</td>
 											<td style="text-align: left">{{ $ordenpago->montoretencion }}</td> --}}
@@ -105,8 +107,12 @@
 											<td style="text-align: left">{{ $ordenpago->montoexento }}</td> --}}
 
                                             <td>
-                                                <a class="btn btn-sm btn-primary " href="{{ route('ordenpagos.show',$ordenpago->id) }}" data-toggle="tooltip" data-placement="top" title="Mostrar Orden de Pago"><i class="fa fa-fw fa-eye"></i> Mostrar</a>
-                                                <a class="btn btn-sm btn-dark " href="{{ route('ordenpagos.pdf',$ordenpago->id) }}" data-toggle="tooltip" data-placement="top" title="Imprimir Orden de Pago"><i class="fas fa-print"></i> Imprimir</a>
+                                                <a class="btn btn-sm btn-block btn btn-outline-dark btn-block " href="{{ route('ordenpagos.pdf',$ordenpago->id) }}" data-toggle="tooltip" data-placement="top" title="Imprimir Orden de Pago"><i class="fas fa-print"></i> Imprimir</a>
+
+                                                @can('admin.reversar')
+                                                <a class="btn btn-sm btn-block btn btn-outline-dark btn-block " href="{{ route('ordenpagos.agregarfacturas',$ordenpago->id) }}" data-toggle="tooltip" data-placement="top" title="Agregar Facturas"><i class="fas fa-check"></i></i> Facturas</a>
+                                                    
+                                                @endcan
                                             </td>
                                         </tr>
                                     @endforeach
@@ -121,6 +127,15 @@
     </div>
     @stop
 
-@section('css')
-    <link rel="stylesheet" href="/css/admin_custom.css">
-@stop
+ @section('css')
+    
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="{{ asset('css/submit.css') }}">
+        
+    @stop
+    
+    @section('js')
+    <script src="{{ asset('js/submit.js') }}"></script>
+    
+    
+    @stop

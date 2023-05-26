@@ -18,6 +18,11 @@ use Illuminate\Http\Request;
  */
 class ComprascpController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:admin.compras')->only('index', 'edit', 'update', 'create', 'store');
+        
+    }
     /**
      * Display a listing of the resource.
      *

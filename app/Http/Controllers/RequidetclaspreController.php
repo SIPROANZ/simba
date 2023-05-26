@@ -11,6 +11,11 @@ use Illuminate\Http\Request;
  */
 class RequidetclaspreController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:admin.solicitudes')->only('index', 'edit', 'update', 'create', 'store');
+        
+    }
     /**
      * Display a listing of the resource.
      *

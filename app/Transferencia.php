@@ -82,4 +82,40 @@ class Transferencia extends Model
         return $this->hasOne('App\Models\User', 'id', 'usuario_id');
     }  
 
+    public function scopeUsuarios($query, $usuario) {
+    	if ($usuario) {
+    		return $query->where('usuario_id','like',"$usuario");
+    	}
+    }
+
+    public function scopeFechaInicio($query, $inicio) {
+    	if ($inicio) {
+    		return $query->where('fecha','>=',"$inicio");
+    	}
+    }
+
+    public function scopeFechaFin($query, $fin) {
+    	if ($fin) {
+    		return $query->where('fecha','<=',"$fin");
+    	}
+    }
+
+    public function scopeBeneficiarios($query, $beneficiario) {
+    	if ($beneficiario) {
+    		return $query->where('beneficiario_id','like',"$beneficiario");
+    	}
+    }
+
+    public function scopeBancos($query, $bancos) {
+    	if ($bancos) {
+    		return $query->where('banco_id','like',"$bancos");
+    	}
+    }
+
+    public function scopeCuentas($query, $cuenta) {
+    	if ($cuenta) {
+    		return $query->where('cuentabancaria_id','like',"$cuenta");
+    	}
+    }
+
 }

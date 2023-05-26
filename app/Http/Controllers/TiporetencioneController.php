@@ -11,6 +11,12 @@ use Illuminate\Http\Request;
  */
 class TiporetencioneController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('can:admin.causados')->only('index', 'edit', 'update', 'create', 'store');
+        
+    }
     /**
      * Display a listing of the resource.
      *

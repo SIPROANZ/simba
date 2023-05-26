@@ -11,6 +11,8 @@ use App\Detallesrequisicione;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use App\Models\User;
+use Carbon\Carbon;
 use PDF;
 
 /**
@@ -19,6 +21,16 @@ use PDF;
  */
 class RequisicioneController extends Controller
 {
+
+       /**
+     * Metodo Constuct
+     */
+public function __construct()
+{
+    $this->middleware('can:admin.solicitudes')->only('index', 'edit', 'update', 'pdf', 'create', 'store', 'indexanuladas', 'indexprocesadas', 'indexaprobadas');
+    
+}
+
     /**
      * Display a listing of the resource.
      *
@@ -26,14 +38,7 @@ class RequisicioneController extends Controller
      */
     public function index()
     {
-       // $requisiciones = Requisicione::where('estatus', 'EP')->paginate();
-/*
-       return redirect()->route('requisiciones.procesadas')
-       ->with('success', 'Requisicione actualizado exitosamente. usuario: ' . Auth::user()->name . ' ID: ' . Auth::user()->id . ' Unidad_id: ' . Auth::user()->unidad_id);
-*/
-
-   // $unidad_id = Auth::user()->unidad_id;
-
+       
       if(Auth::user()->hasAnyRole('Admin')){    
         
         $requisiciones = Requisicione::query()
@@ -58,10 +63,6 @@ class RequisicioneController extends Controller
        ->withQueryString();
 
     }else{
-       // $usuario = Auth::user()->unidad_id;
-       // $unidad_administrativa = $usuario->unidad_id;
-       
-
         $requisiciones = Requisicione::query()
        ->when(request('search'), function($query){
            return $query->where ('correlativo', 'like', '%'.request('search').'%')
@@ -101,28 +102,7 @@ class RequisicioneController extends Controller
      */
     public function indexprocesadas()
     {
-       // $requisiciones = Requisicione::where('estatus', 'PR')->paginate();
-
-      /*  $requisiciones = Requisicione::query()
-        ->when(request('search'), function($query){
-            return $query->where ('correlativo', 'like', '%'.request('search').'%')
-                              ->where('estatus', 'like', 'PR')
-                         ->orWhereHas('unidadadministrativa', function($q){
-                          $q->where('unidadejecutora', 'like', '%'.request('search').'%');
-                          })
-                          ->where('estatus', 'like', 'PR')
-                           ->orWhereHas('tipossgp', function($qa){
-                             $qa->where('denominacion', 'like', '%'.request('search').'%');
-                         })
-                         ->where('estatus', 'like', 'PR');
-         },
-         function ($query) {
-             $query->where('estatus', 'like', 'PR')
-             ->orderBy('id', 'ASC');
-         })
-         
-        ->paginate(25)
-        ->withQueryString(); */
+      
         if(Auth::user()->hasAnyRole('Admin')){    
         
             $requisiciones = Requisicione::query()
@@ -147,10 +127,6 @@ class RequisicioneController extends Controller
            ->withQueryString();
     
         }else{
-           // $usuario = Auth::user()->unidad_id;
-           // $unidad_administrativa = $usuario->unidad_id;
-           
-    
             $requisiciones = Requisicione::query()
            ->when(request('search'), function($query){
                return $query->where ('correlativo', 'like', '%'.request('search').'%')
@@ -188,28 +164,7 @@ class RequisicioneController extends Controller
      */
     public function indexanuladas()
     {
-       // $requisiciones = Requisicione::where('estatus', 'AN')->paginate();
-
-        /*$requisiciones = Requisicione::query()
-        ->when(request('search'), function($query){
-            return $query->where ('correlativo', 'like', '%'.request('search').'%')
-                              ->where('estatus', 'like', 'AN')
-                         ->orWhereHas('unidadadministrativa', function($q){
-                          $q->where('unidadejecutora', 'like', '%'.request('search').'%');
-                          })
-                          ->where('estatus', 'like', 'AN')
-                           ->orWhereHas('tipossgp', function($qa){
-                             $qa->where('denominacion', 'like', '%'.request('search').'%');
-                         })
-                         ->where('estatus', 'like', 'AN');
-         },
-         function ($query) {
-             $query->where('estatus', 'like', 'AN')
-             ->orderBy('id', 'ASC');
-         })
-        ->paginate(25)
-        ->withQueryString();
-        */
+      
         if(Auth::user()->hasAnyRole('Admin')){    
         
             $requisiciones = Requisicione::query()
@@ -465,11 +420,6 @@ class RequisicioneController extends Controller
         //Consulto los datos especificos para la requisicion seleccionada
         $detallesrequisiciones = Detallesrequisicione::where('requisicion_id','=',$id)->paginate();
 
-
-        
-
-
-
         return view('requisicione.agregar', compact('requisicione', 'detallesrequisiciones'))
         ->with('i', (request()->input('page', 1) - 1) * $detallesrequisiciones->perPage());
     }
@@ -585,4 +535,161 @@ class RequisicioneController extends Controller
 
 
     }
+
+    public function pdfdepurar($id)
+    {
+        $requisicione = Requisicione::find($id);
+        // $detallesrequisiciones = Detallesrequisicione::where('requisicion_id','=',$id)->paginate();
+
+        //Obtener las unidades de medidas de los productos, tenemos bos, producto, unidad medida
+         $detallesrequisiciones = DB::table('detallesrequisiciones')
+            ->where('requisicion_id', $id)
+            ->join('bos', 'bos.id', '=', 'detallesrequisiciones.bos_id') 
+            ->join('productoscps', 'productoscps.producto_id', '=', 'bos.producto_id') 
+            ->join('clasificadorpresupuestarios', 'clasificadorpresupuestarios.id', '=', 'productoscps.clasificadorp_id') 
+            ->join('unidadmedidas', 'unidadmedidas.id', '=', 'bos.unidadmedida_id')
+            ->select('detallesrequisiciones.cantidad', 'bos.descripcion', 'unidadmedidas.nombre', 'clasificadorpresupuestarios.cuenta' )
+            ->get(); 
+
+        // Obtener las partidas que tienen que ver con esta requisicion a traves del bos y productos
+        //declaro mi arrray partidas
+        $partidas = DB::table('requidetclaspres')->where('requisicion_id', $id)->select('meta_id', 'claspres')->get();
+            
+
+        $pdf = PDF::loadView('requisicione.pdfdepurar', ['requisicione'=>$requisicione, 'detallesrequisiciones'=>$detallesrequisiciones, 'partidas'=>$partidas]);
+        return $pdf->stream();
+         
+    }
+
+    public function reportes()
+    {
+       
+        $ejercicios = Ejercicio::pluck('nombreejercicio','id');
+        $unidades = Unidadadministrativa::select(
+            DB::raw("CONCAT(sector,'.',programa,'.',subprograma,'.',proyecto,'.',actividad,' ',unidadejecutora) AS name"),'id')
+            ->orderBy('name','ASC')
+            ->pluck('name', 'id'); 
+        $instituciones = Institucione::pluck('institucion', 'id');
+
+        $tipossgps = Tipossgp::pluck('denominacion' , 'id'); 
+
+        $usuarios = User::pluck('name' , 'id'); 
+
+        $fecha_actual = Carbon::now();
+      
+
+        return view('requisicione.reportes', compact('fecha_actual','usuarios','tipossgps','instituciones','unidades','ejercicios'));
+
+            
+    }
+
+    public function reporte_pdf(Request $request)
+    {
+        //Buscar por institucion
+        $institucion = $request->institucion_id;
+        $unidadAdministrativa = $request->unidadadministrativa_id;
+        $ejercicio = $request->ejercicio_id;
+        $requisicion = $request->tiposgp_id;
+        $nombre_tipo = '';
+        if($requisicion == 1)
+        {
+            $nombre_tipo = 'COMPRAS';
+        }elseif($requisicion == 2){
+            $nombre_tipo = 'SERVICIOS';
+        }elseif($requisicion == 3){
+            $nombre_tipo = 'SUMINISTROS';
+        }
+        
+        $estatus = $request->estatus;
+        $nombre_estatus = '';
+        if($estatus == 'EP')
+        {
+            $nombre_estatus = 'EN PROCESO';
+        }elseif($estatus == 'AP'){
+            $nombre_estatus = 'APROBADO';
+        }elseif($estatus == 'PR'){
+            $nombre_estatus = 'PROCESADO';
+        }elseif($estatus == 'AN'){
+            $nombre_estatus = 'ANULADO';
+        }
+        $usuario = $request->usuario_id;
+        $inicio = $request->fecha_inicio;
+        $fin = $request->fecha_fin;
+        
+        $nombre_usuario = '';
+        $rs_usuario = User::find($usuario);
+        if($rs_usuario){
+            $nombre_usuario = $rs_usuario->name;
+        }
+
+        $nombre_unidad = '';
+        $rs_unidad= Unidadadministrativa::find($unidadAdministrativa);
+        if($rs_unidad){
+            $nombre_unidad = $rs_unidad->unidadejecutora;
+        }
+
+        $nombre_ejercicio = '';
+        $rs_ejercicio = Ejercicio::find($ejercicio);
+        if($rs_ejercicio){
+            $nombre_ejercicio = $rs_ejercicio->ejercicioejecucion;
+        }
+
+        $nombre_institucion = '';
+        $rs_institucion = Institucione::find($institucion);
+        if($rs_institucion){
+            $nombre_institucion = $rs_institucion->institucion;
+        }
+
+
+        //
+        
+        $requisiciones = Requisicione::institucion($institucion)->ejercicio($ejercicio)->unidad($unidadAdministrativa)->requisicion($requisicion)->estatus($estatus)->usuarios($usuario)->fechaInicio($inicio)->fechaFin($fin)->get();
+        $aprobadas = Requisicione::where('estatus', 'AP')->institucion($institucion)->ejercicio($ejercicio)->unidad($unidadAdministrativa)->requisicion($requisicion)->estatus($estatus)->usuarios($usuario)->fechaInicio($inicio)->fechaFin($fin)->count();
+        $procesadas = Requisicione::where('estatus', 'PR')->institucion($institucion)->ejercicio($ejercicio)->unidad($unidadAdministrativa)->requisicion($requisicion)->estatus($estatus)->usuarios($usuario)->fechaInicio($inicio)->fechaFin($fin)->count();
+        $enproceso = Requisicione::where('estatus', 'EP')->institucion($institucion)->ejercicio($ejercicio)->unidad($unidadAdministrativa)->requisicion($requisicion)->estatus($estatus)->usuarios($usuario)->fechaInicio($inicio)->fechaFin($fin)->count();
+        $anuladas = Requisicione::where('estatus', 'AN')->institucion($institucion)->ejercicio($ejercicio)->unidad($unidadAdministrativa)->requisicion($requisicion)->estatus($estatus)->usuarios($usuario)->fechaInicio($inicio)->fechaFin($fin)->count();
+        $total = Requisicione::institucion($institucion)->ejercicio($ejercicio)->unidad($unidadAdministrativa)->requisicion($requisicion)->estatus($estatus)->usuarios($usuario)->fechaInicio($inicio)->fechaFin($fin)->count();
+        $compras = Requisicione::where('tiposgp_id', 1)->institucion($institucion)->ejercicio($ejercicio)->unidad($unidadAdministrativa)->requisicion($requisicion)->estatus($estatus)->usuarios($usuario)->fechaInicio($inicio)->fechaFin($fin)->count();
+        $servicios = Requisicione::where('tiposgp_id', 2)->institucion($institucion)->ejercicio($ejercicio)->unidad($unidadAdministrativa)->requisicion($requisicion)->estatus($estatus)->usuarios($usuario)->fechaInicio($inicio)->fechaFin($fin)->count();
+        $suministros = Requisicione::where('tiposgp_id', 3)->institucion($institucion)->ejercicio($ejercicio)->unidad($unidadAdministrativa)->requisicion($requisicion)->estatus($estatus)->usuarios($usuario)->fechaInicio($inicio)->fechaFin($fin)->count();
+
+        /**
+         $requisiciones = Requisicione::where('id', '>', 0)->orWhere('institucion_id', $institucion)->get();
+        $aprobadas = Requisicione::where('estatus', 'AP')->count();
+        $procesadas = Requisicione::where('estatus', 'PR')->count();
+        $enproceso = Requisicione::where('estatus', 'EP')->count();
+        $anuladas = Requisicione::where('estatus', 'AN')->count();
+        $total = Requisicione::where('id', '>', 0)->count();
+        $compras = Requisicione::where('tiposgp_id', 1)->count();
+        $servicios = Requisicione::where('tiposgp_id', 2)->count();
+        $suministros = Requisicione::where('tiposgp_id', 3)->count();
+         */
+
+
+        $datos = [
+           // 'institucion' => $request->institucion_id,
+            'aprobadas' => $aprobadas,
+            'procesadas' => $procesadas,
+            'enproceso' => $enproceso,
+            'anuladas' => $anuladas,
+            'total' => $total, 
+            'compras' => $compras,
+            'servicios' => $servicios,
+            'suministros' => $suministros,
+            'inicio' => $inicio,
+            'fin' => $fin,  
+            'usuario' =>$nombre_usuario,  
+            'estatus' =>$nombre_estatus,  
+            'tipo' => $nombre_tipo,
+            'unidad' => $nombre_unidad,
+            'ejercicio' => $nombre_ejercicio,
+            'institucion' => $nombre_institucion
+            ]; 
+
+        $pdf = PDF::setPaper('letter', 'landscape')->loadView('requisicione.reportepdf', ['datos'=>$datos, 'requisiciones'=>$requisiciones]);
+        return $pdf->stream();
+         
+    }
+
+
 }

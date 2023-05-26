@@ -53,6 +53,30 @@ class Familia extends Model
     {
         return $this->hasOne('App\Segmento', 'id', 'segmento_id');
     }
+
+    public function scopeDescripcion($query, $descripcion) {
+    	if ($descripcion) {
+    		return $query->where('nombre','like',"%$descripcion%");
+    	}
+    }
+
+    public function scopeSegmentos($query, $segmento) {
+    	if ($segmento) {
+    		return $query->where('segmento_id','like',"$segmento");
+    	}
+    }
+
+    public function scopeFechaInicio($query, $inicio) {
+    	if ($inicio) {
+    		return $query->where('created_at','>=',"$inicio");
+    	}
+    }
+
+    public function scopeFechaFin($query, $fin) {
+    	if ($fin) {
+    		return $query->where('created_at','<=',"$fin");
+    	}
+    }
     
 
 }

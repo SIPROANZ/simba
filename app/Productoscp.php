@@ -60,6 +60,32 @@ class Productoscp extends Model
     {
         return $this->hasOne('App\Producto', 'id', 'producto_id');
     }
+
+    
+
+    public function scopeProductos($query, $producto) {
+    	if ($producto) {
+    		return $query->where('producto_id','like',"$producto");
+    	}
+    }
+
+    public function scopeClasificadores($query, $clasificador) {
+    	if ($clasificador) {
+    		return $query->where('clasificadorp_id','like',"$clasificador");
+    	}
+    }
+
+    public function scopeFechaInicio($query, $inicio) {
+    	if ($inicio) {
+    		return $query->where('created_at','>=',"$inicio");
+    	}
+    }
+
+    public function scopeFechaFin($query, $fin) {
+    	if ($fin) {
+    		return $query->where('created_at','<=',"$fin");
+    	}
+    }
     
 
 }

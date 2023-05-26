@@ -16,6 +16,11 @@ use Illuminate\Http\Request;
  */
 class DetallesanalisiController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:admin.analisis')->only('index', 'edit', 'update', 'create', 'store');
+        
+    }
     /**
      * Display a listing of the resource.
      *
@@ -127,6 +132,126 @@ class DetallesanalisiController extends Controller
             ->with('success', 'Detallesanalisi created successfully.');*/
     }
 
+
+    /**
+     * Nueva Funcion Para Obtener todos los imputs
+     */
+    public function storetres(Request $request)
+    {
+
+        request()->validate(Detallesanalisi::$rules);
+
+       
+
+        // request()->validate(Detallesanalisi::$rules);
+        //Obtener el id del analisis que se crea cuando se da agregar analisis en el index
+        $analisis_id = session('analisis_var');
+
+         //Obtener el numero de proveedores registrados en el analisis
+         $cont_proveedor = 1;
+         $proveedor = 0;
+         $firt_proveedor = Detallesanalisi::where('analisis_id', $analisis_id)->first();
+         $proveedor = $firt_proveedor->beneficiario_id;
+         $rs_proveedores = Detallesanalisi::where('analisis_id', $analisis_id)->get();
+         
+         foreach($rs_proveedores as $rs){
+
+            if($proveedor != $rs->beneficiario_id){
+                $cont_proveedor += 1;
+                $proveedor = $rs->beneficiario_id;
+            }
+
+         }  //El resultado de $cont_proveedor sera la cantidad de proveedores que ya estan registrados
+         //en el analisis
+
+
+        //Validar que no se repita mas de tres proveedores
+        if($cont_proveedor < 4){
+
+             //Obtener el Id del Proveedor
+             $proveedor_id = $request->proveedor_id;
+            
+            //Validar que el proveedor no este repetido
+            $rs_proveedor = Detallesanalisi::where('beneficiario_id', $proveedor_id)->exists();
+            $cad_proveedor_duplicado = '';
+            if($rs_proveedor){
+                $cad_proveedor_duplicado = 'Proveedor ya se encuentra registrado en el analisis';
+
+                 //Redirigir a la pagina que la esta llamando
+        return redirect()->route('analisis.agregar',$analisis_id)
+        ->with('success', 'Advertencia: ' . $cad_proveedor_duplicado);
+       
+
+            }else{ 
+
+
+       
+
+        //Probar que trae todos los precios en el arrayPrecio OBTENER TODOS LOS PRECIOS
+        //SE OBTIENE TODOS LOS ID DE LOS PRODUCTOS Y SU DESCRIPCIONES
+        $cad = '';
+
+        $par = 2;
+        $indice_requisicion = 0;
+        $cantidad = 0;
+        $precio = 0;
+        $bos_id = 0;
+
+        foreach($request->precio as $value){
+           // $cad .= $value . ',  ';
+                //Con el primer valor par se obtiene 
+                if($par % 2 == 0)
+                {
+                    $indice_requisicion = $value; 
+                    $par = 3;
+                    //Obtener la cantidad de este producto
+                    $detallesrequisiciones = Detallesrequisicione::find($indice_requisicion);
+                    $cantidad = $detallesrequisiciones->cantidad;
+                    $bos_id = $detallesrequisiciones->bos_id;
+
+
+                }else{
+                    //Obtener el precio y multiplicarlo por la cantidad del producto
+                    $par = 2;
+                    $precio = $value; 
+                    //Realizar todos los calculos y agregarlos en la base de datos
+                    $subtotal = $cantidad * $precio;
+                    $iva = $subtotal * 0.16;
+                    $total = $subtotal + $iva;
+                    $aprobado = $request->aprobado;
+
+                    $datos_guardar = [
+                    'beneficiario_id' => $proveedor_id,
+                    'analisis_id' => $analisis_id,
+                    'bos_id' => $bos_id,
+                    'cantidad' => $cantidad,
+                    'precio' => $precio,
+                    'subtotal' => $subtotal,
+                    'iva' => $iva,
+                    'total' => $total,
+                    'aprobado' => 'SI',
+
+                ];
+                        $detallesanalisi = Detallesanalisi::create($datos_guardar);
+                }
+
+
+        }
+
+
+        //Redirigir a la pagina que la esta llamando
+        return redirect()->route('analisis.agregar',$analisis_id)
+        ->with('success', 'Analisis Agregado satisfactoriamente. Validar Proveedores > ' . $cont_proveedor);
+        }
+    }else{
+             //Redirigir a la pagina que la esta llamando
+             return redirect()->route('analisis.agregar',$analisis_id)
+             ->with('success', 'El numero de Proveedores supera el maximo de tres (03) para realizar el analisis de cotizacion.');
+       
+    }
+   
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -220,7 +345,7 @@ class DetallesanalisiController extends Controller
         //Obtener el id de la requisicion
         $analisis_id = session('analisis_var');
         //Para recuperar el id de la requisicion solo si existe route('requisiciones.agregar',$requisicione->id)
-        if(session()->has('analisis')){
+        if(session()->has('analisis_var')){
            return redirect()->route('analisis.agregar',$analisis_id)
            ->with('success', 'Detalles Actualizado Exitosamente.');
        }else{

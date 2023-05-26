@@ -78,4 +78,34 @@ class Analisi extends Model
     {
         return $this->hasMany('App\Detallesanalisi', 'id', 'detallesanalisi_id');
     }
+
+    public function scopeUnidad($query, $unidad) {
+    	if ($unidad) {
+    		return $query->where('unidadadministrativa_id','like',"$unidad");
+    	}
+    }
+
+    public function scopeEstatus($query, $estatus) {
+    	if ($estatus) {
+    		return $query->where('estatus','like',"$estatus");
+    	}
+    }
+
+    public function scopeUsuarios($query, $usuario) {
+    	if ($usuario) {
+    		return $query->where('usuario_id','like',"$usuario");
+    	}
+    }
+
+    public function scopeFechaInicio($query, $inicio) {
+    	if ($inicio) {
+    		return $query->where('created_at','>=',"$inicio");
+    	}
+    }
+
+    public function scopeFechaFin($query, $fin) {
+    	if ($fin) {
+    		return $query->where('created_at','<=',"$fin");
+    	}
+    }
 }

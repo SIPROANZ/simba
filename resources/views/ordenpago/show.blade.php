@@ -115,7 +115,7 @@
                         </span>
 
 {{--                          <div class="float-right">
-                            <a href="{{ route('detalleretenciones.create') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
+                            <a href="{{ route('detalleretenciones.create') }}" class="btn btn-outline-dark btn-sm float-right"  data-placement="left">
                               {{ __('Agregar Retención') }}
                             </a>
                           </div> --}}
@@ -129,7 +129,7 @@
 
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-striped table-hover">
+                              <table class="table table-hover  small table-bordered table-striped">
                             <thead class="thead">
                                 <tr>
                                     <th>No</th>
@@ -149,10 +149,10 @@
                                         <td>{{ number_format($detalleretencione->montoneto, 2,',','.') }}</td>
 
                                         <td>
-{{--                                             <form action="{{ route('detalleretenciones.destroy',$detalleretencione->id) }}" method="POST">
+{{--                                             <form action="{{ route('detalleretenciones.destroy',$detalleretencione->id) }}" method="POST" class="submit-prevent-form">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-fw fa-trash"></i></button>
+                                                <button type="submit" class="btn btn-outline-danger btn-sm btn-block submit-prevent-button"><i class="fa fa-fw fa-trash"></i></button>
                                             </form> --}}
                                         </td>
                                     </tr>
@@ -169,6 +169,15 @@
 
 @stop
 
-@section('css')
-    <link rel="stylesheet" href="/css/admin_custom.css">
-@stop
+ @section('css')
+    
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="{{ asset('css/submit.css') }}">
+        
+    @stop
+    
+    @section('js')
+    <script src="{{ asset('js/submit.js') }}"></script>
+    
+    
+    @stop

@@ -9,12 +9,24 @@ use App\Unidadadministrativa;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\DB;
 
+use PDF;
+
 /**
  * Class UserController
  * @package App\Http\Controllers
  */
 class UserController extends Controller
 {
+
+    /**
+     * Metodo Constuct
+     */
+public function __construct()
+{
+    $this->middleware('can:admin.administrador')->only('index', 'edit', 'update', 'create', 'store');
+    
+}
+
     /**
      * Display a listing of the resource.
      *
@@ -147,5 +159,48 @@ class UserController extends Controller
 
         return redirect()->route('users.index')
             ->with('success', 'User deleted successfully');
+    }
+
+    public function reportes()
+    {
+        $unidades = Unidadadministrativa::select(
+            DB::raw("CONCAT(sector,'.',programa,'.',subprograma,'.',proyecto,'.',actividad,' ',unidadejecutora) AS name"),'id')
+            ->orderBy('name','ASC')
+            ->pluck('name', 'id'); 
+        return view('user.reportes', compact('unidades'));   
+    }
+
+    public function reporte_pdf(Request $request)
+    {
+        $usuario = $request->usuario;
+        $inicio = $request->fecha_inicio;
+        $fin = $request->fecha_fin;
+        $unidad = $request->unidad;
+
+        $nombre_unidad = '';
+        $rs_unidad = Unidadadministrativa::find($unidad);
+        if($rs_unidad){
+            $nombre_unidad = $rs_unidad->sector .'-'.
+            $rs_unidad->programa .'-'.
+            $rs_unidad->subprograma .'-'.
+            $rs_unidad->proyecto .'-'.
+            $rs_unidad->actividad .' '.
+            $rs_unidad->unidadejecutora;
+        }
+        
+        //
+        $users = User::unidad($unidad)->usuario($usuario)->fechaInicio($inicio)->fechaFin($fin)->get();
+        $total_objetivo = count($users);
+       
+        $datos = [
+            'total_objetivo' => $total_objetivo,
+            'usuario' => $usuario,
+            'unidad' => $nombre_unidad,
+            'inicio' => $inicio,
+            'fin' => $fin,  
+            ]; 
+
+        $pdf = PDF::setPaper('letter', 'portrait')->loadView('user.reportepdf', ['datos'=>$datos, 'users'=>$users]);
+        return $pdf->stream();
     }
 }

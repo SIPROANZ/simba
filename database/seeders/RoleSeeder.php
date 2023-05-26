@@ -18,7 +18,7 @@ class RoleSeeder extends Seeder
     public function run()
     {
         //
-           
+           /*/
         DB::table('model_has_roles')->delete();
         DB::table('role_has_permissions')->delete();
         DB::table('permissions')->delete();
@@ -65,6 +65,25 @@ class RoleSeeder extends Seeder
 
        $role16 = role::create(['name'=>'Beneficiario']);
        Permission::create (['name'=>'admin.beneficiarios'])->syncRoles([$role1,$role16]);
+       */
+        /*
+       $role1 = role::create(['name'=>'Bancos']);
+       $role2 = role::create(['name'=>'AjusteCompromiso']);
+       Permission::create (['name'=>'admin.bancos'])->syncRoles([$role1]);
+       Permission::create (['name'=>'admin.ajustecompromiso'])->syncRoles([$role2]); */
+       /*
+       $role1 = role::create(['name'=>'Bos']);
+       Permission::create (['name'=>'admin.bos'])->syncRoles([$role1]);
+       $role1 = role::create(['name'=>'Poa']);
+       $role2 = 'Admin';
+       Permission::create (['name'=>'admin.poa'])->syncRoles([$role1, $role2]);
+       $role1 = role::create(['name'=>'Institucion']);
+       $role2 = 'Admin';
+       Permission::create (['name'=>'admin.instituciones'])->syncRoles([$role1, $role2]);*/
+       $role1 = role::create(['name'=>'ModificacionPresupuestaria']);
+       $role2 = 'Admin';
+       Permission::create (['name'=>'admin.modificacionpresupuestaria'])->syncRoles([$role1, $role2]);
+
 
       
     }

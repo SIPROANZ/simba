@@ -20,7 +20,12 @@
                             </span>
 
                              <div class="float-right">
-                                <a href="{{ route('metas.create') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
+
+                                <a href="{{ route('metas.reportes') }}" class="btn btn-outline-dark btn-sm float-right"  data-placement="left">
+                                    {{ __('Reporte') }}
+                                  </a>
+
+                                <a href="{{ route('metas.create') }}" class="btn btn-outline-dark btn-sm float-right"  data-placement="left">
                                   {{ __('Crear Nueva Meta') }}
                                 </a>
                               </div>
@@ -43,7 +48,7 @@
 
 
                         <div class="table-responsive">
-                            <table class="table table-striped table-hover">
+                                  <table class="table table-hover  small table-bordered table-striped">
                                 <thead class="thead">
                                     <tr>
                                         <th>No</th>
@@ -90,7 +95,7 @@
 											<td style="text-align: left">{{ $meta->cantidad3 }}</td>
 											<td style="text-align: left">{{ $meta->cantidad4 }}</td>
 											<td style="text-align: left">{{ $meta->meta }}</td>
-											<td style="text-align: left">{{ $meta->monto }}</td>
+											<td style="text-align: left">{{ number_format($meta->monto, 2 ,',','.') }}</td>
 											<td style="text-align: left">{{ $meta->ejercicio->nombreejercicio }}</td>
 											<td style="text-align: left">{{ $meta->institucione->institucion }}</td>
 											<td style="text-align: left">{{ $meta->unidadadministrativa->unidadejecutora }}</td>
@@ -107,18 +112,18 @@
 											<td style="text-align: left">{{ $meta->octubre }}</td>
 											<td style="text-align: left">{{ $meta->noviembre }}</td>
 											<td style="text-align: left">{{ $meta->diciembre }}</td>
-											<td style="text-align: left">{{ $meta->unidadmedida }}</td>
-											<td style="text-align: left">{{ $meta->unidadadministrativasolicitante }}</td>
+											<td style="text-align: left">{{ $meta->unidadmedidas->nombre }}</td>
+											<td style="text-align: left">{{ $meta->solicitantes->unidadejecutora }}</td>
 											<td style="text-align: left">{{ $meta->impacto }}</td>
                                             <td style="text-align: left">{{ $meta->usuario->name }}</td>
 
                                             <td style="text-align: left">
-                                                <form action="{{ route('metas.destroy',$meta->id) }}" method="POST">
-                                                    <a class="btn btn-sm btn-primary " href="{{ route('metas.show',$meta->id) }}"><i class="fa fa-fw fa-eye"></i> Ver</a>
-                                                    <a class="btn btn-sm btn-success" href="{{ route('metas.edit',$meta->id) }}"><i class="fa fa-fw fa-edit"></i> Editar</a>
+                                                <form action="{{ route('metas.destroy',$meta->id) }}" method="POST" class="submit-prevent-form">
+                                                    <a class="btn btn-sm btn-block btn btn-outline-dark btn-block" href="{{ route('metas.show',$meta->id) }}"><i class="fas fa-print"></i> Ver</a>
+                                                    <a class="btn btn-sm btn-block btn btn-outline-dark btn-block" href="{{ route('metas.edit',$meta->id) }}"><i class="fa fa-fw fa-edit"></i> Editar</a>
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-fw fa-trash"></i> Eliminar</button>
+                                                    <button type="submit" class="btn btn-outline-danger btn-sm btn-block submit-prevent-button"><i class="fa fa-fw fa-trash"></i> Eliminar</button>
                                                 </form>
                                             </td>
                                         </tr>
@@ -134,6 +139,15 @@
     </div>
     @stop
 
-@section('css')
-    <link rel="stylesheet" href="/css/admin_custom.css">
-@stop
+ @section('css')
+    
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="{{ asset('css/submit.css') }}">
+        
+    @stop
+    
+    @section('js')
+    <script src="{{ asset('js/submit.js') }}"></script>
+    
+    
+    @stop

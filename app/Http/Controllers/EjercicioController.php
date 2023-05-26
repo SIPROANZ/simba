@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Ejercicio;
 use Illuminate\Http\Request;
+use PDF;
 
 /**
  * Class EjercicioController
@@ -11,6 +12,11 @@ use Illuminate\Http\Request;
  */
 class EjercicioController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:admin.ejecuciones')->only('index', 'edit', 'update', 'create', 'store');
+        
+    }
     /**
      * Display a listing of the resource.
      *
@@ -18,7 +24,14 @@ class EjercicioController extends Controller
      */
     public function index()
     {
-        $ejercicios = Ejercicio::paginate();
+       // $ejercicios = Ejercicio::paginate();
+
+        $ejercicios = Ejercicio::query()
+        ->when(request('search'), function($query) {
+            return $query->where ('nombreejercicio', 'like', '%'.request('search').'%');
+         })
+        ->paginate(25)
+        ->withQueryString();
 
         return view('ejercicio.index', compact('ejercicios'))
             ->with('i', (request()->input('page', 1) - 1) * $ejercicios->perPage());
@@ -105,5 +118,29 @@ class EjercicioController extends Controller
 
         return redirect()->route('ejercicios.index')
             ->with('success', 'Ejercicio eliminado con éxito');
+    }
+
+    public function reportes()
+    {
+        return view('ejercicio.reportes');   
+    }
+
+    public function reporte_pdf(Request $request)
+    {
+        
+        $inicio = $request->fecha_inicio;
+        $fin = $request->fecha_fin;
+
+        $ejercicios = Ejercicio::fechaInicio($inicio)->fechaFin($fin)->get();
+        $total_objetivo = count($ejercicios);
+       
+        $datos = [
+            'total_objetivo' => $total_objetivo,
+            'inicio' => $inicio,
+            'fin' => $fin,  
+            ]; 
+
+        $pdf = PDF::setPaper('letter', 'portrait')->loadView('ejercicio.reportepdf', ['datos'=>$datos, 'ejercicios'=>$ejercicios]);
+        return $pdf->stream();
     }
 }

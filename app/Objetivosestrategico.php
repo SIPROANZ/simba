@@ -62,6 +62,31 @@ class Objetivosestrategico extends Model
     {
         return $this->hasMany('App\Poa', 'estrategico_id', 'id');
     }
+
+    
+    public function scopeObjetivos($query, $objetivo) {
+    	if ($objetivo) {
+    		return $query->where('objetivo','like',"%$objetivo%");
+    	}
+    }
+
+    public function scopeNacional($query, $nacional) {
+    	if ($nacional) {
+    		return $query->where('nacional_id','like',"$nacional");
+    	}
+    }
+
+    public function scopeFechaInicio($query, $inicio) {
+    	if ($inicio) {
+    		return $query->where('created_at','>=',"$inicio");
+    	}
+    }
+
+    public function scopeFechaFin($query, $fin) {
+    	if ($fin) {
+    		return $query->where('created_at','<=',"$fin");
+    	}
+    }
     
 
 }

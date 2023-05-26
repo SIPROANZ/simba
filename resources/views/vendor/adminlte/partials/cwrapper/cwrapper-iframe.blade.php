@@ -90,7 +90,7 @@
         {{-- Loading Overlay --}}
         <div class="tab-loading">
         <div>
-            <h2 class="display-4 text-center">
+            <h2 class="display-9 text-center">
                 <i class="fa fa-sync fa-spin text-secondary"></i>
                 <br/>
                 {{ __('adminlte::iframe.tab_loading') }}

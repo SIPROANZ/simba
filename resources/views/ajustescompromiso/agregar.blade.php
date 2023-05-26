@@ -21,19 +21,19 @@
                             </span>
 
                              <div class="float-right">
-                             <a href="{{ route('ajustescompromisos.agregar') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
+                             <a href="{{ route('ajustescompromisos.agregar') }}" class="btn btn-outline-dark btn-sm float-right"  data-placement="left">
                                   {{ __('Crear Nuevo Ajuste') }}
                                 </a>
 
-                                <a href="{{ route('ajustescompromisos.index') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
+                                <a href="{{ route('ajustescompromisos.index') }}" class="btn btn-outline-dark btn-sm float-right"  data-placement="left">
                                   {{ __('En Proceso') }}
                                 </a>
 
-                                <a href="{{ route('ajustescompromisos.procesadas') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
+                                <a href="{{ route('ajustescompromisos.procesadas') }}" class="btn btn-outline-dark btn-sm float-right"  data-placement="left">
                                   {{ __('Procesados') }}
                                 </a>
 
-                                <a href="{{ route('ajustescompromisos.anuladas') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
+                                <a href="{{ route('ajustescompromisos.anuladas') }}" class="btn btn-outline-dark btn-sm float-right"  data-placement="left">
                                   {{ __('Anulados') }}
                                 </a>
                                 
@@ -58,7 +58,7 @@
 
 
                         <div class="table-responsive">
-                            <table class="table table-striped table-hover">
+                                  <table class="table table-hover  small table-bordered table-striped">
                                 <thead class="thead">
                                     <tr>
                                         
@@ -103,7 +103,7 @@
 
                                             <td>
                                         
-                                            <a class="btn btn-sm btn-primary " href="{{ route('ajustescompromisos.agregarcompromiso',$compromiso->id) }}" data-toggle="tooltip" data-placement="top" title="Agregar Ajuste Compromiso"><i class="fas fa-check"></i></i> Seleccionar</a>
+                                            <a class="btn btn-sm btn-block btn btn-outline-dark btn-block" href="{{ route('ajustescompromisos.agregarcompromiso',$compromiso->id) }}" data-toggle="tooltip" data-placement="top" title="Agregar Ajuste Compromiso"><i class="fas fa-check"></i></i> Seleccionar</a>
                                                 
                                     
                                             </td>
@@ -120,6 +120,15 @@
     </div>
     @stop
 
-@section('css')
-    <link rel="stylesheet" href="/css/admin_custom.css">
-@stop
+ @section('css')
+    
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="{{ asset('css/submit.css') }}">
+        
+    @stop
+    
+    @section('js')
+    <script src="{{ asset('js/submit.js') }}"></script>
+    
+    
+    @stop

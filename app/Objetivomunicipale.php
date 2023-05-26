@@ -53,4 +53,22 @@ class Objetivomunicipale extends Model
     }
     
 
+    public function scopeObjetivos($query, $objetivo) {
+    	if ($objetivo) {
+    		return $query->where('objetivo','like',"%$objetivo%");
+    	}
+    }
+
+    public function scopeFechaInicio($query, $inicio) {
+    	if ($inicio) {
+    		return $query->where('created_at','>=',"$inicio");
+    	}
+    }
+
+    public function scopeFechaFin($query, $fin) {
+    	if ($fin) {
+    		return $query->where('created_at','<=',"$fin");
+    	}
+    }
+
 }

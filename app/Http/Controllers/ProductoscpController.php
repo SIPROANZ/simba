@@ -7,7 +7,6 @@ use App\Producto;
 use App\Clasificadorpresupuestario;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use PDF;
 
@@ -17,6 +16,11 @@ use PDF;
  */
 class ProductoscpController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:admin.bos')->only('index', 'edit', 'update', 'create', 'store');
+        
+    }
     /**
      * Display a listing of the resource.
      *
@@ -111,7 +115,10 @@ class ProductoscpController extends Controller
         $productoscp = Productoscp::find($id);
 
         $productos = Producto::pluck('nombre', 'id');
-        $clasificadorpresupuestarios = Clasificadorpresupuestario::pluck('denominacion', 'id');        
+        // $clasificadorpresupuestarios = Clasificadorpresupuestario::pluck('denominacion', 'id'); 
+        $clasificadorpresupuestarios = Clasificadorpresupuestario::select(
+            DB::raw("CONCAT(cuenta,' - ',denominacion) AS name"),'id')
+            ->pluck('name', 'id');       
 
         return view('productoscp.edit', compact('productoscp' , 'productos', 'clasificadorpresupuestarios'));
 
@@ -146,4 +153,50 @@ class ProductoscpController extends Controller
         return redirect()->route('productoscps.index')
             ->with('success', 'Productos clasificador presupuestario eliminado exitosamente.');
     }
+
+
+    public function reportes()
+    {
+        $productos = Producto::orderBy('nombre', 'ASC')->pluck('nombre','id');
+        $clasificadores = Clasificadorpresupuestario::orderBy('denominacion', 'ASC')->pluck('denominacion', 'id');
+
+        return view('productoscp.reportes', compact('productos', 'clasificadores'));
+    }
+
+    public function reporte_pdf(Request $request)
+    {
+        //Buscar por institucion
+        $producto = $request->producto;
+        $clasificador = $request->clasificador;
+        $inicio = $request->fecha_inicio;
+        $fin = $request->fecha_fin;
+        
+        $nombre_producto = '';
+        $rs_producto = Producto::find($producto);
+        if($rs_producto){
+            $nombre_producto = $rs_producto->nombre;
+        }
+
+        $nombre_clasificador = '';
+        $rs_clasificador = Clasificadorpresupuestario::find($clasificador);
+        if($rs_clasificador){
+            $nombre_clasificador = $rs_clasificador->denominacion;
+        }
+
+        $productoscps = Productoscp::productos($producto)->clasificadores($clasificador)->fechaInicio($inicio)->fechaFin($fin)->get();
+        $total = count($productoscps);
+        
+        $datos = [
+            'producto' => $nombre_producto,
+            'clasificador' => $nombre_clasificador,
+            'total' => $total, 
+            'inicio' => $inicio,
+            'fin' => $fin,     
+            ]; 
+
+        $pdf = PDF::setPaper('letter', 'portrait')->loadView('productoscp.reportepdf', ['datos'=>$datos, 'productoscps'=>$productoscps]);
+        return $pdf->stream();
+         
+    }
+
 }

@@ -16,7 +16,7 @@
                         <span class="card-title">Update Requidetbo</span>
                     </div>
                     <div class="card-body">
-                        <form method="POST" action="{{ route('requidetbos.update', $requidetbo->id) }}"  role="form" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('requidetbos.update', $requidetbo->id) }}"  role="form" enctype="multipart/form-data" class="submit-prevent-form">
                             {{ method_field('PATCH') }}
                             @csrf
 

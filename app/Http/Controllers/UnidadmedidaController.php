@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Unidadmedida;
 use Illuminate\Http\Request;
+use App\Models\User;
+use PDF;
 
 /**
  * Class UnidadmedidaController
@@ -11,6 +13,11 @@ use Illuminate\Http\Request;
  */
 class UnidadmedidaController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:admin.bos')->only('index', 'edit', 'update', 'create', 'store');
+        
+    }
     /**
      * Display a listing of the resource.
      *
@@ -122,5 +129,45 @@ class UnidadmedidaController extends Controller
 
         return redirect()->route('unidadmedidas.index')
             ->with('success', 'Unidad de Medida elimimada con exito');
+    }
+
+
+    public function reportes()
+    {
+        $usuarios = User::orderBy('name', 'ASC')->pluck('name', 'id');
+
+        return view('unidadmedida.reportes', compact('usuarios'));
+    }
+
+    public function reporte_pdf(Request $request)
+    {
+        //Buscar por institucion
+        $descripcion = $request->descripcion;
+        $usuario = $request->usuario;
+        $inicio = $request->fecha_inicio;
+        $fin = $request->fecha_fin;
+        
+        
+
+        $nombre_usuario = '';
+        $rs_usuario = User::find($usuario);
+        if($rs_usuario){
+            $nombre_usuario = $rs_usuario->name;
+        }
+
+        $unidadmedidas = Unidadmedida::descripcion($descripcion)->usuarios($usuario)->fechaInicio($inicio)->fechaFin($fin)->get();
+        $total = count($unidadmedidas);
+        
+        $datos = [
+            'usuario' => $nombre_usuario,
+            'total' => $total, 
+            'inicio' => $inicio,
+            'fin' => $fin,   
+            'descripcion' =>$descripcion,  
+            ]; 
+
+        $pdf = PDF::setPaper('letter', 'portrait')->loadView('unidadmedida.reportepdf', ['datos'=>$datos, 'unidadmedidas'=>$unidadmedidas]);
+        return $pdf->stream();
+         
     }
 }

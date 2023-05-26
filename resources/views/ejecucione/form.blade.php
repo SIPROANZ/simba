@@ -126,8 +126,8 @@
              </div>
              <div class="col-sm-3">
                 <div class="form-group">
-                    {{ Form::label('Poa_id') }}
-                    {{ Form::select('poa_id',$poa, $ejecucione->poa_id, ['class' => 'form-control' . ($errors->has('poa_id') ? ' is-invalid' : ''), 'placeholder' => 'Poa Id']) }}
+                    {{ Form::label('Poa') }}
+                    {{ Form::select('poa_id',$poa, $ejecucione->poa_id, ['class' => 'form-control' . ($errors->has('poa_id') ? ' is-invalid' : ''), 'placeholder' => 'Seleccione Poa']) }}
                     {!! $errors->first('poa_id', '<div class="invalid-feedback">:message</div>') !!}
                 </div>
              </div>
@@ -135,6 +135,6 @@
     </div>
     <br>
     <div class="box-footer mt20">
-        <button type="submit" class="btn btn-primary">Enviar</button>
+        <button type="submit" class="btn btn-primary submit-prevent-button">Crear En Sistema </button>
     </div>
 </div>

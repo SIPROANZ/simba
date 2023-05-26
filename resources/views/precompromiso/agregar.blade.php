@@ -14,7 +14,7 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="float-left">
-                            <span class="card-title">Precompromiso</span>
+                            <span class="card-title"></span>
                         </div>
                         <div class="float-right">
                             <a class="btn btn-primary" href="{{ route('precompromisos.index') }}"> Regresar</a>
@@ -22,35 +22,61 @@
                     </div>
 
                     <div class="card-body">
+
+                        <div class="row">
+
+                            <div class="col-md-12"> 
+                            <div class="form-group">
+                                <strong>Concepto:</strong>
+                                {!! $precompromiso->concepto !!}
+                            </div>
+                        </div>
+
+                            <div class="col-md-3">
+                            <div class="form-group">
+                                <strong>Documento:</strong>
+                                {{ $precompromiso->documento }}
+                            </div>
+                        </div>
+
+                            <div class="col-md-3">
+                            <div class="form-group">
+                                <strong>Monto total:</strong>
+                                {{ number_format($precompromiso->montototal,2,',','.') }}
+                            </div>
+                        </div>
+                           
+                            <div class="col-md-3">
+                            <div class="form-group">
+                                <strong>Fecha:</strong>
+                                {{ $precompromiso->created_at }}
+                            </div>
+                        </div>
+
+                            <div class="col-md-3">
+                            <div class="form-group">
+                                <strong>Unidad administrativa:</strong>
+                                {{ $precompromiso->unidadadministrativa->unidadejecutora }}
+                            </div>
+                        </div>
+
+                            <div class="col-md-3">
+                            <div class="form-group">
+                                <strong>Tipo compromiso:</strong>
+                                {{ $precompromiso->tipodecompromiso->nombre }}
+                            </div>
+                        </div>
+
+                            <div class="col-md-3">
+                            <div class="form-group">
+                                <strong>Beneficiario:</strong>
+                                {{ $precompromiso->beneficiario->nombre }}
+                            </div>
+                        </div>
+
+                        </div>
                         
-                        <div class="form-group">
-                            <strong>Documento:</strong>
-                            {{ $precompromiso->documento }}
-                        </div>
-                        <div class="form-group">
-                            <strong>Monto total:</strong>
-                            {{ number_format($precompromiso->montototal,2,',','.') }}
-                        </div>
-                        <div class="form-group">
-                            <strong>Concepto:</strong>
-                            {{ $precompromiso->concepto }}
-                        </div>
-                        <div class="form-group">
-                            <strong>Fecha:</strong>
-                            {{ $precompromiso->created_at }}
-                        </div>
-                        <div class="form-group">
-                            <strong>Unidad administrativa:</strong>
-                            {{ $precompromiso->unidadadministrativa->unidadejecutora }}
-                        </div>
-                        <div class="form-group">
-                            <strong>Tipo compromiso:</strong>
-                            {{ $precompromiso->tipodecompromiso->nombre }}
-                        </div>
-                        <div class="form-group">
-                            <strong>Beneficiario:</strong>
-                            {{ $precompromiso->beneficiario->nombre }}
-                        </div>
+                        
 
                     </div>
                 </div>
@@ -71,7 +97,7 @@
                             </span>
 
                              <div class="float-right">
-                                <a href="{{ route('detallesprecompromisos.create') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
+                                <a href="{{ route('detallesprecompromisos.create') }}" class="btn btn-outline-dark btn-sm float-right"  data-placement="left">
                                   {{ __('Agregar Imputacion!') }}
                                 </a>
                               </div>
@@ -93,7 +119,7 @@
 
 
                         <div class="table-responsive">
-                            <table class="table table-striped table-hover">
+                                  <table class="table table-hover  small table-bordered table-striped">
                                 <thead class="thead">
                                     <tr>
                                         <th>No</th>
@@ -115,17 +141,17 @@
 											<td>
                                             {{ number_format($detallesprecompromiso->montocompromiso,2,',','.') }}
                                             </td>
-											<td>{{ $detallesprecompromiso->precompromiso->concepto }}</td>
+											<td>{!! $detallesprecompromiso->precompromiso->concepto !!}</td>
 											<td>{{ $detallesprecompromiso->unidadadministrativa->unidadejecutora }}</td>
 											<td>{{ $detallesprecompromiso->ejecucione->clasificadorpresupuestario }}</td>
                                             <td>{{ $detallesprecompromiso->financiamiento }}</td>
 
                                             <td>
-                                                <form action="{{ route('detallesprecompromisos.destroy',$detallesprecompromiso->id) }}" method="POST">
-                                                    <a class="btn btn-sm btn-success" href="{{ route('detallesprecompromisos.edit',$detallesprecompromiso->id) }}"><i class="fa fa-fw fa-edit"></i> Editar</a>
+                                                <form action="{{ route('detallesprecompromisos.destroy',$detallesprecompromiso->id) }}" method="POST" class="submit-prevent-form">
+                                                    <a class="btn btn-sm btn-block btn btn-outline-dark btn-block" href="{{ route('detallesprecompromisos.edit',$detallesprecompromiso->id) }}"><i class="fa fa-fw fa-edit"></i> Editar</a>
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-fw fa-trash"></i> Eliminar</button>
+                                                    <button type="submit" class="btn btn-outline-danger btn-sm btn-block submit-prevent-button"><i class="fa fa-fw fa-trash"></i> Eliminar</button>
                                                 </form>
                                             </td>
                                         </tr>
@@ -141,6 +167,15 @@
     </div>
     @stop
 
-@section('css')
-    <link rel="stylesheet" href="/css/admin_custom.css">
-@stop
+ @section('css')
+    
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="{{ asset('css/submit.css') }}">
+        
+    @stop
+    
+    @section('js')
+    <script src="{{ asset('js/submit.js') }}"></script>
+    
+    
+    @stop

@@ -20,23 +20,23 @@
                             </span>
 
                              <div class="float-right">
-                                <a href="{{ route('requisiciones.create') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
+                                <a href="{{ route('requisiciones.create') }}" class="btn btn-outline-dark btn-sm float-right"  data-placement="left">
                                   {{ __('Crear Nueva Requisicion') }}
                                 </a>
 
-                                <a href="{{ route('requisiciones.aprobadas') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
+                                <a href="{{ route('requisiciones.aprobadas') }}" class="btn btn-outline-dark btn-sm float-right"  data-placement="left">
                                   {{ __('Aprobadas') }}
                                 </a>
 
-                                <a href="{{ route('requisiciones.index') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
+                                <a href="{{ route('requisiciones.index') }}" class="btn btn-outline-dark btn-sm float-right"  data-placement="left">
                                   {{ __('En Proceso') }}
                                 </a>
 
-                                <a href="{{ route('requisiciones.procesadas') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
+                                <a href="{{ route('requisiciones.procesadas') }}" class="btn btn-outline-dark btn-sm float-right"  data-placement="left">
                                   {{ __('Procesadas') }}
                                 </a>
 
-                                <a href="{{ route('requisiciones.anuladas') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
+                                <a href="{{ route('requisiciones.anuladas') }}" class="btn btn-outline-dark btn-sm float-right"  data-placement="left">
                                   {{ __('Anuladas') }}
                                 </a>
 
@@ -60,7 +60,7 @@
 
 
                         <div class="table-responsive">
-                            <table class="table table-striped table-hover">
+                         <table class="table table-hover  small table-bordered table-striped">
                                 <thead class="thead">
                                     <tr>
                                         <th style="text-align: center">No. Requisicion</th>
@@ -88,8 +88,8 @@
 										    <td style="text-align: center">{{ $requisicione->ejercicio->nombreejercicio}}</td>
 											<td style="text-align: center">{{ $requisicione->unidadadministrativa->unidadejecutora }}</td>
 											<td style="text-align: center">{{ $requisicione->correlativo }}</td>
-                                            <td style="text-align: center">{{ $requisicione->concepto }}</td>
-											<td style="text-align: center">{{ $requisicione->uso }}</td>
+                                            <td>{!! $requisicione->concepto !!}</td>
+											<td>{!! $requisicione->uso !!}</td>
 											<td style="text-align: center">{{ $requisicione->tipossgp->denominacion }}</td>
 											<td style="text-align: center">
                                             @if ($requisicione->estatus == 'EP')
@@ -104,19 +104,19 @@
                                         </td>
                                         <td style="text-align: center">{{ $requisicione->usuario->name }}</td>
                                             <td>
-                                            <a class="btn btn-sm btn-primary " href="{{ route('requisiciones.pdf',$requisicione->id) }}" target="_black"><i class="fa fa-fw fa-eye"></i> Imprimir</a>
+                                            <a class="btn btn-sm btn-block btn btn-outline-dark btn-block" href="{{ route('requisiciones.pdf',$requisicione->id) }}" target="_black"><i class="fas fa-print"></i> Imprimir</a>
                                            
                                                 {{--     
-                                                    <form action="{{ route('requisiciones.anular',$requisicione->id) }}" method="POST">
-                                                    <a class="btn btn-sm btn-primary " href="{{ route('requisiciones.pdf',$requisicione->id) }}" data-toggle="tooltip" data-placement="top" title="Imprimir Requisicion"><i class="fa fa-fw fa-eye"></i></a>
-                                                    <a class="btn btn-sm btn-primary " href="{{ route('requisiciones.agregar',$requisicione->id) }}" data-toggle="tooltip" data-placement="top" title="Agregar Producto BOS"><i class="fas fa-outdent"></i></i></a>
-                                                    <a class="btn btn-sm btn-success" href="{{ route('requisiciones.edit',$requisicione->id) }}" data-toggle="tooltip" data-placement="top" title="Editar Requisicion"><i class="fa fa-fw fa-edit"></i></a>
+                                                    <form action="{{ route('requisiciones.anular',$requisicione->id) }}" method="POST" class="submit-prevent-form">
+                                                    <a class="btn btn-sm btn-block btn btn-outline-dark btn-block" href="{{ route('requisiciones.pdf',$requisicione->id) }}" data-toggle="tooltip" data-placement="top" title="Imprimir Requisicion"><i class="fas fa-print"></i></a>
+                                                    <a class="btn btn-sm btn-block btn btn-outline-dark btn-block" href="{{ route('requisiciones.agregar',$requisicione->id) }}" data-toggle="tooltip" data-placement="top" title="Agregar Producto BOS"><i class="fas fa-download"></i></i></a>
+                                                    <a class="btn btn-sm btn-block btn btn-outline-dark btn-block" href="{{ route('requisiciones.edit',$requisicione->id) }}" data-toggle="tooltip" data-placement="top" title="Editar Requisicion"><i class="fa fa-fw fa-edit"></i></a>
                                                    
                                                     
                                                     <!-- Agregar detalles BOS a la requisicion -->
                                                     @csrf
                                                     @method('PATCH')
-                                                    <button type="submit" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Anular Requisicion"><i class="fa fa-fw fa-trash"></i></button>
+                                                    <button type="submit" class="btn btn-outline-danger btn-sm btn-block submit-prevent-button" data-toggle="tooltip" data-placement="top" title="Anular Requisicion"><i class="fa fa-fw fa-trash"></i></button>
                                                 </form> --}}
                                                 </td>
                                            

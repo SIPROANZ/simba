@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Institucione;
 use App\Municipio;
 use Illuminate\Http\Request;
+use PDF;
 
 /**
  * Class InstitucioneController
@@ -12,6 +13,11 @@ use Illuminate\Http\Request;
  */
 class InstitucioneController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:admin.instituciones')->only('index', 'edit', 'update', 'create', 'store');
+        
+    }
     /**
      * Display a listing of the resource.
      *
@@ -19,7 +25,13 @@ class InstitucioneController extends Controller
      */
     public function index()
     {
-        $instituciones = Institucione::paginate();
+       // $instituciones = Institucione::paginate();
+        $instituciones = Institucione::query()
+        ->when(request('search'), function($query) {
+            return $query->where ('institucion', 'like', '%'.request('search').'%');
+         })
+        ->paginate(25)
+        ->withQueryString();
 
         return view('institucione.index', compact('instituciones'))
             ->with('i', (request()->input('page', 1) - 1) * $instituciones->perPage());
@@ -123,5 +135,41 @@ class InstitucioneController extends Controller
 
         return redirect()->route('instituciones.index')
             ->with('success', 'Institución eliminada con Exito');
+    }
+
+
+    public function reportes()
+    {
+        $municipios = Municipio::orderBy('nombre', 'ASC')->pluck('nombre', 'id');
+        return view('institucione.reportes', compact('municipios'));   
+    }
+
+    public function reporte_pdf(Request $request)
+    {
+        $institucion = $request->institucion;
+        $inicio = $request->fecha_inicio;
+        $fin = $request->fecha_fin;
+        $municipio = $request->municipio;
+
+        $nombre_municipio = '';
+        $rs_municipio = Municipio::find($municipio);
+        if($rs_municipio){
+            $nombre_municipio = $rs_municipio->nombre;
+        }
+        
+        //
+        $instituciones = Institucione::municipios($municipio)->institucion($institucion)->fechaInicio($inicio)->fechaFin($fin)->get();
+        $total_objetivo = count($instituciones);
+       
+        $datos = [
+            'total_objetivo' => $total_objetivo,
+            'institucion' => $institucion,
+            'municipio' => $nombre_municipio,
+            'inicio' => $inicio,
+            'fin' => $fin,  
+            ]; 
+
+        $pdf = PDF::setPaper('letter', 'landscape')->loadView('institucione.reportepdf', ['datos'=>$datos, 'instituciones'=>$instituciones]);
+        return $pdf->stream();
     }
 }

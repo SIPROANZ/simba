@@ -144,9 +144,61 @@ class Meta extends Model
     {
         return $this->hasOne('App\Unidadadministrativa', 'id', 'unidadadministrativa_id');
     }
+
+    public function solicitantes()
+    {
+        return $this->hasOne('App\Unidadadministrativa', 'id', 'unidadadministrativasolicitante');
+    }
+
     public function usuario()
     {
         return $this->hasOne('App\Models\User', 'id', 'usuario_id');
     }   
+    public function unidadmedidas()
+    {
+        return $this->hasOne('App\Unidadmedida', 'id', 'unidadmedida');
+    }
+
+    public function scopeInstitucion($query, $institucion) {
+    	if ($institucion) {
+    		return $query->where('institucion_id','like',"$institucion");
+    	}
+    }
+
+    public function scopeUnidad($query, $unidad) {
+    	if ($unidad) {
+    		return $query->where('unidadadministrativa_id','like',"$unidad");
+    	}
+    }
+
+    public function scopeEjercicio($query, $ejercicio) {
+    	if ($ejercicio) {
+    		return $query->where('ejercicio_id','like',"$ejercicio");
+    	}
+    }
+
+    public function scopePoas($query, $poa) {
+    	if ($poa) {
+    		return $query->where('poa_id','like',"$poa");
+    	}
+    }
+
+    public function scopeUsuarios($query, $usuario) {
+    	if ($usuario) {
+    		return $query->where('usuario_id','like',"$usuario");
+    	}
+    }
+
+    public function scopeFechaInicio($query, $inicio) {
+    	if ($inicio) {
+    		return $query->where('created_at','>=',"$inicio");
+    	}
+    }
+
+    public function scopeFechaFin($query, $fin) {
+    	if ($fin) {
+    		return $query->where('created_at','<=',"$fin");
+    	}
+    }
 
 }

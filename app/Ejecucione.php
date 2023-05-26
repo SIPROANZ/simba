@@ -147,5 +147,34 @@ class Ejecucione extends Model
         return $this->hasOne('App\Models\User', 'id', 'usuario_id');
     }
 
+    public function clasificador()
+    {
+        return $this->hasOne('App\Models\Clasificadorpresupuestario', 'cuenta', 'clasificadorpresupuestario');
+    }
+
+
+    public function scopeUnidad($query, $unidad) {
+    	if ($unidad) {
+    		return $query->where('unidadadministrativa_id','like',"$unidad");
+    	}
+    }
+
+    public function scopeEjercicios($query, $ejercicio) {
+    	if ($ejercicio) {
+    		return $query->where('ejercicio_id','like',"$ejercicio");
+    	}
+    }
+
+    public function scopeUsuarios($query, $usuario) {
+    	if ($usuario) {
+    		return $query->where('usuario_id','like',"$usuario");
+    	}
+    }
+
+    public function scopeClasificadores($query, $clasificador) {
+    	if ($clasificador) {
+    		return $query->where('clasificadorpresupuestario','like',"$clasificador");
+    	}
+    }
 
 }

@@ -20,7 +20,7 @@
                             </span>
 
                              <div class="float-right">
-                                <a href="{{ route('notasdecreditos.create') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
+                                <a href="{{ route('notasdecreditos.create') }}" class="btn btn-outline-dark btn-sm float-right"  data-placement="left">
                                   {{ __('Crear Nueva Nota de Credito') }}
                                 </a>
                               </div>
@@ -43,7 +43,7 @@
 
 
                         <div class="table-responsive">
-                            <table class="table table-striped table-hover">
+                                  <table class="table table-hover  small table-bordered table-striped">
                                 <thead class="thead">
                                     <tr>
                                         <th>No</th>
@@ -65,7 +65,7 @@
                                 <tbody>
                                     @foreach ($notasdecreditos as $notasdecredito)
                                         <tr>
-                                            <td>{{ ++$i }}</td>
+                                            <td>{{ $notasdecredito->id }}</td>
                                             
 											<td>{{ $notasdecredito->ejercicio->ejercicioejecucion }}</td>
 											<td>{{ $notasdecredito->institucione->institucion }}</td>
@@ -74,18 +74,22 @@
 											<td>{{ $notasdecredito->cuentasbancaria->cuenta }}</td>
 											<td>{{ $notasdecredito->fecha }}</td>
 											<td>{{ $notasdecredito->referencia }}</td>
-											<td>{{ $notasdecredito->descripcion }}</td>
+											<td>{!! $notasdecredito->descripcion !!}</td>
 											<td>{{ number_format($notasdecredito->monto, 2 ,',','.') }}</td>
 
                                             <td>{{ $notasdecredito->usuario->name }}</td>
                                             <td>
-                                                <form action="{{ route('notasdecreditos.destroy',$notasdecredito->id) }}" method="POST">
-                                                    <a class="btn btn-sm btn-primary " href="{{ route('notasdecreditos.show',$notasdecredito->id) }}"><i class="fa fa-fw fa-eye"></i> Mostrar</a>
-                                                    <a class="btn btn-sm btn-success" href="{{ route('notasdecreditos.edit',$notasdecredito->id) }}"><i class="fa fa-fw fa-edit"></i> Editar</a>
-                                                    @csrf
+                                            <a class="btn btn-sm btn-block btn btn-outline-dark btn-block" href="{{ route('notasdecreditos.pdf',$notasdecredito->id) }}" data-toggle="tooltip" data-placement="top" title="Imprimir Nota de Credito" target="_black"><i class="fas fa-print"></i> Imprimir</a>
+       
+                                            <a class="btn btn-sm btn-block btn btn-outline-dark btn-block" href="{{ route('notasdecreditos.show',$notasdecredito->id) }}"><i class="fas fa-print"></i> Mostrar</a>
+                                            <a class="btn btn-sm btn-block btn btn-outline-dark btn-block" href="{{ route('notasdecreditos.edit',$notasdecredito->id) }}"><i class="fa fa-fw fa-edit"></i> Editar</a>
+                                                @can('admin.reversar')
+                                                <form action="{{ route('notasdecreditos.destroy',$notasdecredito->id) }}" method="POST" class="submit-prevent-form">
+                                                @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-fw fa-trash"></i> Eliminar</button>
+                                                    <button type="submit" class="btn btn-outline-danger btn-sm btn-block submit-prevent-button"><i class="fa fa-fw fa-trash"></i> Eliminar</button>
                                                 </form>
+                                                @endcan
                                             </td>
                                         </tr>
                                     @endforeach
@@ -100,7 +104,15 @@
     </div>
     @stop
 
-@section('css')
-
-    <link rel="stylesheet" href="/css/admin_custom.css">
-@stop
+ @section('css')
+    
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="{{ asset('css/submit.css') }}">
+        
+    @stop
+    
+    @section('js')
+    <script src="{{ asset('js/submit.js') }}"></script>
+    
+    
+    @stop

@@ -46,6 +46,6 @@
     </div>
     <div class="box-footer mt20">
         <br>
-        <button type="submit" class="btn btn-primary">Enviar</button>
+        <button type="submit" class="btn btn-primary submit-prevent-button">Crear En Sistema </button>
     </div>
 </div>

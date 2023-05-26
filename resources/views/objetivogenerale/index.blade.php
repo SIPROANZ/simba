@@ -16,12 +16,17 @@
                         <div style="display: flex; justify-content: space-between; align-items: center;">
 
                             <span id="card_title">
-                                {{ __('Objetivo Generales') }}
+                                {{ __('') }}
                             </span>
 
                              <div class="float-right">
-                                <a href="{{ route('objetivogenerales.create') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
-                                  {{ __('Crear Nuevo') }}
+
+                                <a href="{{ route('objetivogenerales.reportes') }}" class="btn btn-outline-dark btn-sm float-right"  data-placement="left">
+                                    {{ __('Reportes De Objetivos ') }}
+                                  </a>
+
+                                <a href="{{ route('objetivogenerales.create') }}" class="btn btn-outline-dark btn-sm float-right"  data-placement="left">
+                                  {{ __('Crear Nuevo Objetivos') }}
                                 </a>
                               </div>
                         </div>
@@ -34,24 +39,24 @@
 
                     <div class="card-body">
                     <form method="GET">
-<div class="input-group mb-3">
-  <input type="text" name="search" class="form-control" placeholder="Buscar">
-  <button class="btn btn-outline-primary" type="submit" id="button-addon2">Buscar</button>
-</div>
-</form>
+                    <div class="input-group mb-3">
+                    <input type="text" name="search" class="form-control" placeholder="Buscar">
+                    <button class="btn btn-outline-primary" type="submit" id="button-addon2">Buscar</button>
+                    </div>
+                    </form>
 
 
                         <div class="table-responsive">
-                            <table class="table table-hover table-bordered table-striped">
+                            <table class="table table-hover small table-bordered table-striped">
                                 <thead class="thead">
                                     <tr>
                                         <th class="text-center">Nro</th>
 
+										<th class="text-center">Numeral</th>
 										<th class="text-center">Objetivo General</th>
-										<th class="text-center">Objetivo</th>
 										<th class="text-center">Objetivo Estrategico</th>
 
-                                        <th class="text-center">Acción</th>
+                                        <th class="text-center">Opciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -60,18 +65,39 @@
                                             <td class="text-center">{{ ++$i }}</td>
 
 											<td class="text-center">{{ $objetivogenerale->objetivogeneral }}</td>
-											<td class="text-center">{{ $objetivogenerale->objetivo }}</td>
-											<td class="text-center">{{ $objetivogenerale->objetivosestrategico->objetivo }}</td>
+											<td class="text-left">{!! $objetivogenerale->objetivo !!}</td>
+											<td class="text-left">{!! $objetivogenerale->objetivosestrategico->objetivo !!}</td>
 
 
                                             <td class="text-center">
-                                                <form action="{{ route('objetivogenerales.destroy',$objetivogenerale->id) }}" method="POST">
-                                                    <a class="btn btn-sm btn-primary " href="{{ route('objetivogenerales.show',$objetivogenerale->id) }}"><i class="fa fa-fw fa-eye"></i> Mostrar</a>
-                                                    <a class="btn btn-sm btn-success" href="{{ route('objetivogenerales.edit',$objetivogenerale->id) }}"><i class="fa fa-fw fa-edit"></i> Editar</a>
+                                                                                             <!-- =========================================================== -->
+
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card card-secondary collapsed-card">
+              <div class="card-header">
+                <h3 class="card-title">Ver </h3>
+
+                <div class="card-tools">
+                  <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-plus"></i>
+                  </button>
+                </div>
+                <!-- /.card-tools -->
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                                                <form action="{{ route('objetivogenerales.destroy',$objetivogenerale->id) }}" method="POST" class="submit-prevent-form">
+                                                    <a class="btn btn-sm btn-block btn btn-outline-dark btn-block" href="{{ route('objetivogenerales.show',$objetivogenerale->id) }}"><i class="fas fa-print"></i> Mostrar</a>
+                                                    <a class="btn btn-sm btn-block btn btn-outline-dark btn-block" href="{{ route('objetivogenerales.edit',$objetivogenerale->id) }}"><i class="fa fa-fw fa-edit"></i> Editar</a>
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-fw fa-trash"></i> Eliminar</button>
+                                                    <button type="submit" class="btn btn-outline-danger btn-sm btn-block submit-prevent-button"><i class="fa fa-fw fa-trash"></i> Eliminar</button>
                                                 </form>
+                                                                                                              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
                                             </td>
                                         </tr>
                                     @endforeach
@@ -86,6 +112,15 @@
     </div>
     @stop
 
-    @section('css')
-        <link rel="stylesheet" href="/css/admin_custom.css">
+   @section('css')
+    
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="{{ asset('css/submit.css') }}">
+        
+    @stop
+    
+    @section('js')
+    <script src="{{ asset('js/submit.js') }}"></script>
+    
+    
     @stop

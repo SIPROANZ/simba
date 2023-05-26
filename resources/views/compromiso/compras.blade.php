@@ -20,21 +20,21 @@
 
                              <div class="float-right">
                                
-                                <a href="{{ route('compromisos.compras') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
+                                <a href="{{ route('compromisos.compras') }}" class="btn btn-outline-dark btn-sm float-right"  data-placement="left">
                                   {{ __('Crear Compromiso') }}
                                 </a>
                                
-                                <a href="{{ route('compromisos.index') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
+                                <a href="{{ route('compromisos.index') }}" class="btn btn-outline-dark btn-sm float-right"  data-placement="left">
                                   {{ __('En Proceso') }}
                                 </a>
-                                <a href="{{ route('compromisos.procesados') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
+                                <a href="{{ route('compromisos.procesados') }}" class="btn btn-outline-dark btn-sm float-right"  data-placement="left">
                                   {{ __('Procesados') }}
                                 </a>
-                                <a href="{{ route('compromisos.anulados') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
+                                <a href="{{ route('compromisos.anulados') }}" class="btn btn-outline-dark btn-sm float-right"  data-placement="left">
                                   {{ __('Anulados') }}
                                 </a>
 
-                                <a href="{{ route('compromisos.aprobadas') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
+                                <a href="{{ route('compromisos.aprobadas') }}" class="btn btn-outline-dark btn-sm float-right"  data-placement="left">
                                   {{ __('Aprobados') }}
                                 </a>
 
@@ -53,7 +53,7 @@
 
 
                         <div class="table-responsive">
-                            <table class="table table-striped table-hover">
+                            <table class="table table-hover  small table-bordered table-striped">
                                 <thead class="thead">
                                     <tr>
                                        
@@ -75,7 +75,7 @@
                                             
                                             
 											<td>{{ $compra->analisis_id }}</td>
-                                            <td>{{ $compra->analisi->observacion }}</td>
+                                            <td>{{ substr($compra->analisi->observacion, 0, 120) }}</td>
 											<td>{{ $compra->numordencompra }}</td>
 										{{--	<td>
 
@@ -97,7 +97,7 @@
                                             <td>
                                             
 
-                                            <a class="btn btn-sm btn-primary " href="{{ route('compromisos.agregarcompromiso',$compra->id) }}" data-toggle="tooltip" data-placement="top" title="Agregar Compromiso"><i class="fas fa-check"></i></i> Seleccionar</a>
+                                            <a class="btn btn-sm btn-block btn btn-outline-dark btn-block" href="{{ route('compromisos.agregarcompromiso',$compra->id) }}" data-toggle="tooltip" data-placement="top" title="Agregar Compromiso"><i class="fas fa-check"></i></i> Seleccionar</a>
                                                 
                                             
 
@@ -142,7 +142,7 @@
 
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-striped table-hover">
+                            <table class="table table-hover  small table-bordered table-striped">
                                 <thead class="thead">
                                     <tr>
                                        
@@ -166,7 +166,7 @@
                                             
 											<td>{{ $precompromiso->documento }}</td>
 											<td>{{ number_format($precompromiso->montototal, 2, ',', '.') }}</td>
-											<td>{{ $precompromiso->concepto }}</td>
+											<td>{!! substr($precompromiso->concepto, 0, 120) !!}</td>
 											<td>{{ $precompromiso->unidadadministrativa->unidadejecutora }}</td>
 											<td>{{ $precompromiso->tipodecompromiso->nombre}}</td>
 											<td>{{ $precompromiso->beneficiario->nombre }}</td>
@@ -186,7 +186,7 @@
 
                                             <td>
                                                 
-                                            <a class="btn btn-sm btn-primary " href="{{ route('compromisos.agregarprecompromiso',$precompromiso->id) }}" data-toggle="tooltip" data-placement="top" title="Agregar Compromiso Precompromiso"><i class="fas fa-check"></i></i> Seleccionar</a>
+                                            <a class="btn btn-sm btn-block btn btn-outline-dark btn-block" href="{{ route('compromisos.agregarprecompromiso',$precompromiso->id) }}" data-toggle="tooltip" data-placement="top" title="Agregar Compromiso Precompromiso"><i class="fas fa-check"></i></i> Seleccionar</a>
                                                 
                                             
                                             </td>
@@ -228,7 +228,7 @@
 
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-striped table-hover">
+                            <table class="table table-hover  small table-bordered table-striped">
                                 <thead class="thead">
                                     <tr>
                                         
@@ -251,7 +251,7 @@
                                             
 											<td>{{ $ayudassociale->id }}</td>
 											<td>{{ number_format($ayudassociale->montototal, 2, ',', '.') }}</td>
-											<td>{{ $ayudassociale->concepto }}</td>
+											<td>{{ substr($ayudassociale->concepto, 0,120) }}</td>
 											<td>{{ $ayudassociale->unidadadministrativa->denominacion }}</td>
 											<td>{{ $ayudassociale->tipodecompromiso->nombre }}</td>
 											<td>{{ $ayudassociale->beneficiario->nombre }}</td>
@@ -269,7 +269,7 @@
 
                                             <td>
 
-                                            <a class="btn btn-sm btn-primary " href="{{ route('compromisos.agregarayuda',$ayudassociale->id) }}" data-toggle="tooltip" data-placement="top" title="Agregar Compromiso Ayuda"><i class="fas fa-check"></i></i> Seleccionar</a>
+                                            <a class="btn btn-sm btn-block btn btn-outline-dark btn-block" href="{{ route('compromisos.agregarayuda',$ayudassociale->id) }}" data-toggle="tooltip" data-placement="top" title="Agregar Compromiso Ayuda"><i class="fas fa-check"></i></i> Seleccionar</a>
                                                 
                                                
                                                
@@ -288,6 +288,15 @@
 
     @stop 
 
-@section('css')
-    <link rel="stylesheet" href="/css/admin_custom.css">
-@stop
+ @section('css')
+    
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="{{ asset('css/submit.css') }}">
+        
+    @stop
+    
+    @section('js')
+    <script src="{{ asset('js/submit.js') }}"></script>
+    
+    
+    @stop

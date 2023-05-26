@@ -31,13 +31,13 @@
         <div class="form-group">
             {{ Form::label('Monto base') }}
             @if($compromiso->precompromiso_id!=NULL)
-            {{ Form::number('montobase', $compromiso->precompromiso->montototal, ['class' => 'form-control' . ($errors->has('montobase') ? ' is-invalid' : ''), 'placeholder' => '']) }}
+            {{ Form::text('montobase', $compromiso->precompromiso->montototal, ['class' => 'form-control' . ($errors->has('montobase') ? ' is-invalid' : ''), 'placeholder' => '']) }}
             @endif
             @if($compromiso->ayuda_id!=NULL)
-            {{ Form::number('montobase', $compromiso->ayudassociale->montototal, ['class' => 'form-control' . ($errors->has('montobase') ? ' is-invalid' : ''), 'placeholder' => '']) }}
+            {{ Form::text('montobase', $compromiso->ayudassociale->montototal, ['class' => 'form-control' . ($errors->has('montobase') ? ' is-invalid' : ''), 'placeholder' => '']) }}
             @endif
             @if($compromiso->compra_id!=NULL)
-            {{ Form::number('montobase', $compromiso->compra->montobase, ['class' => 'form-control' . ($errors->has('montobase') ? ' is-invalid' : ''), 'placeholder' => '']) }}
+            {{ Form::text('montobase', $compromiso->compra->montobase, ['class' => 'form-control' . ($errors->has('montobase') ? ' is-invalid' : ''), 'placeholder' => '']) }}
             @endif
             {!! $errors->first('montobase', '<div class="invalid-feedback">:message</div>') !!}
         </div>
@@ -47,13 +47,13 @@
                 {{ Form::label('Monto IVA') }}
 
                 @if($compromiso->precompromiso_id!=NULL)
-                {{ Form::number('montoiva', 0, ['class' => 'form-control' . ($errors->has('montoiva') ? ' is-invalid' : ''), 'placeholder' => '']) }}
+                {{ Form::text('montoiva', 0, ['class' => 'form-control' . ($errors->has('montoiva') ? ' is-invalid' : ''), 'placeholder' => '']) }}
                 @endif
             @if($compromiso->ayuda_id!=NULL)
-            {{ Form::number('montoiva', 0, ['class' => 'form-control' . ($errors->has('montoiva') ? ' is-invalid' : ''), 'placeholder' => '']) }}
+            {{ Form::text('montoiva', 0, ['class' => 'form-control' . ($errors->has('montoiva') ? ' is-invalid' : ''), 'placeholder' => '']) }}
                 @endif
             @if($compromiso->compra_id!=NULL)
-            {{ Form::number('montoiva', $compromiso->compra->montoiva, ['class' => 'form-control' . ($errors->has('montoiva') ? ' is-invalid' : ''), 'placeholder' => '']) }}
+            {{ Form::text('montoiva', $compromiso->compra->montoiva, ['class' => 'form-control' . ($errors->has('montoiva') ? ' is-invalid' : ''), 'placeholder' => '']) }}
                 @endif
 
                 {!! $errors->first('montoiva', '<div class="invalid-feedback">:message</div>') !!}
@@ -62,7 +62,7 @@
         <div class="col-md-3">
             <div class="form-group">
                 {{ Form::label('Monto exento') }}
-                {{ Form::number('montoexento', $ordenpago->montoexento, ['class' => 'form-control' . ($errors->has('montoexento') ? ' is-invalid' : ''), 'placeholder' => '']) }}
+                {{ Form::text('montoexento', $ordenpago->montoexento, ['class' => 'form-control' . ($errors->has('montoexento') ? ' is-invalid' : ''), 'placeholder' => '']) }}
                 {!! $errors->first('montoexento', '<div class="invalid-feedback">:message</div>') !!}
             </div>
         </div>
@@ -71,13 +71,13 @@
                 {{ Form::label('Monto neto') }}
 
                 @if($compromiso->precompromiso_id!=NULL)
-                {{ Form::number('montoneto', $compromiso->precompromiso->montototal, ['class' => 'form-control' . ($errors->has('montoneto') ? ' is-invalid' : ''), 'placeholder' => '']) }}
+                {{ Form::text('montoneto', $compromiso->precompromiso->montototal, ['class' => 'form-control' . ($errors->has('montoneto') ? ' is-invalid' : ''), 'placeholder' => '']) }}
                 @endif
             @if($compromiso->ayuda_id!=NULL)
-            {{ Form::number('montoneto', $compromiso->ayudassociale->montototal, ['class' => 'form-control' . ($errors->has('montoneto') ? ' is-invalid' : ''), 'placeholder' => '']) }}
+            {{ Form::text('montoneto', $compromiso->ayudassociale->montototal, ['class' => 'form-control' . ($errors->has('montoneto') ? ' is-invalid' : ''), 'placeholder' => '']) }}
                   @endif
             @if($compromiso->compra_id!=NULL)
-            {{ Form::number('montoneto', $compromiso->compra->montototal, ['class' => 'form-control' . ($errors->has('montoneto') ? ' is-invalid' : ''), 'placeholder' => '']) }}
+            {{ Form::text('montoneto', $compromiso->compra->montototal, ['class' => 'form-control' . ($errors->has('montoneto') ? ' is-invalid' : ''), 'placeholder' => '']) }}
                  @endif
 
                 {!! $errors->first('montoneto', '<div class="invalid-feedback">:message</div>') !!}
@@ -130,6 +130,6 @@
 
 <br>
     <div class="box-footer mt20">
-        <button type="submit" class="btn btn-primary">Enviar</button>
+        <button type="submit" class="btn btn-primary submit-prevent-button">Crear En Sistema </button>
     </div>
 </div>

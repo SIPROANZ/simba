@@ -79,6 +79,18 @@ class Cuentasbancaria extends Model
     {
         return $this->hasMany('App\Transferencia', 'cuentasbancaria_id', 'id');
     }
+
+    public function scopeBancos($query, $bancos) {
+    	if ($bancos) {
+    		return $query->where('banco_id','like',"$bancos");
+    	}
+    }
+
+    public function scopeCuentas($query, $cuenta) {
+    	if ($cuenta) {
+    		return $query->where('id','like',"$cuenta");
+    	}
+    }
     
 
 }

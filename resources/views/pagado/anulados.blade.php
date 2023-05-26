@@ -4,7 +4,7 @@
 @section('title', 'Pagado')
 
 @section('content_header')
-    <h1>Pagado</h1>
+    <h1>Pagado Anulados</h1>
 @stop
 
 @section('content')
@@ -17,29 +17,29 @@
                         <div style="display: flex; justify-content: space-between; align-items: center;">
 
                             <span id="card_title">
-                                {{ __('Pagado') }}
+                                {{ __('') }}
                             </span>
 
                              <div class="float-right">
 
-                             <a href="{{ route('pagados.agregar') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
+                             <a href="{{ route('pagados.agregar') }}" class="btn btn-outline-dark btn-sm float-right"  data-placement="left">
                                     {{ __('Crear Nuevo Pagado') }}
                                 </a>
 
-                                <a href="{{ route('pagados.index') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
+                                <a href="{{ route('pagados.index') }}" class="btn btn-outline-dark btn-sm float-right"  data-placement="left">
                                     {{ __('En proceso') }}
                                 </a>
 
-                                <a href="{{ route('pagados.procesados') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
-                                    {{ __('Procesadas') }}
+                                <a href="{{ route('pagados.procesados') }}" class="btn btn-outline-dark btn-sm float-right"  data-placement="left">
+                                    {{ __('Procesados') }}
                                 </a>
 
-                                <a href="{{ route('pagados.anulados') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
-                                    {{ __('Anuladas') }}
+                                <a href="{{ route('pagados.anulados') }}" class="btn btn-outline-dark btn-sm float-right"  data-placement="left">
+                                    {{ __('Anulados') }}
                                 </a>
 
-                                <a href="{{ route('pagados.aprobadas') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
-                                    {{ __('Aprobadas') }}
+                                <a href="{{ route('pagados.aprobadas') }}" class="btn btn-outline-dark btn-sm float-right"  data-placement="left">
+                                    {{ __('Aprobados') }}
                                 </a>
 
                               </div>
@@ -59,7 +59,7 @@
 </div>
 </form>
                         <div class="table-responsive">
-                            <table class="table table-striped table-hover">
+                            <table class="table table-hover  small table-bordered table-striped">
                                 <thead class="thead">
                                     <tr>
                                         <th>No Pagado</th>
@@ -106,7 +106,7 @@
                                             <td>{{ $pagado->usuario->name }}</td>
 
                                             <td>
-                                               <a class="btn btn-sm btn-primary " href="{{ route('pagados.pdf',$pagado->id) }}" data-toggle="tooltip" data-placement="top" title="Imprimir"><i class="fas fa-print"></i> Imprimir</a>  
+                                               <a class="btn btn-sm btn-block btn btn-outline-dark btn-blockbtn-block " href="{{ route('pagados.pdf',$pagado->id) }}" data-toggle="tooltip" data-placement="top" title="Imprimir"><i class="fas fa-print"></i> Imprimir</a>  
                                             </td>
                                             
                                         </tr>
@@ -122,6 +122,15 @@
     </div>
     @stop
 
-@section('css')
-    <link rel="stylesheet" href="/css/admin_custom.css">
-@stop
+ @section('css')
+    
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="{{ asset('css/submit.css') }}">
+        
+    @stop
+    
+    @section('js')
+    <script src="{{ asset('js/submit.js') }}"></script>
+    
+    
+    @stop

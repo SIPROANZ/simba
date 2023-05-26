@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use App\Cuentasbancaria;
 use App\Banco;
 use App\Institucione;
-use App\Notacredito;
 use Illuminate\Http\Request;
+use PDF;
 
 /**
  * Class CuentasbancariaController
@@ -14,6 +14,11 @@ use Illuminate\Http\Request;
  */
 class CuentasbancariaController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:admin.bancos')->only('index', 'edit', 'update', 'create', 'store');
+        
+    }
     /**
      * Display a listing of the resource.
      *
@@ -21,7 +26,22 @@ class CuentasbancariaController extends Controller
      */
     public function index()
     {
-        $cuentasbancarias = Cuentasbancaria::paginate();
+       //  $cuentasbancarias = Cuentasbancaria::paginate();
+
+        $cuentasbancarias = Cuentasbancaria::query()
+        ->when(request('search'), function($query){
+            return $query->where ('cuenta', 'like', '%'.request('search').'%')
+                              ->orWhere('descripcion', 'like', '%'.request('search').'%')
+                         ->orWhereHas('banco', function($q){
+                          $q->where('denominacion', 'like', '%'.request('search').'%');
+                          });
+         },
+         function ($query) {
+             $query->orderBy('id', 'DESC');
+         })
+         
+        ->paginate(25)
+        ->withQueryString();
 
         return view('cuentasbancaria.index', compact('cuentasbancarias'))
             ->with('i', (request()->input('page', 1) - 1) * $cuentasbancarias->perPage());
@@ -111,5 +131,55 @@ class CuentasbancariaController extends Controller
 
         return redirect()->route('cuentasbancarias.index')
             ->with('success', 'Cuentas bancaria borrada exitosamente');
+    }
+
+    public function reportes()
+    {
+       
+        $bancos = Banco::pluck('denominacion' , 'id');
+
+        $cuentas = Cuentasbancaria::pluck('cuenta', 'id');
+
+
+        return view('cuentasbancaria.reportes', compact('cuentas','bancos'));
+
+            
+    }
+
+    public function reporte_pdf(Request $request)
+    {   
+        
+
+        //Buscar por 
+        $banco = $request->banco;
+        $cuenta = $request->cuenta;
+        
+        $nombre_banco = '';
+        $rs_banco= Banco::find($banco);
+        if($rs_banco){
+            $nombre_banco = $rs_banco->denominacion;
+        }
+
+        $nombre_cuenta = '';
+        $rs_cuenta= Cuentasbancaria::find($cuenta);
+        if($rs_cuenta){
+            $nombre_cuenta = $rs_cuenta->cuenta;
+        }
+
+        //
+        $cuentasbancarias = Cuentasbancaria::bancos($banco)->cuentas($cuenta)->get();
+        $total_saldo = $cuentasbancarias->sum('montosaldo');
+       
+
+        $datos = [
+             
+            'nombre_banco' => $nombre_banco,
+            'nombre_cuenta' => $nombre_cuenta,
+            'total_saldo' => $total_saldo
+            ]; 
+
+        $pdf = PDF::setPaper('letter', 'landscape')->loadView('cuentasbancaria.reportepdf', ['datos'=>$datos, 'cuentasbancarias'=>$cuentasbancarias]);
+        return $pdf->stream();
+         
     }
 }

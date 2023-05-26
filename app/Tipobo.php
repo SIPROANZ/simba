@@ -40,6 +40,26 @@ class Tipobo extends Model
     {
         return $this->hasMany('App\Bo', 'tipobos_id', 'id');
     }
+
+    public function scopeDescripcion($query, $descripcion) {
+    	if ($descripcion) {
+    		return $query->where('nombre','like',"%$descripcion%");
+    	}
+    }
+
+
+    public function scopeFechaInicio($query, $inicio) {
+    	if ($inicio) {
+    		return $query->where('created_at','>=',"$inicio");
+    	}
+    }
+
+    public function scopeFechaFin($query, $fin) {
+    	if ($fin) {
+    		return $query->where('created_at','<=',"$fin");
+    	}
+    }
+    
     
 
 }

@@ -20,7 +20,7 @@
                             </span>
 
                              <div class="float-right">
-                                <a href="{{ route('tipomovimientos.create') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
+                                <a href="{{ route('tipomovimientos.create') }}" class="btn btn-outline-dark btn-sm float-right"  data-placement="left">
                                   {{ __('Crear nuevo') }}
                                 </a>
                               </div>
@@ -42,7 +42,7 @@
 
 
                         <div class="table-responsive">
-                            <table class="table table-striped table-hover">
+                                  <table class="table table-hover  small table-bordered table-striped">
                                 <thead class="thead">
                                     <tr>
                                         <th>No</th>
@@ -62,13 +62,15 @@
 											<td>{{ $tipomovimiento->accion }}</td>
 
                                             <td>
-                                                <form action="{{ route('tipomovimientos.destroy',$tipomovimiento->id) }}" method="POST">
-                                                    <a class="btn btn-sm btn-primary " href="{{ route('tipomovimientos.show',$tipomovimiento->id) }}"><i class="fa fa-fw fa-eye"></i> Mostrar</a>
-                                                    <a class="btn btn-sm btn-success" href="{{ route('tipomovimientos.edit',$tipomovimiento->id) }}"><i class="fa fa-fw fa-edit"></i>Editar</a>
-                                                    @csrf
+                                            <a class="btn btn-sm btn-block btn btn-outline-dark btn-block" href="{{ route('tipomovimientos.show',$tipomovimiento->id) }}"><i class="fas fa-print"></i> Mostrar</a>
+                                                    <a class="btn btn-sm btn-block btn btn-outline-dark btn-block" href="{{ route('tipomovimientos.edit',$tipomovimiento->id) }}"><i class="fa fa-fw fa-edit"></i>Editar</a>
+                                                @can('admin.reversar')
+                                                <form action="{{ route('tipomovimientos.destroy',$tipomovimiento->id) }}" method="POST" class="submit-prevent-form">
+                                                   @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-fw fa-trash"></i> Borrar</button>
+                                                    <button type="submit" class="btn btn-outline-danger btn-sm btn-block submit-prevent-button"><i class="fa fa-fw fa-trash"></i> Borrar</button>
                                                 </form>
+                                                @endcan
                                             </td>
                                         </tr>
                                     @endforeach
@@ -84,6 +86,15 @@
 
     @stop
 
-@section('css')
-    <link rel="stylesheet" href="/css/admin_custom.css">
-@stop
+ @section('css')
+    
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="{{ asset('css/submit.css') }}">
+        
+    @stop
+    
+    @section('js')
+    <script src="{{ asset('js/submit.js') }}"></script>
+    
+    
+    @stop

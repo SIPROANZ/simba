@@ -15,6 +15,11 @@ use Illuminate\Support\Facades\DB;
  */
 class DetallesmodificacioneController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:admin.modificacionpresupuestaria')->only('index', 'edit', 'update', 'create', 'store');
+        
+    }
     /**
      * Display a listing of the resource.
      *

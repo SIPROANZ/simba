@@ -29,6 +29,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property Detalleretencione[] $detalleretenciones
  * @property Pagado[] $pagados
  * @property Transferencia[] $transferencias
+ * @property factura[] $factura
  * @package App
  * @mixin \Illuminate\Database\Eloquent\Builder
  */
@@ -112,6 +113,41 @@ class Ordenpago extends Model
     public function usuario()
     {
         return $this->hasOne('App\Models\User', 'id', 'usuario_id');
+    }
+
+    public function facturas()
+    {
+        return $this->hasMany('App\Factura', 'ordenpago_id', 'id');
+    }
+    
+    public function scopeBeneficiarios($query, $beneficiario) {
+    	if ($beneficiario) {
+    		return $query->where('beneficiario_id','like',"$beneficiario");
+    	}
+    }
+
+    public function scopeEstatus($query, $estatus) {
+    	if ($estatus) {
+    		return $query->where('status','like',"$estatus");
+    	}
+    }
+
+    public function scopeUsuarios($query, $usuario) {
+    	if ($usuario) {
+    		return $query->where('usuario_id','like',"$usuario");
+    	}
+    }
+
+    public function scopeFechaInicio($query, $inicio) {
+    	if ($inicio) {
+    		return $query->where('created_at','>=',"$inicio");
+    	}
+    }
+
+    public function scopeFechaFin($query, $fin) {
+    	if ($fin) {
+    		return $query->where('created_at','<=',"$fin");
+    	}
     }
 
 }

@@ -15,6 +15,12 @@ use Illuminate\Http\Request;
  */
 class DetallesayudaController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('can:admin.ayudas')->only('index', 'edit', 'update', 'create', 'store');
+        
+    }
     /**
      * Display a listing of the resource.
      *

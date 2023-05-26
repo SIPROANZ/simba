@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Clasificadorpresupuestario;
+use App\Models\User;
 use Illuminate\Http\Request;
+
+use PDF;
 
 /**
  * Class ClasificadorpresupuestarioController
@@ -11,6 +14,11 @@ use Illuminate\Http\Request;
  */
 class ClasificadorpresupuestarioController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:admin.ejecuciones')->only('index', 'edit', 'update', 'create', 'store');
+        
+    }
     /**
      * Display a listing of the resource.
      *
@@ -18,7 +26,18 @@ class ClasificadorpresupuestarioController extends Controller
      */
     public function index()
     {
-        $clasificadorpresupuestarios = Clasificadorpresupuestario::paginate();
+       // $clasificadorpresupuestarios = Clasificadorpresupuestario::paginate();
+
+        $clasificadorpresupuestarios = Clasificadorpresupuestario::query()
+        ->when(request('search'), function($query){
+            return $query->where ('cuenta', 'like', '%'.request('search').'%')
+                         ->orWhere('denominacion', 'like', '%'.request('search').'%');
+         },
+         function ($query) {
+             $query->orderBy('cuenta', 'ASC');
+         })
+        ->paginate(25)
+        ->withQueryString();
 
         return view('clasificadorpresupuestario.index', compact('clasificadorpresupuestarios'))
             ->with('i', (request()->input('page', 1) - 1) * $clasificadorpresupuestarios->perPage());
@@ -109,5 +128,40 @@ class ClasificadorpresupuestarioController extends Controller
 
         return redirect()->route('clasificadorpresupuestarios.index')
             ->with('success', 'Clasificador presupuestario eliminado exitosamente');
+    }
+
+    public function reportes()
+    {
+        $usuarios = User::orderBy('name', 'ASC')->pluck('name', 'id');
+        return view('clasificadorpresupuestario.reportes', compact('usuarios'));   
+    }
+
+    public function reporte_pdf(Request $request)
+    {
+        $clasificador = $request->clasificador;
+        $inicio = $request->fecha_inicio;
+        $fin = $request->fecha_fin;
+        $usuario = $request->usuario;
+
+        $nombre_usuario = '';
+        $rs_usuario = User::find($usuario);
+        if($rs_usuario){
+            $nombre_usuario = $rs_usuario->name;
+        }
+        
+        //
+        $clasificadorpresupuestarios = Clasificadorpresupuestario::clasificador($clasificador)->usuarios($usuario)->fechaInicio($inicio)->fechaFin($fin)->get();
+        $total_objetivo = count($clasificadorpresupuestarios);
+       
+        $datos = [
+            'total_objetivo' => $total_objetivo,
+            'clasificador' => $clasificador,
+            'usuario' => $nombre_usuario,
+            'inicio' => $inicio,
+            'fin' => $fin,  
+            ]; 
+
+        $pdf = PDF::setPaper('letter', 'portrait')->loadView('clasificadorpresupuestario.reportepdf', ['datos'=>$datos, 'clasificadorpresupuestarios'=>$clasificadorpresupuestarios]);
+        return $pdf->stream();
     }
 }

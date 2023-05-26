@@ -51,8 +51,8 @@
 
         <div class="col-sm-4">
         <div class="form-group">
-            {{ Form::label('montodebita') }}
-            {{ Form::text('monto debita', $modificacione->montodebita, ['class' => 'form-control' . ($errors->has('montodebita') ? ' is-invalid' : ''), 'placeholder' => 'Monto debita']) }}
+            {{ Form::label('monto debita') }}
+            {{ Form::text('montodebita', $modificacione->montodebita, ['class' => 'form-control' . ($errors->has('montodebita') ? ' is-invalid' : ''), 'placeholder' => 'Monto debita']) }}
             {!! $errors->first('montodebita', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         </div>
@@ -69,6 +69,6 @@
     </div>
     <br>
     <div class="box-footer mt20">
-        <button type="submit" class="btn btn-primary">Enviar</button>
+        <button type="submit" class="btn btn-primary submit-prevent-button">Enviar</button>
     </div>
 </div>

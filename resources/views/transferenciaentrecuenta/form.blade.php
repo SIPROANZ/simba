@@ -2,6 +2,15 @@
     <div class="box-body">
 
     <div class="row">
+
+        <div class="col-md-12"> 
+            <div class="form-group">
+                {{ Form::label('Descripcion') }}
+                <textarea class="ckeditor form-control" name="descripcion">{{ $transferenciaentrecuenta->descripcion }}</textarea>
+                {!! $errors->first('descripcion', '<div class="invalid-feedback">:message</div>') !!}
+            </div>
+        </div>
+
         <div class="col-md-3">
         
         <div class="form-group">
@@ -20,6 +29,9 @@
         </div>
 
         <div class="col-md-3">
+
+
+            
         <div class="form-group">
             {{ Form::label('referencia') }}
             {{ Form::text('referencia', $transferenciaentrecuenta->referencia, ['class' => 'form-control' . ($errors->has('referencia') ? ' is-invalid' : ''), 'placeholder' => 'Referencia']) }}
@@ -27,13 +39,7 @@
         </div>
         </div>
 
-        <div class="col-md-3">
-        <div class="form-group">
-            {{ Form::label('descripcion') }}
-            {{ Form::text('descripcion', $transferenciaentrecuenta->descripcion, ['class' => 'form-control' . ($errors->has('descripcion') ? ' is-invalid' : ''), 'placeholder' => 'Descripcion']) }}
-            {!! $errors->first('descripcion', '<div class="invalid-feedback">:message</div>') !!}
-        </div>
-        </div>
+       
 <!--
         <div class="col-md-3">
         <div class="form-group">
@@ -120,6 +126,6 @@
 
     </div>
     <div class="box-footer mt20">
-        <button type="submit" class="btn btn-primary">Enviar</button>
+        <button type="submit" class="btn btn-primary submit-prevent-button">Crear En Sistema </button>
     </div>
 </div>

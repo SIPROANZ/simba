@@ -15,6 +15,11 @@ use Illuminate\Http\Request;
  */
 class DetallesprecompromisoController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:admin.precompromisos')->only('index', 'edit', 'update', 'create', 'store');
+        
+    }
     /**
      * Display a listing of the resource.
      *

@@ -3,7 +3,7 @@
 @section('title', 'Ejecucion')
 
 @section('content_header')
-    <h1>Ejecucion</h1>
+    <h1>Crear Ejecución</h1>
 @stop
 
 @section('content')
@@ -16,10 +16,10 @@
 
                 <div class="card card-default">
                     <div class="card-header">
-                        <span class="card-title">Crear Ejecución</span>
+                        <span class="card-title"></span>
                     </div>
                     <div class="card-body">
-                        <form method="POST" action="{{ route('ejecuciones.store') }}"  role="form" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('ejecuciones.store') }}"  role="form" enctype="multipart/form-data" class="submit-prevent-form">
                             @csrf
 
                             @include('ejecucione.form')

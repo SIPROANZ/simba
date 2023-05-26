@@ -37,7 +37,7 @@ class Comprobantesretencione extends Model
      *
      * @var array
      */
-    protected $fillable = ['tiporetencion_id','ordenpago_id','montoretencion','status'];
+    protected $fillable = ['tiporetencion_id','detretencion_id','ordenpago_id','montoretencion','status','ncomprobante','created_at'];
 
 
     /**
@@ -54,6 +54,46 @@ class Comprobantesretencione extends Model
     public function tiporetencione()
     {
         return $this->hasOne('App\Tiporetencione', 'id', 'tiporetencion_id');
+    }
+
+    public function detretencione()
+    {
+        return $this->hasOne('App\Detalleretencione', 'id', 'detretencion_id');
+    }
+
+    public function scopeBeneficiarios($query, $beneficiario) {
+    	if ($beneficiario) {
+    		//return $query->where('beneficiario_id','like',"$beneficiario");
+
+            return $query->whereHas('ordenpago', function($qa) use ($beneficiario) {
+                $qa->where('beneficiario_id', 'like', "$beneficiario");
+            });
+
+    	}
+    }
+
+    public function scopeEstatus($query, $estatus) {
+    	if ($estatus) {
+    		return $query->where('status','like',"$estatus");
+    	}
+    }
+
+    public function scopeTiporetencion($query, $tipo) {
+    	if ($tipo) {
+    		return $query->where('tiporetencion_id','like',"$tipo");
+    	}
+    }
+    
+    public function scopeFechaInicio($query, $inicio) {
+    	if ($inicio) {
+    		return $query->where('created_at','>=',"$inicio");
+    	}
+    }
+
+    public function scopeFechaFin($query, $fin) {
+    	if ($fin) {
+    		return $query->where('created_at','<=',"$fin");
+    	}
     }
     
 

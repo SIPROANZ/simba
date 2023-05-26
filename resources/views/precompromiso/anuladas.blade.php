@@ -15,24 +15,24 @@
                         <div style="display: flex; justify-content: space-between; align-items: center;">
 
                             <span id="card_title">
-                                {{ __('Precompromisos Anulados') }}
+                                {{ __('') }}
                             </span>
 
                              <div class="float-right">
-                             <a href="{{ route('precompromisos.create') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
+                             <a href="{{ route('precompromisos.create') }}" class="btn btn-outline-dark btn-sm float-right"  data-placement="left">
                                   {{ __('Crear Nuevo Precompromiso') }}
                                 </a>
-                                <a href="{{ route('precompromisos.aprobadas') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
-                                  {{ __('Aprobadas') }}
+                                <a href="{{ route('precompromisos.aprobadas') }}" class="btn btn-outline-dark btn-sm float-right"  data-placement="left">
+                                  {{ __('Aprobados') }}
                                 </a>
-                                <a href="{{ route('precompromisos.index') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
+                                <a href="{{ route('precompromisos.index') }}" class="btn btn-outline-dark btn-sm float-right"  data-placement="left">
                                   {{ __('En Proceso') }}
                                 </a>
-                                <a href="{{ route('precompromisos.procesadas') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
-                                  {{ __('Procesadas') }}
+                                <a href="{{ route('precompromisos.procesadas') }}" class="btn btn-outline-dark btn-sm float-right"  data-placement="left">
+                                  {{ __('Procesados') }}
                                 </a>
-                                <a href="{{ route('precompromisos.anuladas') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
-                                  {{ __('Anuladas') }}
+                                <a href="{{ route('precompromisos.anuladas') }}" class="btn btn-outline-dark btn-sm float-right"  data-placement="left">
+                                  {{ __('Anulados') }}
                                 </a>
                               </div>
                         </div>
@@ -53,7 +53,7 @@
 
 
                         <div class="table-responsive">
-                            <table class="table table-striped table-hover">
+                                  <table class="table table-hover  small table-bordered table-striped">
                                 <thead class="thead">
                                     <tr>
                                         <th>No. Precompromiso</th>
@@ -78,7 +78,7 @@
 											<td>{{ $precompromiso->documento }}</td>
 											<td>{{ number_format($precompromiso->montototal,2,',','.') }}</td>
 											
-											<td>{{ $precompromiso->concepto }}</td>
+											<td>{!! substr($precompromiso->concepto,0,120) !!}</td>
 											<td>{{ $precompromiso->fechaanulacion }}</td>
 											<td>{{ $precompromiso->unidadadministrativa->unidadejecutora }}</td>
 											<td>{{ $precompromiso->tipodecompromiso->nombre}}</td>
@@ -88,7 +88,7 @@
 
                                             <td>
                                                 
-                                            <a class="btn btn-sm btn-primary " href="{{ route('precompromisos.pdf',$precompromiso->id) }}" data-toggle="tooltip" data-placement="top" title="Imprimir Precompromiso"><i class="fas fa-print"></i> Imprimir</a>
+                                            <a class="btn btn-sm btn-block btn btn-outline-dark btn-block" href="{{ route('precompromisos.pdf',$precompromiso->id) }}" data-toggle="tooltip" data-placement="top" title="Imprimir Precompromiso"><i class="fas fa-print"></i> Imprimir</a>
 
                                             </td>
                                         </tr>

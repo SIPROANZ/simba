@@ -21,7 +21,7 @@
                             </span>
 
                              <div class="float-right">
-                                <a href="{{ route('transferenciaentrecuentas.create') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
+                                <a href="{{ route('transferenciaentrecuentas.create') }}" class="btn btn-outline-dark btn-sm float-right"  data-placement="left">
                                   {{ __('Crear nueva transferencia') }}
                                 </a>
                               </div>
@@ -43,7 +43,7 @@
 
 
                         <div class="table-responsive">
-                            <table class="table table-striped table-hover">
+                                  <table class="table table-hover  small table-bordered table-striped">
                                 <thead class="thead">
                                     <tr>
                                         <th>No</th>
@@ -69,7 +69,7 @@
 											<td>{{ number_format($transferenciaentrecuenta->monto, 2, ',', '.') }}</td>
 											<td>{{ $transferenciaentrecuenta->fecha }}</td>
 											<td>{{ $transferenciaentrecuenta->referencia }}</td>
-											<td>{{ $transferenciaentrecuenta->descripcion }}</td>
+											<td>{!! $transferenciaentrecuenta->descripcion !!}</td>
 											<td>{{ $transferenciaentrecuenta->banco->denominacion }}</td>
 											<td>{{ $transferenciaentrecuenta->cuentasbancaria->cuenta }}</td>
 											<td>{{ $transferenciaentrecuenta->bancodestino->denominacion }}</td>
@@ -77,13 +77,18 @@
                                             <td>{{ $transferenciaentrecuenta->usuario->name }}</td>
 
                                             <td>
-                                                <form action="{{ route('transferenciaentrecuentas.destroy',$transferenciaentrecuenta->id) }}" method="POST">
-                                                    <a class="btn btn-sm btn-primary " href="{{ route('transferenciaentrecuentas.show',$transferenciaentrecuenta->id) }}"><i class="fa fa-fw fa-eye"></i> Mostrar</a>
-                                                    <a class="btn btn-sm btn-success" href="{{ route('transferenciaentrecuentas.edit',$transferenciaentrecuenta->id) }}"><i class="fa fa-fw fa-edit"></i> Editar</a>
-                                                    @csrf
+                                            <a class="btn btn-sm btn-block btn btn-outline-dark btn-block" href="{{ route('transferenciaentrecuentas.pdf',$transferenciaentrecuenta->id) }}" data-toggle="tooltip" data-placement="top" title="Imprimir transferencia entre cuentas" target="_black"><i class="fas fa-print"></i> Imprimir</a>
+    
+                                            <a class="btn btn-sm btn-block btn btn-outline-dark btn-block" href="{{ route('transferenciaentrecuentas.show',$transferenciaentrecuenta->id) }}"><i class="fas fa-print"></i> Mostrar</a>
+                                            <a class="btn btn-sm btn-block btn btn-outline-dark btn-block" href="{{ route('transferenciaentrecuentas.edit',$transferenciaentrecuenta->id) }}"><i class="fa fa-fw fa-edit"></i> Editar!</a>
+       
+                                            @can('admin.reversar')
+                                                <form action="{{ route('transferenciaentrecuentas.destroy',$transferenciaentrecuenta->id) }}" method="POST" class="submit-prevent-form">
+                                                @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-fw fa-trash"></i> Eliminar</button>
+                                                    <button type="submit" class="btn btn-outline-danger btn-sm btn-block submit-prevent-button"><i class="fa fa-fw fa-trash"></i> Eliminar</button>
                                                 </form>
+                                            @endcan
                                             </td>
                                         </tr>
                                     @endforeach

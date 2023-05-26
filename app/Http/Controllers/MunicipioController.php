@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Municipio;
 use App\Estado;
 use Illuminate\Http\Request;
+use PDF;
 
 /**
  * Class MunicipioController
@@ -12,6 +13,11 @@ use Illuminate\Http\Request;
  */
 class MunicipioController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:admin.instituciones')->only('index', 'edit', 'update', 'create', 'store');
+        
+    }
     /**
      * Display a listing of the resource.
      *
@@ -19,7 +25,14 @@ class MunicipioController extends Controller
      */
     public function index()
     {
-        $municipios = Municipio::paginate();
+       // $municipios = Municipio::paginate();
+
+        $municipios = Municipio::query()
+        ->when(request('search'), function($query) {
+            return $query->where ('nombre', 'like', '%'.request('search').'%');
+         })
+        ->paginate(25)
+        ->withQueryString();
 
         return view('municipio.index', compact('municipios'))
             ->with('i', (request()->input('page', 1) - 1) * $municipios->perPage());
@@ -112,4 +125,41 @@ class MunicipioController extends Controller
         return redirect()->route('municipios.index')
             ->with('success', 'Municipio deleted successfully');
     }
+
+
+    public function reportes()
+    {
+        $estados = Estado::orderBy('nombre', 'ASC')->pluck('nombre', 'id');
+        return view('municipio.reportes', compact('estados'));   
+    }
+
+    public function reporte_pdf(Request $request)
+    {
+        $municipio = $request->municipio;
+        $inicio = $request->fecha_inicio;
+        $fin = $request->fecha_fin;
+        $estado = $request->estado;
+
+        $nombre_estado = '';
+        $rs_estado = Estado::find($estado);
+        if($rs_estado){
+            $nombre_estado = $rs_estado->nombre;
+        }
+        
+        //
+        $municipios = Municipio::estados($estado)->municipios($municipio)->fechaInicio($inicio)->fechaFin($fin)->get();
+        $total_objetivo = count($municipios);
+       
+        $datos = [
+            'total_objetivo' => $total_objetivo,
+            'municipio' => $municipio,
+            'estado' => $nombre_estado,
+            'inicio' => $inicio,
+            'fin' => $fin,  
+            ]; 
+
+        $pdf = PDF::setPaper('letter', 'portrait')->loadView('municipio.reportepdf', ['datos'=>$datos, 'municipios'=>$municipios]);
+        return $pdf->stream();
+    }
+
 }

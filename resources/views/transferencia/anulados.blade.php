@@ -21,19 +21,19 @@
 
                              <div class="float-right">
 
-                               <a href="{{ route('transferencias.agregartransferencia') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
+                               <a href="{{ route('transferencias.agregartransferencia') }}" class="btn btn-outline-dark btn-sm float-right"  data-placement="left">
                                   {{ __('Crear Transferencia') }}
                                 </a>
 
-                                <a href="{{ route('transferencias.agregar') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
+                                <a href="{{ route('transferencias.agregar') }}" class="btn btn-outline-dark btn-sm float-right"  data-placement="left">
                                   {{ __('En Proceso') }}
                                 </a>
 
-                                <a href="{{ route('transferencias.index') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
+                                <a href="{{ route('transferencias.index') }}" class="btn btn-outline-dark btn-sm float-right"  data-placement="left">
                                   {{ __('Emitidas') }}
                                 </a>
 
-                                <a href="{{ route('transferencias.anulados') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
+                                <a href="{{ route('transferencias.anulados') }}" class="btn btn-outline-dark btn-sm float-right"  data-placement="left">
                                   {{ __('Anuladas') }}
                                 </a>
 
@@ -56,7 +56,7 @@
 
 
                         <div class="table-responsive">
-                            <table class="table table-striped table-hover">
+                                  <table class="table table-hover  small table-bordered table-striped">
                                 <thead class="thead">
                                     <tr>
                                         <th>No</th>
@@ -103,7 +103,7 @@
                                             </td>
                                             <td>
 
-                                            <a class="btn btn-sm btn-primary " href="{{ route('transferencias.pdf',$transferencia->id) }}" data-toggle="tooltip" data-placement="top" title="Imprimir transferencias"><i class="fas fa-print"></i></a>
+                                            <a class="btn btn-sm btn-block btn btn-outline-dark btn-block" href="{{ route('transferencias.pdf',$transferencia->id) }}" data-toggle="tooltip" data-placement="top" title="Imprimir transferencias"><i class="fas fa-print"></i></a>
 
                                         </td>
                                         </tr>
@@ -119,6 +119,15 @@
     </div>
     @stop
 
-@section('css')
-    <link rel="stylesheet" href="/css/admin_custom.css">
-@stop
+ @section('css')
+    
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="{{ asset('css/submit.css') }}">
+        
+    @stop
+    
+    @section('js')
+    <script src="{{ asset('js/submit.js') }}"></script>
+    
+    
+    @stop

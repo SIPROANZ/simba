@@ -124,7 +124,7 @@
                         </div>
 
     <!-- CREAMOS LOS DATOS DEL ANALISIS DE LA COTIZACION -->
-    <table class="table table-striped table-hover">
+    <table class="table table-hover  small table-bordered table-striped">
                                 <thead class="thead">
                                     <tr>
                                         

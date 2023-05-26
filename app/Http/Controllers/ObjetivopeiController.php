@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Objetivopei;
 use App\Objetivomunicipale;
 use Illuminate\Http\Request;
+use PDF;
 
 /**
  * Class ObjetivopeiController
@@ -12,6 +13,11 @@ use Illuminate\Http\Request;
  */
 class ObjetivopeiController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:admin.poa')->only('index', 'edit', 'update', 'create', 'store');
+        
+    }
     /**
      * Display a listing of the resource.
      *
@@ -19,7 +25,14 @@ class ObjetivopeiController extends Controller
      */
     public function index()
     {
-        $objetivopeis = Objetivopei::paginate();
+      //  $objetivopeis = Objetivopei::paginate();
+
+        $objetivopeis = Objetivopei::query()
+        ->when(request('search'), function($query) {
+            return $query->where ('objetivo', 'like', '%'.request('search').'%');
+         })
+        ->paginate(25)
+        ->withQueryString();
 
         return view('objetivopei.index', compact('objetivopeis'))
             ->with('i', (request()->input('page', 1) - 1) * $objetivopeis->perPage());
@@ -108,5 +121,40 @@ class ObjetivopeiController extends Controller
 
         return redirect()->route('objetivopeis.index')
             ->with('success', 'Objetivo PEI eliminada con Exito');
+    }
+
+    public function reportes()
+    {
+        $municipales = Objetivomunicipale::orderBy('objetivo', 'ASC')->pluck('objetivo', 'id');
+        return view('objetivopei.reportes', compact('municipales'));   
+    }
+
+    public function reporte_pdf(Request $request)
+    {
+        $objetivo = $request->objetivo;
+        $inicio = $request->fecha_inicio;
+        $fin = $request->fecha_fin;
+        $municipal = $request->municipal;
+
+        $nombre_municipal = '';
+        $rs_municipal = Objetivomunicipale::find($municipal);
+        if($rs_municipal){
+            $nombre_municipal = $rs_municipal->objetivo;
+        }
+        
+        //
+        $objetivopeis = Objetivopei::municipal($municipal)->objetivos($objetivo)->fechaInicio($inicio)->fechaFin($fin)->get();
+        $total_objetivo = count($objetivopeis);
+       
+        $datos = [
+            'total_objetivo' => $total_objetivo,
+            'objetivo' => $objetivo,
+            'municipal' => $nombre_municipal,
+            'inicio' => $inicio,
+            'fin' => $fin,  
+            ]; 
+
+        $pdf = PDF::setPaper('letter', 'landscape')->loadView('objetivopei.reportepdf', ['datos'=>$datos, 'objetivopeis'=>$objetivopeis]);
+        return $pdf->stream();
     }
 }

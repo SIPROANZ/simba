@@ -31,14 +31,14 @@ class Detallesanalisi extends Model
     
     static $rules = [
 		'proveedor_id' => 'required',
-		'analisis_id' => 'required',
+		/*'analisis_id' => 'required',
 		'bos_id' => 'required',
-		'cantidad' => 'required',
+		'cantidad' => 'required',*/
 		'precio' => 'required',
 		/*'subtotal' => 'required',
 		'iva' => 'required',
-		'total' => 'required',*/
-        'aprobado' => 'required',
+		'total' => 'required',
+        'aprobado' => 'required',*/
     ];
 
     protected $perPage = 20;

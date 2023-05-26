@@ -21,19 +21,19 @@
                             </span>
 
                             <div class="float-right">
-                                <a href="{{ route('ordenpagos.compromisos') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
+                                <a href="{{ route('ordenpagos.compromisos') }}" class="btn btn-outline-dark btn-sm float-right"  data-placement="left">
                                   {{ __('Crear Orden de Pago') }}
                                 </a>
-                                <a href="{{ route('ordenpagos.index') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
+                                <a href="{{ route('ordenpagos.index') }}" class="btn btn-outline-dark btn-sm float-right"  data-placement="left">
                                 {{ __('En Proceso') }}
                                 </a>
-                                <a href="{{ route('ordenpagos.procesados') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
+                                <a href="{{ route('ordenpagos.procesados') }}" class="btn btn-outline-dark btn-sm float-right"  data-placement="left">
                                 {{ __('Procesados') }}
-                                <a href="{{ route('ordenpagos.aprobados') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
+                                <a href="{{ route('ordenpagos.aprobados') }}" class="btn btn-outline-dark btn-sm float-right"  data-placement="left">
                                 {{ __('Aprobados') }}
                                 </a>
                                 </a>
-                                <a href="{{ route('ordenpagos.anulados') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
+                                <a href="{{ route('ordenpagos.anulados') }}" class="btn btn-outline-dark btn-sm float-right"  data-placement="left">
                                 {{ __('Anulados') }}
                                 </a>
                               </div>
@@ -55,7 +55,7 @@
 
 
                         <div class="table-responsive">
-                            <table class="table table-striped table-hover">
+                                  <table class="table table-hover  small table-bordered table-striped">
                                 <thead class="thead">
                                     <tr>
                                         
@@ -87,7 +87,7 @@
 											<td>{{ $compromiso->ayuda_id }}</td> --}}
 
                                             <td>
-                                                <a class="btn btn-sm btn-primary " href="{{ route('ordenpagos.agregarordenpago',$compromiso->id) }}" data-toggle="tooltip" data-placement="top" title="Agregar Orden de Pago"><i class="fas fa-check"></i></i>Seleccionar</a>
+                                                <a class="btn btn-sm btn-block btn btn-success btn-block" href="{{ route('ordenpagos.agregarordenpago',$compromiso->id) }}" data-toggle="tooltip" data-placement="top" title="Agregar Orden de Pago"><i class="fas fa-check"></i></i>Seleccionar</a>
 
                                              
                                             </td>
@@ -104,6 +104,15 @@
     </div>
     @stop
 
-@section('css')
-    <link rel="stylesheet" href="/css/admin_custom.css">
-@stop
+ @section('css')
+    
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="{{ asset('css/submit.css') }}">
+        
+    @stop
+    
+    @section('js')
+    <script src="{{ asset('js/submit.js') }}"></script>
+    
+    
+    @stop

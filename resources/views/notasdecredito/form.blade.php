@@ -2,6 +2,15 @@
     <div class="box-body">
         
     <div class="row">
+
+        <div class="col-md-12"> 
+            <div class="form-group">
+                {{ Form::label('Descripcion') }}
+                <textarea class="ckeditor form-control" name="descripcion">{{ $notasdecredito->descripcion }}</textarea>
+                {!! $errors->first('descripcion', '<div class="invalid-feedback">:message</div>') !!}
+            </div>
+        </div>
+
         <div class="col-sm-3">
         <div class="form-group">
             {{ Form::label('ejercicio') }}
@@ -83,13 +92,6 @@
         </div>
         </div>
 
-        <div class="col-sm-3">
-        <div class="form-group">
-            {{ Form::label('descripcion') }}
-            {{ Form::text('descripcion', $notasdecredito->descripcion, ['class' => 'form-control' . ($errors->has('descripcion') ? ' is-invalid' : ''), 'placeholder' => 'Descripcion']) }}
-            {!! $errors->first('descripcion', '<div class="invalid-feedback">:message</div>') !!}
-        </div>
-        </div>
 
         <div class="col-sm-3">
         <div class="form-group">
@@ -102,6 +104,6 @@
 
     </div>
     <div class="box-footer mt20">
-        <button type="submit" class="btn btn-primary">Enviar</button>
+        <button type="submit" class="btn btn-primary submit-prevent-button">Crear En Sistema </button>
     </div>
 </div>

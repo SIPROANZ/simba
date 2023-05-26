@@ -70,4 +70,16 @@ class Beneficiario extends Model
     {
         return $this->hasOne('App\Models\User', 'id', 'usuario_id');
     }
+
+	public function scopeDireccion($query, $direccion) {
+    	if ($direccion) {
+    		return $query->where('direccion','like',"%$direccion%");
+    	}
+    }
+
+	public function scopePersona($query, $persona) {
+    	if ($persona) {
+    		return $query->where('caracterbeneficiario','like',"$persona");
+    	}
+    }
 }

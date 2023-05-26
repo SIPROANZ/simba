@@ -6,9 +6,15 @@ use App\Bo;
 use App\Producto;
 use App\Productoscp;
 use App\Unidadmedida;
+use App\Detallesrequisicione;
 use App\Tipobo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
+use PDF;
+
+
+use Illuminate\Support\Facades\Auth;
 
 /**
  * Class BoController
@@ -16,6 +22,11 @@ use Illuminate\Support\Facades\DB;
  */
 class BoController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:admin.bos')->only('index', 'edit', 'update', 'create', 'store');
+        
+    }
     /**
      * Display a listing of the resource.
      *
@@ -146,9 +157,77 @@ class BoController extends Controller
      */
     public function destroy($id)
     {
-        $bo = Bo::find($id)->delete();
 
-        return redirect()->route('bos.index')
-            ->with('success', 'BOS eliminada con Exito');
+        //Validar que no este ese bos relacionado en el sistema
+        if(Detallesrequisicione::where('bos_id',$id)->exists()){
+           
+
+            return redirect()->route('bos.index')
+                ->with('success', 'El siguiente BOS no se puede eliminar, ya que se encuentra asignado a una requisicion.');
+        }else{
+            $bo = Bo::find($id)->delete();
+
+            return redirect()->route('bos.index')
+                ->with('success', 'BOS eliminada con Exito');
+        }
+
+    }
+
+
+    public function reportes()
+    {
+       
+        $tipos = Tipobo::pluck('nombre','id');
+        $unidades = Unidadmedida::pluck('nombre','id');
+
+        return view('bo.reportes', compact('tipos','unidades'));
+    }
+
+    public function reporte_pdf(Request $request)
+    {
+        //Buscar por institucion
+        $descripcion = $request->descripcion;
+        $tipo = $request->tipo;
+        $unidad = $request->unidad;
+        $inicio = $request->fecha_inicio;
+        $fin = $request->fecha_fin;
+        
+        $nombre_tipo = '';
+        $rs_tipo = Tipobo::find($tipo);
+        if($rs_tipo){
+            $nombre_tipo = $rs_tipo->nombre;
+        }
+
+        $nombre_unidad = '';
+        $rs_unidad= Unidadmedida::find($unidad);
+        if($rs_unidad){
+            $nombre_unidad = $rs_unidad->nombre;
+        }
+
+        //
+        
+        $bos = Bo::descripcion($descripcion)->tipo($tipo)->unidad($unidad)->fechaInicio($inicio)->fechaFin($fin)->get();
+        $total = count($bos);
+        $bienes = Bo::where('tipobos_id', 1)->descripcion($descripcion)->tipo($tipo)->unidad($unidad)->fechaInicio($inicio)->fechaFin($fin)->count();
+        $obras = Bo::where('tipobos_id', 2)->descripcion($descripcion)->tipo($tipo)->unidad($unidad)->fechaInicio($inicio)->fechaFin($fin)->count();
+        $servicios = Bo::where('tipobos_id', 3)->descripcion($descripcion)->tipo($tipo)->unidad($unidad)->fechaInicio($inicio)->fechaFin($fin)->count();
+
+
+        $datos = [
+            'bienes' => $bienes,
+            'obras' => $obras,
+            'servicios' => $servicios,
+           
+            'total' => $total, 
+            'inicio' => $inicio,
+            'fin' => $fin,   
+            'descripcion' =>$descripcion,  
+            'tipo' => $nombre_tipo,
+            'unidad' => $nombre_unidad,
+            ]; 
+
+        $pdf = PDF::setPaper('letter', 'portrait')->loadView('bo.reportepdf', ['datos'=>$datos, 'bos'=>$bos]);
+        return $pdf->stream();
+         
     }
 }

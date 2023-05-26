@@ -149,12 +149,26 @@ class DetalleretencioneController extends Controller
     {
         request()->validate(Detalleretencione::$rules);
       
-        $detalleretencione = Detalleretencione::find($detalleretencione->id);
-        $odp = $detalleretencione->ordenpago_id;
+        $detalleretenciones = Detalleretencione::find($detalleretencione->id);
+        $odp = $detalleretenciones->ordenpago_id;
 
+        $retenido = $detalleretencione->montoIVA - $request->montoIVA;
+
+        //Actualizo en mi orden de pago
+        $ordenpago = Ordenpago::find($odp);
+
+        $ordenpago->decrement('montoretencion', $detalleretencione->montoIVA);
+        $ordenpago->decrement('montoneto',  $detalleretencione->montoIVA);
+
+        $ordenpago->increment('montoretencion', $request->montoIVA);
+        $ordenpago->increment('montoneto',  $request->montoIVA);
+        
+        
+
+        //Actualizo en mi detalle requisicion
         $request->merge(['montoneto'=>$request->montoIVA]);
 
-        $detalleretencione->update($request->all());
+        $detalleretenciones->update($request->all());
 
         return redirect()->route('ordenpagos.agregar',$odp)
             ->with('success', 'Retencion Editada Satisfactoriamente');

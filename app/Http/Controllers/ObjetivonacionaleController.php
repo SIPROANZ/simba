@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Objetivonacionale;
 use App\Objetivoshistorico;
 use Illuminate\Http\Request;
+use PDF;
 
 /**
  * Class ObjetivonacionaleController
@@ -12,6 +13,11 @@ use Illuminate\Http\Request;
  */
 class ObjetivonacionaleController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:admin.poa')->only('index', 'edit', 'update', 'create', 'store');
+        
+    }
     /**
      * Display a listing of the resource.
      *
@@ -19,7 +25,14 @@ class ObjetivonacionaleController extends Controller
      */
     public function index()
     {
-        $objetivonacionales = Objetivonacionale::paginate();
+       // $objetivonacionales = Objetivonacionale::paginate();
+
+        $objetivonacionales = Objetivonacionale::query()
+        ->when(request('search'), function($query) {
+            return $query->where ('objetivo', 'like', '%'.request('search').'%');
+         })
+        ->paginate(25)
+        ->withQueryString();
 
         return view('objetivonacionale.index', compact('objetivonacionales'))
             ->with('i', (request()->input('page', 1) - 1) * $objetivonacionales->perPage());
@@ -107,5 +120,40 @@ class ObjetivonacionaleController extends Controller
 
         return redirect()->route('objetivonacionales.index')
             ->with('success', 'Objetivonacionale deleted successfully');
+    }
+
+    public function reportes()
+    {
+        $historicos = Objetivoshistorico::orderBy('objetivo', 'ASC')->pluck('objetivo', 'id');
+        return view('objetivonacionale.reportes', compact('historicos'));   
+    }
+
+    public function reporte_pdf(Request $request)
+    {
+        $objetivo = $request->objetivo;
+        $inicio = $request->fecha_inicio;
+        $fin = $request->fecha_fin;
+        $historico = $request->historico;
+
+        $nombre_historico = '';
+        $rs_historico = Objetivoshistorico::find($historico);
+        if($rs_historico){
+            $nombre_historico = $rs_historico->objetivo;
+        }
+        
+        //
+        $objetivonacionales = Objetivonacionale::historicos($historico)->objetivos($objetivo)->fechaInicio($inicio)->fechaFin($fin)->get();
+        $total_objetivo = count($objetivonacionales);
+       
+        $datos = [
+            'total_objetivo' => $total_objetivo,
+            'objetivo' => $objetivo,
+            'historico' => $nombre_historico,
+            'inicio' => $inicio,
+            'fin' => $fin,  
+            ]; 
+
+        $pdf = PDF::setPaper('letter', 'landscape')->loadView('objetivonacionale.reportepdf', ['datos'=>$datos, 'objetivonacionales'=>$objetivonacionales]);
+        return $pdf->stream();
     }
 }

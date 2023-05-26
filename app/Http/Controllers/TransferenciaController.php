@@ -10,11 +10,15 @@ use App\Cuentasbancaria;
 use App\Beneficiario;
 use App\Detallepagado;
 use App\Ejecucione;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Luecano\NumeroALetras\NumeroALetras;
-
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use PDF;
+
+
+use App\Models\User;
 
 /**
  * Class TransferenciaController
@@ -22,6 +26,11 @@ use PDF;
  */
 class TransferenciaController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:admin.pagados')->only('index', 'edit', 'update', 'create', 'store', 'pdf');
+        
+    }
     /**
      * Display a listing of the resource.
      *
@@ -256,13 +265,9 @@ class TransferenciaController extends Controller
        
         //MOstrar los valores
 
- 
- 
-    
+        if($monto_transferencia < $saldo || bccomp($monto_transferencia, $saldo, 2)==0){ //que la cuenta tenga saldo
 
-        if($monto_transferencia <= $saldo){ //que la cuenta tenga saldo
-
-            if($monto_transferencia <= $total_a_pagar){ //que el monto de la trasnferencia no sea mayor a lo que se debe pagar
+            if($monto_transferencia < $total_a_pagar || bccomp($monto_transferencia, $total_a_pagar, 2)==0){ //que el monto de la trasnferencia no sea mayor a lo que se debe pagar
 
                 if($validar_transferencia != TRUE){ //Validar que el numero de referencia no se repita
 
@@ -337,7 +342,7 @@ class TransferenciaController extends Controller
                         $monto_diferencia = $montopagado - $montoabonado;
 
                         if($monto_diferencia!=0){ 
-                            if($monto_transferencia>=$monto_diferencia){
+                            if($monto_transferencia>$monto_diferencia || bccomp($monto_transferencia, $monto_diferencia, 2)==0){
                                 //Agregar el monto de la transferencia al abano de detalle pagado
                                 $det_pagado = Detallepagado::find($rows->id);
                                 $det_pagado->increment('montoabonado', $monto_diferencia);
@@ -549,4 +554,173 @@ class TransferenciaController extends Controller
         return $pdf->stream();
  
      }
+
+     public function reversar($id)
+     {
+        // transferencia
+        $transferencias = Transferencia::find($id);
+        // 
+        $fecha = Carbon::now();
+        // Obtener el nombre del usuario que esta reversando la transferencia
+        $nombre_usuario = Auth::user()->name;
+
+        $pagado_id = $transferencias->pagado_id;
+
+        $concepto_reverso = 'Se ha reversado la transferencia por un Monto De: ' . $transferencias->montotransferencia . ' Accion realizada por: ' . $nombre_usuario . ' ID Pagado: ' .$pagado_id . ' Numero de Referencia: ' . $transferencias->referenciabancaria;
+
+        //El monto de la transferencia debe ser cero, y la referencia bancaria tambien debe ser cero
+
+        //Disminuir de Pagado el monto pagado que corresponde al monto de la transferencia que se esta reversando
+        $pagado = Pagado::find($pagado_id);
+        $pagado->decrement('montopagado',$transferencias->montotransferencia);
+
+        //Aumentar el monto en la cuenta bancaria
+        
+
+        //Disminuir de la tabla detalle pagado el monto de la transferencia
+       //Obtener el detalle pagado
+       $monto_transferencia = $transferencias->montotransferencia;
+       $detalles_pagado = Detallepagado::where('pagado_id', $pagado->id)->get();
+
+       foreach($detalles_pagado as $rows){
+           
+           $montoabonado = $rows->montoabonado;
+
+          // return redirect()->route('transferencias.index')->with('success', 'Mensaje: Entro en el foreach Monto Abonado: ' . $montoabonado . ' Monto de la transferencia: ' . $monto_transferencia);
+   
+           
+               if($monto_transferencia>=$montoabonado){
+                   //Agregar el monto de la transferencia al abano de detalle pagado
+                   $det_pagado = Detallepagado::find($rows->id);
+                   $det_pagado->decrement('montoabonado', $montoabonado);
+                   //modificar la ejecucion correspondiente
+                   $ejecucion = Ejecucione::find($rows->ejecucion_id);
+                   $ejecucion->decrement('monto_pagado', $montoabonado);
+                   $ejecucion->increment('monto_por_pagar', $montoabonado);
+
+                   $monto_transferencia -= $montoabonado;
+
+               }else{
+                   $det_pagado = Detallepagado::find($rows->id);
+                   $det_pagado->decrement('montoabonado', $monto_transferencia);
+                   //Modificar la ejecucion correspondiente
+                   $ejecucion = Ejecucione::find($rows->ejecucion_id);
+                   $ejecucion->decrement('monto_pagado', $monto_transferencia);
+                   $ejecucion->increment('monto_por_pagar', $monto_transferencia);
+
+                   $monto_transferencia -= $monto_transferencia;
+
+               }
+           
+
+       }
+
+       $pagado->status = 'PR';
+       $pagado->save();
+
+       $cuenta_bancaria = Cuentasbancaria::find($transferencias->cuentasbancaria_id);
+       $cuenta_bancaria->increment('montosaldo',$transferencias->montotransferencia);
+       //Editar el pagado
+       $datos_editar = [
+        'montotransferencia' => 0,
+        'fechaanulacion' => $fecha,
+        'referenciabancaria' => '0',
+        'conceptoanulacion'=>$concepto_reverso,
+       ];
+
+       $transferencias->update($datos_editar);
+
+        return redirect()->route('transferencias.index')->with('success', 'Mensaje: ' . $concepto_reverso);
+   
+     }
+
+
+     public function reportes()
+     {
+        
+         $bancos = Banco::pluck('denominacion' , 'id');
+ 
+         $cuentas = Cuentasbancaria::pluck('cuenta', 'id');
+ 
+         $usuarios = User::pluck('name' , 'id'); 
+ 
+         $fecha_actual = Carbon::now();
+       
+ 
+         return view('transferencia.reportes', compact('cuentas','bancos','fecha_actual','usuarios'));
+ 
+             
+     }
+ 
+     public function reporte_pdf(Request $request)
+     {   
+         //Buscar por rif
+         $rif = $request->rif;
+         //Obtener Beneficiario
+         $beneficiario_id = false;
+         $nombre_beneficiario = '';
+         $rs_beneficiario = Beneficiario::where('rif', $rif)->first();
+         if($rs_beneficiario){
+             $beneficiario_id = $rs_beneficiario->id;
+             $nombre_beneficiario = $rs_beneficiario->nombre;
+         }
+ 
+         //Buscar por 
+         $banco = $request->banco;
+         $cuenta = $request->cuenta;
+         
+         
+         $usuario = $request->usuario_id;
+         $inicio = $request->fecha_inicio;
+         $fin = $request->fecha_fin;
+         
+         $nombre_usuario = '';
+         $rs_usuario = User::find($usuario);
+         if($rs_usuario){
+             $nombre_usuario = $rs_usuario->name;
+         }
+ 
+         $nombre_banco = '';
+         $rs_banco= Banco::find($banco);
+         if($rs_banco){
+             $nombre_banco = $rs_banco->denominacion;
+         }
+ 
+         $nombre_cuenta = '';
+         $rs_cuenta= Cuentasbancaria::find($cuenta);
+         if($rs_cuenta){
+             $nombre_cuenta = $rs_cuenta->cuenta;
+         }
+ 
+         
+ 
+ 
+         //
+         
+         $transferencias = Transferencia::bancos($banco)->cuentas($cuenta)->beneficiarios($beneficiario_id)->usuarios($usuario)->fechaInicio($inicio)->fechaFin($fin)->get();
+        
+         $total_transferencias = $transferencias->sum('montotransferencia');
+         $total_ordenpago = $transferencias->sum('montoorden');
+         $total_pagado = 0;
+         foreach($transferencias as $transferencia){
+            $total_pagado += $transferencia->pagado->montopagado;
+         } 
+ 
+         $datos = [
+             'inicio' => $inicio,
+             'fin' => $fin,  
+             'usuario' =>$nombre_usuario,  
+             'nombre_banco' => $nombre_banco,
+             'nombre_cuenta' => $nombre_cuenta,
+             'nombre_beneficiario' => $nombre_beneficiario,
+             'total_transferencias' => $total_transferencias,
+             'total_ordenpago' => $total_ordenpago,
+             'total_pagado' => $total_pagado
+             ]; 
+ 
+         $pdf = PDF::setPaper('letter', 'landscape')->loadView('transferencia.reportepdf', ['datos'=>$datos, 'transferencias'=>$transferencias]);
+         return $pdf->stream();
+          
+     }
+
 }

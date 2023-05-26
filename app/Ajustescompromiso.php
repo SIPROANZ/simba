@@ -54,4 +54,34 @@ class Ajustescompromiso extends Model
         return $this->hasOne('App\Models\User', 'id', 'usuario_id');
     }
 
+    public function scopeTipos($query, $tipo) {
+    	if ($tipo) {
+    		return $query->where('tipo','like',"$tipo");
+    	}
+    }
+
+    public function scopeEstatus($query, $estatus) {
+    	if ($estatus) {
+    		return $query->where('status','like',"$estatus");
+    	}
+    }
+
+    public function scopeUsuarios($query, $usuario) {
+    	if ($usuario) {
+    		return $query->where('usuario_id','like',"$usuario");
+    	}
+    }
+
+    public function scopeFechaInicio($query, $inicio) {
+    	if ($inicio) {
+    		return $query->where('created_at','>=',"$inicio");
+    	}
+    }
+
+    public function scopeFechaFin($query, $fin) {
+    	if ($fin) {
+    		return $query->where('created_at','<=',"$fin");
+    	}
+    }
+
 }

@@ -74,11 +74,6 @@ class OrdenpagoController extends Controller
         $numero_correlativo = $max_correlativo + 1;
         $request->merge(['nordenpago'=>$numero_correlativo]);
         $request->merge(['status'=>'EP']);
-
-        //Agregar el id del usuario
-        $id_usuario = $request->user()->id;
-        $request->merge(['usuario_id'=>$id_usuario]);
-        
         $nordenpago = Ordenpago::create($request->all());
         //Obtener el ultimo ID
         $ultimo = Ordenpago::latest('id')->first();

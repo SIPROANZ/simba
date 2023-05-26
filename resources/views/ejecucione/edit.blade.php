@@ -19,7 +19,7 @@
                         <span class="card-title">Actualizar Ejecución</span>
                     </div>
                     <div class="card-body">
-                        <form method="POST" action="{{ route('ejecuciones.update', $ejecucione->id) }}"  role="form" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('ejecuciones.update', $ejecucione->id) }}"  role="form" enctype="multipart/form-data" class="submit-prevent-form">
                             {{ method_field('PATCH') }}
                             @csrf
 

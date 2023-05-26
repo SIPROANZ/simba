@@ -16,6 +16,11 @@ use Illuminate\Http\Request;
  */
 class EjecuciondetalleController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:admin.ejecuciones')->only('index', 'edit', 'update', 'create', 'store');
+        
+    }
     /**
      * Display a listing of the resource.
      *

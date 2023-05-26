@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Segmento;
 use Illuminate\Http\Request;
+use PDF;
 
 /**
  * Class SegmentoController
@@ -11,6 +12,11 @@ use Illuminate\Http\Request;
  */
 class SegmentoController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:admin.bos')->only('index', 'edit', 'update', 'create', 'store');
+        
+    }
     /**
      * Display a listing of the resource.
      *
@@ -18,7 +24,19 @@ class SegmentoController extends Controller
      */
     public function index()
     {
-        $segmentos = Segmento::paginate();
+       // $segmentos = Segmento::paginate();
+
+        $segmentos = Segmento::query()
+        ->when(request('search'), function($query){
+            return $query->where ('nombre', 'like', '%'.request('search').'%')
+                         ->orderBy('nombre', 'ASC');
+         },
+         function ($query) {
+             $query->orderBy('nombre', 'ASC');
+         })
+         
+        ->paginate(25)
+        ->withQueryString();
 
         return view('segmento.index', compact('segmentos'))
             ->with('i', (request()->input('page', 1) - 1) * $segmentos->perPage());
@@ -105,5 +123,36 @@ class SegmentoController extends Controller
 
         return redirect()->route('segmentos.index')
             ->with('success', 'Segmento eliminado con éxito');
+    }
+
+    public function reportes()
+    {
+
+        return view('segmento.reportes');
+    }
+
+    public function reporte_pdf(Request $request)
+    {
+        //Buscar por institucion
+        $descripcion = $request->descripcion;
+        $inicio = $request->fecha_inicio;
+        $fin = $request->fecha_fin;
+        
+       
+        
+        $segmentos = Segmento::descripcion($descripcion)->fechaInicio($inicio)->fechaFin($fin)->get();
+        $total = count($segmentos);
+       
+
+        $datos = [
+            'total' => $total, 
+            'inicio' => $inicio,
+            'fin' => $fin,   
+            'descripcion' =>$descripcion,  
+            ]; 
+
+        $pdf = PDF::setPaper('letter', 'portrait')->loadView('segmento.reportepdf', ['datos'=>$datos, 'segmentos'=>$segmentos]);
+        return $pdf->stream();
+         
     }
 }
