@@ -49,7 +49,7 @@
                                   <table class="table table-hover  small table-bordered table-striped">
                                 <thead class="thead">
                                     <tr>
-                                        <th>No</th>
+                                        <th>ID</th>
                                         <th>Logo</th>
 										<th>Rif</th>
 										<th>Institución</th>
@@ -65,10 +65,10 @@
                                 <tbody>
                                     @foreach ($instituciones as $institucione)
                                         <tr>
-                                            <td>{{ ++$i }}</td>
+                                            
+                                            <td>{{ $institucione->id }}</td>
                                             <td>{{ $institucione->logoinstitucion }}</td>
 											<td>{{ $institucione->rif }}</td>
-
 											<td>{{ $institucione->institucion }}</td>
                                             <td>{{ $institucione->razonsocial }}</td>
 											<td>{{ $institucione->municipio->nombre }}</td>
@@ -98,7 +98,7 @@
                                                     <a class="btn btn-sm btn-block btn btn-outline-dark btn-block" href="{{ route('instituciones.edit',$institucione->id) }}"><i class="fa fa-fw fa-edit"></i> Editar</a>
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn btn-outline-danger btn-sm btn-block submit-prevent-button"><i class="fa fa-fw fa-trash"></i> Eliminar</button>
+                                                    <button type="submit" class="btn btn-outline-danger btn-sm btn-block submit-prevent-button show-alert-delete-box"><i class="fa fa-fw fa-trash"></i> Eliminar</button>
                                                 </form>
                                                                                                               <!-- /.card-body -->
             </div>
@@ -129,6 +129,7 @@
     
     @section('js')
     <script src="{{ asset('js/submit.js') }}"></script>
+    <script src="{{ asset('js/alerta_eliminar.js') }}"></script>
     
     
     @stop

@@ -45,7 +45,7 @@
 
   <div class="col-sm-3">
 <div class="info-box">
-  <span class="info-box-icon bg-info"><i class="fas fa-money-bill-alt"></i></span>
+  <span class="info-box-icon bg-warning"><i class="fas fa-money-bill-alt"></i></span>
   <div class="info-box-content">
     <span class="info-box-text">Total Ajustado</span>
     <span class="info-box-number">{{ $datos['total_ajustado'] }}</span>
@@ -78,7 +78,7 @@
 </div>
 
 <div class="row">
-            <div class="col-sm-4">
+            <div class="col-sm-3">
             <div class="info-box bg-success">
   <span class="info-box-icon"><i class="far fa-handshake"></i></span>
   <div class="info-box-content">
@@ -88,13 +88,13 @@
       <div class="progress-bar bg-dark" style="width: {{$datos['tpcomprometido']}}%"></div>
     </div>
     <span class="progress-description">
-    Representa el {{ $datos['porc_comprometido'] }}% Compromiso
+    {{ $datos['porc_comprometido'] }}% Comprometido
     </span>
   </div>
 </div>
             </div>  
 
-            <div class="col-sm-4">
+            <div class="col-sm-3">
             <div class="info-box bg-gradient-warning">
   <span class="info-box-icon"><i class="	fas fa-calendar-check"></i></span>
   <div class="info-box-content">
@@ -104,27 +104,47 @@
       <div class="progress-bar bg-dark" style="width: {{$datos['tpcausado']}}%"></div>
     </div>
     <span class="progress-description">
-    Representa el {{ $datos['porc_causado'] }}% Causado
+    {{ $datos['porc_causado'] }}% Causado
     </span>
   </div>
 </div>
             </div>  
 
-            <div class="col-sm-4">
+            <div class="col-sm-3">
             <div class="info-box bg-gradient-info">
-  <span class="info-box-icon"><i class="fas fa-file-invoice-dollar"></i></span>
-  <div class="info-box-content">
-    <span class="info-box-text">Pagado</span>
-    <span class="info-box-number">{{ $datos['total_pagado'] }}</span>
-    <div class="progress">
-      <div class="progress-bar bg-dark" style="width: {{$datos['tppagado']}}%"></div>
-    </div>
-    <span class="progress-description">
-    Representa el {{ $datos['porc_pagado'] }}% Pagado
-    </span>
-  </div>
-</div>
-</div>  
+                  <span class="info-box-icon"><i class="fas fa-file-invoice-dollar"></i></span>
+                  <div class="info-box-content">
+                    <span class="info-box-text">Pagado</span>
+                    <span class="info-box-number">{{ $datos['total_pagado'] }}</span>
+                    <div class="progress">
+                      <div class="progress-bar bg-dark" style="width: {{$datos['tppagado']}}%"></div>
+                    </div>
+                    <span class="progress-description">
+                    {{ $datos['porc_pagado'] }}% Pagado
+                    </span>
+              </div>
+            </div>
+          </div>  
+
+          <!-- Para colocar pagado -->
+          <div class="col-sm-3">
+            <div class="info-box bg-gradient-danger">
+                  <span class="info-box-icon"><i class="fas fa-file-invoice-dollar"></i></span>
+                  <div class="info-box-content">
+                    <span class="info-box-text">Disponibilidad</span>
+                    <span class="info-box-number">{{ $datos['total_disponible'] }}</span>
+                    <div class="progress">
+                      <div class="progress-bar bg-dark" style="width: {{$datos['tpdisponible']}}%"></div>
+                    </div>
+                    <span class="progress-description">
+                    {{ $datos['porc_disponible'] }}% Disponibilidad
+                    </span>
+              </div>
+            </div>
+          </div>  
+
+
+
 </div>
 
 
@@ -150,7 +170,7 @@
           </div>
           <div class="card-body">
           <!-- Cadena para guardar los valores en el html que luego leera el script -->
-          <input type="hidden" id="ingresos_egresos" value="<?PHP echo "" . $datos['comprometido'] . "," . $datos['causado'] . "," .$datos['pagado']; ?>">
+          <input type="hidden" id="ingresos_egresos" value="<?PHP echo "" . $datos['comprometido'] . "," . $datos['causado'] . "," .$datos['pagado']. "," .$datos['disponible']; ?>">
          
           <!-- Inicio Otro Pie Ingresos Vs Egresos -->
           <div class="chart">
@@ -237,7 +257,7 @@
         <!-- LINE CHART -->
         <div class="card card-info ">
           <div class="card-header">
-          <h3 class="card-title">Compromiso \ Causado  \ Pagado.</h3>
+          <h3 class="card-title">Compromiso \ Causado  \ Pagado \ Disponible</h3>
 
             <div class="card-tools">
               <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -253,6 +273,7 @@
           <input type="hidden" id="ingresos_anual" value="<?PHP echo "" . $datos['cadena_compromiso']; ?>">
           <input type="hidden" id="egresos_anual" value="<?PHP echo "" . $datos['cadena_causado']; ?>">
           <input type="hidden" id="pagado_anual" value="<?PHP echo "" . $datos['cadena_pagado']; ?>">
+          <input type="hidden" id="cadena_disponible" value="<?PHP echo "" . $datos['cadena_disponible']; ?>">
           <!-- Inicio Otro Pie Ingresos Vs Egresos -->
           <div class="chart">
             <canvas id="myChartLine" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
@@ -408,11 +429,17 @@
   new Chart(ctx, {
     type: 'pie',
   data: {
-  labels: ['Comprometido', 'Causado', 'Pagado'],
+  labels: ['Comprometido', 'Causado', 'Pagado','Disponible'],
   datasets: [
     {
       label: 'Total Bs',
       data: arrayingresos_egresos,
+      backgroundColor: [
+                "#16B94A",
+                "#FBB609",
+                "#20A9C9",
+                "#DF3030",
+            ]
      // backgroundColor: Object.values(Utils.CHART_COLORS),
     }
   ]
@@ -447,6 +474,9 @@
       var pagado = document.getElementById("pagado_anual").value;
       var arraypagado =  pagado.split(",");
 
+      var disponible = document.getElementById("cadena_disponible").value;
+      var arraydisponible =  disponible.split(",");
+
   new Chart(ctx_line, {
     type: 'line',
     data: {
@@ -454,16 +484,37 @@
       datasets: [{
         label: 'Compromisos Bs',
         data: arrayingresos,
+        backgroundColor: [
+                "#16B94A",
+            ],
+            borderColor: "#16B94A",
         borderWidth: 1
       },
       {
         label: 'Causado Bs',
         data: arrayegresos,
+        backgroundColor: [
+                "#FBB609",
+            ],
+            borderColor: "#FBB609",
         borderWidth: 1
       },
       {
         label: 'Pagado Bs',
         data: arraypagado,
+        backgroundColor: [
+                "#20A9C9",
+            ],
+            borderColor: "#20A9C9",
+        borderWidth: 1
+      },
+      {
+        label: 'Disponible Bs',
+        data: arraydisponible,
+        backgroundColor: [
+                "#DF3030",
+            ],
+            borderColor: "#DF3030", 
         borderWidth: 1
       }]
     },

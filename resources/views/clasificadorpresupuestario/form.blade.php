@@ -3,7 +3,7 @@
         
     <div class="row">
 
-        <div class="col-md-8"> 
+        <div class="col-md-4"> 
         <div class="form-group">
             {{ Form::label('Cuenta') }}
             {{ Form::text('cuenta', $clasificadorpresupuestario->cuenta, ['class' => 'form-control' . ($errors->has('cuenta') ? ' is-invalid' : ''), 'placeholder' => 'Cuenta']) }}
@@ -11,7 +11,7 @@
         </div>
         </div>
 
-        <div class="col-md-4">
+        <div class="col-md-8">
         <div class="form-group">
             {{ Form::label('Denominacion') }}
             {{ Form::text('denominacion', $clasificadorpresupuestario->denominacion, ['class' => 'form-control' . ($errors->has('denominacion') ? ' is-invalid' : ''), 'placeholder' => 'Denominacion']) }}

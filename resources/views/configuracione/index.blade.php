@@ -71,12 +71,12 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                                                <form action="{{ route('configuraciones.destroy',$configuracione->id) }}" method="POST">
+                                                <form action="{{ route('configuraciones.destroy',$configuracione->id) }}" method="POST" class="submit-prevent-form">
                                                     <a class="btn btn-sm btn-primary " href="{{ route('configuraciones.show',$configuracione->id) }}"><i class="fa fa-fw fa-eye"></i> {{ __('Mostrar') }}</a>
                                                     <a class="btn btn-sm btn-success" href="{{ route('configuraciones.edit',$configuracione->id) }}"><i class="fa fa-fw fa-edit"></i> {{ __('Editar') }}</a>
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-fw fa-trash"></i> {{ __('Eliminar') }}</button>
+                                                    <button type="submit" class="btn btn-danger btn-sm btn-block submit-prevent-button show-alert-delete-box"><i class="fa fa-fw fa-trash"></i> {{ __('Eliminar') }}</button>
                                                 </form>
                                                                                                               <!-- /.card-body -->
             </div>
@@ -106,6 +106,5 @@
        
        @section('js')
        <script src="{{ asset('js/submit.js') }}"></script>
-       
-       
+       <script src="{{ asset('js/alerta_eliminar.js') }}"></script>
        @stop

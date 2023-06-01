@@ -57,7 +57,7 @@
 
 
                         <div class="table-responsive">
-   <table class="table table-hover  small table-bordered table-striped">
+   <table class="table table-hover small table-bordered table-striped">
                                 <thead class="thead">
                                     <tr>
                                         <th>Numero compromiso</th>
@@ -125,10 +125,9 @@
    
                                                     <a class="btn btn-sm btn-block btn btn-outline-dark btn-block " href="{{ route('compromisos.reversar',$compromiso->id) }}" data-toggle="tooltip" data-placement="top" title="Reversar"><i class="fas fa-angle-double-left"></i> Reversar</a>
    
-
                                                     @csrf
                                                     @method('PATCH')
-                                                    <button type="submit" class="btn btn-sm btn-block btn btn-outline-dark btn-block" data-toggle="tooltip" data-placement="top" title="Actualizar Compromiso, solo si lo ha reversado previamente"><i class="fas fa-history"></i> Actualizar</button>
+                                                    <button type="submit" class="btn btn-sm btn-block btn btn-outline-dark submit-prevent-button btn-block" data-toggle="tooltip" data-placement="top" title="Actualizar Compromiso, solo si lo ha reversado previamente"><i class="fas fa-history"></i> Actualizar</button>
                                                 </form>
 
 
@@ -139,14 +138,14 @@
                                                    @csrf
                                                     @method('PATCH')
                                                     
-                                                    <button type="submit" class="btn btn-sm btn-block btn btn-outline-primary btn-blockbtn-block" data-toggle="tooltip" data-placement="top" title="Aprobar Compromiso"><i class="fas fa-check-double"></i> Aprobar</button>
+                                                    <button type="submit" class="btn btn-sm btn-block btn btn-outline-success submit-prevent-button btn-blockbtn-block" data-toggle="tooltip" data-placement="top" title="Aprobar Compromiso"><i class="fas fa-check-double"></i> Aprobar</button>
                                                 </form>
 
                                                  <form action="{{ route('compromisos.anular',$compromiso->id) }}" method="POST" class="submit-prevent-form">
                                                   
                                                   @csrf
                                                     @method('PATCH')
-                                                    <button type="submit" class="btn btn-outline-danger btn-sm btn-block submit-prevent-button" data-toggle="tooltip" data-placement="top" title="Anular Compromiso"><i class="fa fa-fw fa-trash"></i> Anular</button>
+                                                    <button type="submit" class="btn btn-outline-danger btn-sm btn-block submit-prevent-button show-alert-anular-box" data-toggle="tooltip" data-placement="top" title="Anular Compromiso"><i class="fa fa-fw fa-trash"></i> Anular</button>
                                                 </form>
 
                                                 
@@ -174,6 +173,7 @@
     
     @section('js')
     <script src="{{ asset('js/submit.js') }}"></script>
+    <script src="{{ asset('js/alerta_anular.js') }}"></script>
     
     
     @stop

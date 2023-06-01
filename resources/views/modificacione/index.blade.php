@@ -116,22 +116,24 @@
 
 
 
+                <form action="{{ route('modificaciones.aprobar',$modificacione->id) }}" method="POST" class="submit-prevent-form">
+                    <!-- Agregar detalles BOS a la requisicion -->
+                    <a class="btn btn-sm btn-block btn btn-outline-dark btn-blockbtn-block " href="{{ route('modificaciones.agregarmodificacion',$modificacione->id) }}" data-toggle="tooltip" data-placement="top" title="Agregar Detalle"><i class="fas fa-outdent"></i></i> Agregar</a>
+                    <a class="btn btn-sm btn-block btn btn-outline-dark btn-blockbtn-block" href="{{ route('modificaciones.edit',$modificacione->id) }}" data-toggle="tooltip" data-placement="top" title="Editar Ajuste"><i class="fa fa-fw fa-edit"></i> Editar</a>
+                   
+                    @csrf
+                    @method('PATCH')
+                    <button type="submit" class="btn btn-sm btn-block btn btn-outline-success btn-blockbtn-block submit-prevent-button" data-toggle="tooltip" data-placement="top" title="Aprobar Modificacion"><i class="fas fa-check-double"></i> Aprobar</button>
+                </form>
 
                                                 <form action="{{ route('modificaciones.anular',$modificacione->id) }}" method="POST" class="submit-prevent-form">
-                                                <a class="btn btn-sm btn-block btn btn-outline-dark btn-blockbtn-block " href="{{ route('modificaciones.agregarmodificacion',$modificacione->id) }}" data-toggle="tooltip" data-placement="top" title="Agregar Detalle"><i class="fas fa-outdent"></i></i> Agregar</a>
-                                                    <a class="btn btn-sm btn-block btn btn-outline-dark btn-blockbtn-block" href="{{ route('modificaciones.edit',$modificacione->id) }}" data-toggle="tooltip" data-placement="top" title="Editar Ajuste"><i class="fa fa-fw fa-edit"></i> Editar</a>
-                                                   
+                                               
                                                     @csrf
                                                     @method('PATCH')
-                                                    <button type="submit" class="btn btn-sm btn-block btn btn-outline-danger btn-blockbtn-block" data-toggle="tooltip" data-placement="top" title="Anular Modificacion"><i class="fa fa-fw fa-trash"></i> Anular</button>
+                                                    <button type="submit" class="btn btn-sm btn-block btn btn-outline-danger btn-blockbtn-block submit-prevent-button show-alert-anular-box" data-toggle="tooltip" data-placement="top" title="Anular Modificacion"><i class="fa fa-fw fa-trash"></i> Anular</button>
                                                 </form>
 
-                                                <form action="{{ route('modificaciones.aprobar',$modificacione->id) }}" method="POST" class="submit-prevent-form">
-                                                    <!-- Agregar detalles BOS a la requisicion -->
-                                                    @csrf
-                                                    @method('PATCH')
-                                                    <button type="submit" class="btn btn-sm btn-block btn btn-outline-success btn-blockbtn-block" data-toggle="tooltip" data-placement="top" title="Aprobar Modificacion"><i class="fas fa-check-double"></i> Aprobar</button>
-                                                </form>
+                                                
 
                                             </td>
                                                           <!-- /.card-body -->
@@ -162,6 +164,6 @@
     
     @section('js')
     <script src="{{ asset('js/submit.js') }}"></script>
-    
+    <script src="{{ asset('js/alerta_anular.js') }}"></script>
     
     @stop

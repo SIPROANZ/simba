@@ -102,6 +102,6 @@
     
     @section('js')
     <script src="{{ asset('js/submit.js') }}"></script>
-    
+    <script src="{{ asset('js/alerta_eliminar.js') }}"></script>
     
     @stop

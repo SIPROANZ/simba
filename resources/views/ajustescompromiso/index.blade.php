@@ -112,18 +112,19 @@
                                                 
                                                     <a class="btn btn-sm btn-block btn btn-outline-dark btn-block" href="{{ route('ajustescompromisos.show',$ajustescompromiso->id) }}" data-toggle="tooltip" data-placement="top" title="Mostrar Ajuste Compromiso"><i class="fas fa-print"></i> Procesar</a>
                                                    
+                                                    <a class="btn btn-sm btn-block btn btn-outline-dark btn-block" href="{{ route('ajustescompromisos.edit',$ajustescompromiso->id) }}" data-toggle="tooltip" data-placement="top" title="Editar Ajuste Compromiso"><i class="fa fa-fw fa-edit"></i> Editar</a>
+                                                
                                                    @csrf
                                                     @method('PATCH')
                                                     
-                                                    <button type="submit" class="btn btn-sm btn-block btn btn-outline-dark btn-blockbtn-block" data-toggle="tooltip" data-placement="top" title="Aprobar Ajuste Compromiso"><i class="fas fa-check-double"></i> Aprobar</button>
+                                                    <button type="submit" class="btn btn-sm btn-block btn btn-outline-success submit-prevent-button btn-blockbtn-block" data-toggle="tooltip" data-placement="top" title="Aprobar Ajuste Compromiso"><i class="fas fa-check-double"></i> Aprobar</button>
                                                 </form>
 
                                                 <form action="{{ route('ajustescompromisos.anular',$ajustescompromiso->id) }}" method="POST" class="submit-prevent-form">
                                                   
-                                                <a class="btn btn-sm btn-block btn btn-outline-dark btn-block" href="{{ route('ajustescompromisos.edit',$ajustescompromiso->id) }}" data-toggle="tooltip" data-placement="top" title="Editar Ajuste Compromiso"><i class="fa fa-fw fa-edit"></i> Editar</a>
                                                     @csrf
                                                     @method('PATCH')
-                                                    <button type="submit" class="btn btn-outline-danger btn-sm btn-block submit-prevent-button" data-toggle="tooltip" data-placement="top" title="Anular Ajuste Compromiso"><i class="fa fa-fw fa-trash"></i> Anular</button>
+                                                    <button type="submit" class="btn btn-outline-danger btn-sm btn-block submit-prevent-button show-alert-anular-box" data-toggle="tooltip" data-placement="top" title="Anular Ajuste Compromiso"><i class="fa fa-fw fa-trash"></i> Anular</button>
                                                 </form>
 
                                             </td>
@@ -149,6 +150,7 @@
     
     @section('js')
     <script src="{{ asset('js/submit.js') }}"></script>
+    <script src="{{ asset('js/alerta_anular.js') }}"></script>
     
     
     @stop

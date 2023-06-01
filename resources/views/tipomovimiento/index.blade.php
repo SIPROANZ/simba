@@ -68,7 +68,7 @@
                                                 <form action="{{ route('tipomovimientos.destroy',$tipomovimiento->id) }}" method="POST" class="submit-prevent-form">
                                                    @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn btn-outline-danger btn-sm btn-block submit-prevent-button"><i class="fa fa-fw fa-trash"></i> Borrar</button>
+                                                    <button type="submit" class="btn btn-outline-danger btn-sm btn-block submit-prevent-button show-alert-delete-box"><i class="fa fa-fw fa-trash"></i> Borrar</button>
                                                 </form>
                                                 @endcan
                                             </td>
@@ -95,6 +95,6 @@
     
     @section('js')
     <script src="{{ asset('js/submit.js') }}"></script>
-    
+    <script src="{{ asset('js/alerta_eliminar.js') }}"></script>
     
     @stop

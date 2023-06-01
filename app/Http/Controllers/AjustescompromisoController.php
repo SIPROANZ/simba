@@ -630,4 +630,27 @@ class AjustescompromisoController extends Controller
         
          
     }
+
+
+    public function anular($id)
+    {
+        $ajustecompromiso = Ajustescompromiso::find($id);
+
+        if($ajustecompromiso->status == 'AN')
+        {
+            return redirect()->route('ajustescompromisos.index')
+            ->with('success', 'El Ajuste Compromiso que esta intentando Anular, ya usted lo ha anulado previamente, evite dar muchos click en el boton anular. ');
+
+        } else { 
+        
+        $ajustecompromiso->status = 'AN';
+        $ajustecompromiso->save();
+
+        return redirect()->route('ajustescompromisos.index')
+            ->with('success', 'Ajuste de Compromiso Anulado exitosamente.');
+
+        }
+
+    }
+
 }

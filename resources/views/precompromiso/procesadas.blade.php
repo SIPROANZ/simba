@@ -104,7 +104,7 @@
                                             
                                                     @csrf
                                                     @method('PATCH')
-                                                    <button type="submit" class="btn btn-sm btn-block btn btn-outline-success btn-block" data-toggle="tooltip" data-placement="top" title="Reversa el precompromiso, afectando la ejecucion presupuestaria, es decir, descuenta el precompromiso de la ejecucion"><i class="fa fa-fw fa-check"></i> Modificar</button>
+                                                    <button type="submit" class="btn btn-sm btn-block btn btn-outline-success btn-block submit-prevent-button show-alert-reversar-box" data-toggle="tooltip" data-placement="top" title="Reversa el precompromiso, afectando la ejecucion presupuestaria, es decir, descuenta el precompromiso de la ejecucion"><i class="fa fa-fw fa-check"></i> Reversar</button>
                                                 </form>
                                                 @endcan
                                             
@@ -133,6 +133,7 @@
     
     @section('js')
     <script src="{{ asset('js/submit.js') }}"></script>
+    <script src="{{ asset('js/alerta_reversar.js') }}"></script>
     
     
     @stop

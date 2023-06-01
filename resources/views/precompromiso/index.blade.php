@@ -66,16 +66,13 @@
                                         <th>Estado</th>
                                         <th>Usuario</th>
 
-
                                         <th>Opciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach ($precompromisos as $precompromiso)
 
-                                    
                                         <tr>
-                                          
 
                                             <td>{{ $precompromiso->id }}</td>
                                             
@@ -133,7 +130,7 @@
 
                                                     @csrf
                                                     @method('PATCH')
-                                                    <button type="submit" class="btn btn-outline-danger btn-sm btn-block submit-prevent-button" data-toggle="tooltip" data-placement="top" title="Anular Precompromiso"><i class="fa fa-fw fa-trash"></i> Anular</button>
+                                                    <button type="submit" class="btn btn-outline-danger btn-sm btn-block submit-prevent-button show-alert-anular-box" data-toggle="tooltip" data-placement="top" title="Anular Precompromiso"><i class="fa fa-fw fa-trash"></i> Anular</button>
                                                 </form>
                                                 
 
@@ -175,6 +172,7 @@
     
     @section('js')
     <script src="{{ asset('js/submit.js') }}"></script>
+    <script src="{{ asset('js/alerta_anular.js') }}"></script>
     
     
     @stop

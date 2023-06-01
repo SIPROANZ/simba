@@ -1,10 +1,10 @@
 @extends('adminlte::page')
 
 
-@section('title', 'Orden de Pago')
+@section('title', 'Tipos de Compromisos')
 
 @section('content_header')
-    <h1>Orden de Pago</h1>
+    <h1>Tipo de Compromiso</h1>
 @stop
 
 @section('content')

@@ -23,7 +23,18 @@ class BancoController extends Controller
      */
     public function index()
     {
-        $bancos = Banco::paginate();
+       // $bancos = Banco::paginate();
+
+        $bancos = Banco::query()
+        ->when(request('search'), function($query){
+            return $query->where ('denominacion', 'like', '%'.request('search').'%')
+                         ->orderBy('denominacion', 'ASC');
+         },
+         function ($query) {
+             $query->orderBy('denominacion', 'ASC');
+         })
+        ->paginate(25)
+        ->withQueryString();
 
         return view('banco.index', compact('bancos'))
             ->with('i', (request()->input('page', 1) - 1) * $bancos->perPage());

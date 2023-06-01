@@ -88,8 +88,8 @@
                                             
 											<td style="text-align: left">{!!$poa->ejercicio->ejercicioejecucion !!}</td>
                                             <td style="text-align: left">{!! $poa->institucione->institucion !!}</td>
-                                            <td style="text-align: left">{ !!$poa->objetivoshistorico->objetivo !!}</td>
-                                            <td style="text-align: left">{ !!$poa->objetivonacionale->objetivo !!}</td>
+                                            <td style="text-align: left">{!!$poa->objetivoshistorico->objetivo !!}</td>
+                                            <td style="text-align: left">{!!$poa->objetivonacionale->objetivo !!}</td>
                                             <td style="text-align: left">{!!$poa->objetivosestrategico->objetivo !!}</td>
                                             <td style="text-align: left">{!! $poa->objetivogenerale->objetivo !!}</td>
                                             <td style="text-align: left">{!! $poa->objetivomunicipale->objetivo !!}</td>
@@ -104,7 +104,7 @@
                                             <td style="text-align: left">{!! $poa->sncfespecifico !!}</td>
                                             <td style="text-align: left">{!! $poa->psocial!!}</td>
                                             <td style="text-align: left">{!! $poa->codigo !!}</td>
-                                            <td style="text-align: left">{!! $poa->tipoproyecto }}</td>
+                                            <td style="text-align: left">{!! $poa->tipoproyecto !!}</td>
                                             <td style="text-align: left">{!! $poa->central !!}</td>
                                             <td style="text-align: left">{!!$poa->descripcion !!}</td>
                                             <td style="text-align: left">{!! $poa->usuario->name!!}</td>
@@ -131,7 +131,7 @@
                                                     <a class="btn btn-sm btn-block btn btn-outline-dark btn-block" href="{{ route('poas.edit',$poa->id) }}"><i class="fa fa-fw fa-edit"></i> Editar</a>
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn btn-outline-danger btn-sm btn-block submit-prevent-button"><i class="fa fa-fw fa-trash"></i> Eliminar</button>
+                                                    <button type="submit" class="btn btn-outline-danger btn-sm btn-block submit-prevent-button show-alert-delete-box"><i class="fa fa-fw fa-trash"></i> Eliminar</button>
                                                 </form>
                                                                                                            <!-- /.card-body -->
             </div>
@@ -161,6 +161,7 @@
     
     @section('js')
     <script src="{{ asset('js/submit.js') }}"></script>
+    <script src="{{ asset('js/alerta_eliminar.js') }}"></script>
     
     
     @stop

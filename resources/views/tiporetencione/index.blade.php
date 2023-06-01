@@ -11,7 +11,7 @@
 <br>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-sm-6">
+            <div class="col-sm-12">
                 <div class="card">
                     <div class="card-header">
                         <div style="display: flex; justify-content: space-between; align-items: center;">
@@ -27,7 +27,7 @@
                               </div>
                         </div>
                     </div>
-                    @if ($message = Session::get('Exitoso'))
+                    @if ($message = Session::get('success'))
                         <div class="alert alert-success">
                             <p>{{ $message }}</p>
                         </div>
@@ -82,7 +82,7 @@
                                                     <a class="btn btn-sm btn-block btn btn-outline-dark btn-block" href="{{ route('tiporetenciones.edit',$tiporetencione->id) }}"><i class="fa fa-fw fa-edit"></i> Editar</a>
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn btn-sm btn-block btn btn-outline-danger btn-block"><i class="fa fa-fw fa-trash"></i> Eliminar</button>
+                                                    <button type="submit" class="btn btn-sm btn-block btn btn-outline-danger btn-block submit-prevent-button show-alert-delete-box"><i class="fa fa-fw fa-trash"></i> Eliminar</button>
                                                 </form>
                                             </td>
                                                                                                                                                   <!-- /.card-body -->
@@ -112,6 +112,7 @@
     
     @section('js')
     <script src="{{ asset('js/submit.js') }}"></script>
+    <script src="{{ asset('js/alerta_eliminar.js') }}"></script>
     
     
     @stop

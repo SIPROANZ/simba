@@ -3,7 +3,7 @@
 @section('title', 'Compromisos')
 
 @section('content_header')
-    <h1>Compromisos Procesador</h1>
+    <h1>Compromisos Procesados</h1>
 @stop
 
 @section('content')
@@ -117,14 +117,14 @@
                                             <a class="btn btn-sm btn-block btn btn-outline-dark btn-block" href="{{ route('compromisos.pdf',$compromiso->id) }}" data-toggle="tooltip" data-placement="top" title="Imprimir Compromiso" target="_black"><i class="fas fa-print"></i> Imprimir</a>
                                                  
                                                  @can('admin.reversar')
-                                                 <a class="btn btn-sm btn-block btn btn-outline-dark btn-block " href="{{ route('compromisos.modificar', $compromiso->id) }}" data-toggle="tooltip" data-placement="top" title="Modificar Compromiso, este boton modifica la ejecucion presupuestaria"><i class="fas fa-check"></i> Restaurar</a>
+                                                 <a class="btn btn-sm btn-block btn btn-outline-success btn-block" href="{{ route('compromisos.modificar', $compromiso->id) }}" data-toggle="tooltip" data-placement="top" title="Modificar Compromiso, este boton modifica la ejecucion presupuestaria"><i class="fas fa-check"></i> Reversar</a>
                                                  {{--   
-                                            <form action="{{ route('compromisos.modificar', $compromiso->id) }}" method="POST" class="submit-prevent-form">
+                                                <form action="{{ route('compromisos.modificar', $compromiso->id) }}" method="POST" class="submit-prevent-form">
                                             
                                                  
                                                     @csrf
                                                     @method('PATCH')
-                                                    <button type="submit" class="btn btn-sm btn-block btn btn-outline-dark btn-block" data-toggle="tooltip" data-placement="top" title="Modificar Compromiso, este boton modifica la ejecucion presupuestaria"><i class="fa fa-fw fa-check"></i> Restaurar</button>
+                                                    <button type="submit" class="btn btn-sm btn-block btn btn-outline-success btn-block submit-prevent-button show-alert-reversar-box" data-toggle="tooltip" data-placement="top" title="Modificar Compromiso, este boton modifica la ejecucion presupuestaria"><i class="fa fa-fw fa-check"></i> Reversar</button>
                                                 </form>
                                                 --}}
                                                 @endcan
@@ -152,6 +152,8 @@
     
     @section('js')
     <script src="{{ asset('js/submit.js') }}"></script>
+    <script src="{{ asset('js/alerta_reversar.js') }}"></script>
+    
     
     
     @stop

@@ -11,7 +11,7 @@
 <br>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-sm-8">
+            <div class="col-sm-12">
                 <div class="card">
                     <div class="card-header">
                         <div style="display: flex; justify-content: space-between; align-items: center;">
@@ -86,7 +86,7 @@
                                                     <a class="btn btn-sm btn-block btn btn-outline-dark btn-block" href="{{ route('tipomodificaciones.edit',$tipomodificacione->id) }}"><i class="fa fa-fw fa-edit"></i> Editar</a>
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn btn-outline-danger btn-sm btn-block submit-prevent-button"><i class="fa fa-fw fa-trash"></i> Eliminar</button>
+                                                    <button type="submit" class="btn btn-outline-danger btn-sm btn-block submit-prevent-button show-alert-delete-box"><i class="fa fa-fw fa-trash"></i> Eliminar</button>
                                                 </form>
                                             </td>
                                                                                                       <!-- /.card-body -->
@@ -116,6 +116,6 @@
     
     @section('js')
     <script src="{{ asset('js/submit.js') }}"></script>
-    
+    <script src="{{ asset('js/alerta_eliminar.js') }}"></script>
     
     @stop

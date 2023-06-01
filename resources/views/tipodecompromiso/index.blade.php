@@ -67,12 +67,17 @@
                                             <td>
                                             <a class="btn btn-sm btn-block btn btn-outline-dark btn-block" href="{{ route('tipodecompromisos.show',$tipodecompromiso->id) }}"><i class="fas fa-print"></i> Mostrar</a>
                                                     <a class="btn btn-sm btn-block btn btn-outline-dark btn-block" href="{{ route('tipodecompromisos.edit',$tipodecompromiso->id) }}"><i class="fa fa-fw fa-edit"></i> Editar</a>
-                                                  {{--                                                <form action="{{ route('tipodecompromisos.destroy',$tipodecompromiso->id) }}" method="POST" class="submit-prevent-form">
+                                                  
+                                                    
+                                                    @can('admin.anular')
+                                             
+                                                    <form action="{{ route('tipodecompromisos.destroy',$tipodecompromiso->id) }}" method="POST" class="submit-prevent-form">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn btn-outline-danger btn-sm btn-block submit-prevent-button"><i class="fa fa-fw fa-trash"></i> Eliminar</button>
+                                                    <button type="submit" class="btn btn-outline-danger btn-sm btn-block submit-prevent-button show-alert-delete-box"><i class="fa fa-fw fa-trash"></i> Eliminar</button>
                                                 </form>
-                                                --}}
+                                                @endcan
+                                               
                                             </td>
                                         </tr>
                                     @endforeach
@@ -96,6 +101,8 @@
     
     @section('js')
     <script src="{{ asset('js/submit.js') }}"></script>
+    <script src="{{ asset('js/alerta_eliminar.js') }}"></script>
+
     
     
     @stop

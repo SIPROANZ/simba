@@ -54,11 +54,22 @@ class EjecucioneController extends Controller
         $total_causado = DB::table('ejecuciones')->sum('monto_causado');
         $total_pagado = DB::table('ejecuciones')->sum('monto_pagado');
         $total_disponible = $total_presupuestario - $total_comprometido;
-        $porc_comprometido = ( $total_comprometido * 100 ) / $total_presupuestario;
-        $porc_causado = ( $total_causado * 100 ) / $total_presupuestario;
-        $porc_pagado = ( $total_pagado * 100 ) / $total_presupuestario;
-        $porc_disponible = ( $total_disponible * 100 ) / $total_presupuestario;
 
+
+
+        if($total_presupuestario != 0){
+            $porc_comprometido = ( $total_comprometido * 100 ) / $total_presupuestario;
+            $porc_causado = ( $total_causado * 100 ) / $total_presupuestario;
+            $porc_pagado = ( $total_pagado * 100 ) / $total_presupuestario;
+            $porc_disponible = ( $total_disponible * 100 ) / $total_presupuestario;
+        }else{
+            $porc_comprometido = 0;
+            $porc_causado = 0;
+            $porc_pagado = 0;
+            $porc_disponible = 0;
+        }
+        
+       
         $tpcomprometido = $porc_comprometido;
         $tpcausado = $porc_causado;
         $tppagado = $porc_pagado;
@@ -300,7 +311,7 @@ class EjecucioneController extends Controller
     public function formular()
     {
 
-        $config = Configuracione::where('nombre','institucion')->first();
+        $config = Configuracione::where('nombre','institucion_formular')->first();
         $institucion = $config->valor;
         
 
@@ -311,10 +322,19 @@ class EjecucioneController extends Controller
         $total_causado = DB::table('ejecuciones')->sum('monto_causado');
         $total_pagado = DB::table('ejecuciones')->sum('monto_pagado');
         $total_disponible = $total_presupuestario - $total_comprometido;
+     
+        if($total_presupuestario != 0){
         $porc_comprometido = ( $total_comprometido * 100 ) / $total_presupuestario;
         $porc_causado = ( $total_causado * 100 ) / $total_presupuestario;
         $porc_pagado = ( $total_pagado * 100 ) / $total_presupuestario;
         $porc_disponible = ( $total_disponible * 100 ) / $total_presupuestario;
+    }else{
+        $porc_comprometido = 0;
+        $porc_causado = 0;
+        $porc_pagado = 0;
+        $porc_disponible = 0;
+    }
+    
 
         $tpcomprometido = $porc_comprometido;
         $tpcausado = $porc_causado;
@@ -358,7 +378,7 @@ class EjecucioneController extends Controller
 
        $ejecuciones = Ejecucione::query()
        ->when(request('search'), function($query){
-        $config = Configuracione::where('nombre','institucion')->first();
+        $config = Configuracione::where('nombre','institucion_formular')->first();
         $institucion = $config->valor;
         $config = Configuracione::where('nombre','ejercicio_formular')->first();
         $ejercicio = $config->valor;
@@ -373,7 +393,7 @@ class EjecucioneController extends Controller
                          ->where('ejercicio_id', 'like', $ejercicio);
         },
         function ($query) {
-            $config = Configuracione::where('nombre','institucion')->first();
+            $config = Configuracione::where('nombre','institucion_formular')->first();
             $institucion = $config->valor;
             $config = Configuracione::where('nombre','ejercicio_formular')->first();
             $ejercicio = $config->valor;
@@ -404,6 +424,8 @@ class EjecucioneController extends Controller
             DB::raw("CONCAT(sector,'.',programa,'.',subprograma,'.',proyecto,'.',actividad,' ',unidadejecutora) AS name"),'id')
             ->orderBy('name','ASC')
             ->pluck('name', 'id'); 
+
+        $instituciones = Institucione::orderBy('institucion', 'ASC')->pluck('institucion','id');
        
 
         $usuarios = User::pluck('name', 'id'); 
@@ -411,7 +433,7 @@ class EjecucioneController extends Controller
         $clasificadores = Clasificadorpresupuestario::orderBy('cuenta', 'ASC')->pluck('cuenta', 'cuenta'); 
       
 
-        return view('ejecucione.reportes', compact('usuarios','unidades','ejercicios', 'clasificadores'));
+        return view('ejecucione.reportes', compact('instituciones','usuarios','unidades','ejercicios', 'clasificadores'));
 
             
     }
@@ -420,6 +442,7 @@ class EjecucioneController extends Controller
     {
         //Buscar por institucion
         $unidadAdministrativa = $request->unidadadministrativa_id;
+        $institucion = $request->institucion_id;
         $ejercicio = $request->ejercicio_id;
         
         $usuario = $request->usuario_id;
@@ -438,6 +461,12 @@ class EjecucioneController extends Controller
             $nombre_unidad = $rs_unidad->unidadejecutora;
         }
 
+        $nombre_institucion = '';
+        $rs_institucion= Institucione::find($institucion);
+        if($rs_institucion){
+            $nombre_institucion = $rs_institucion->institucion;
+        }
+
         $nombre_ejercicio = '';
         $rs_ejercicio = Ejercicio::find($ejercicio);
         if($rs_ejercicio){
@@ -445,7 +474,7 @@ class EjecucioneController extends Controller
         }
 
         //
-        $ejecuciones = Ejecucione::ejercicios($ejercicio)->clasificadores($clasificador)->unidad($unidadAdministrativa)->usuarios($usuario)->get();
+        $ejecuciones = Ejecucione::instituciones($institucion)->ejercicios($ejercicio)->clasificadores($clasificador)->unidad($unidadAdministrativa)->usuarios($usuario)->get();
         $monto_inicial = $ejecuciones->sum('monto_inicial');
         $monto_ajustado = $ejecuciones->sum('monto_actualizado');
         $monto_modificacion = $monto_ajustado - $monto_inicial;
@@ -465,6 +494,7 @@ class EjecucioneController extends Controller
             'causado' => $causado,
             'pagado' => $pagado,
             'disponibilidad' => $disponibilidad,
+            'institucion' => $nombre_institucion,
             ]; 
 
         $pdf = PDF::setPaper('letter', 'landscape')->loadView('ejecucione.reportepdf', ['datos'=>$datos, 'ejecuciones'=>$ejecuciones]);

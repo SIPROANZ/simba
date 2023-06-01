@@ -17,7 +17,7 @@
                         <div style="display: flex; justify-content: space-between; align-items: center;">
 
                             <span id="card_title">
-                                {{ __('Ordenes de Pago Procesadas') }}
+                                {{ __('Ordenes de Pago Procesadas.') }}
                             </span>
 
                              <div class="float-right">
@@ -114,7 +114,7 @@
                                                     <a class="btn btn-sm btn-block btn btn-outline-dark btn-block " href="{{ route('ordenpagos.pdf',$ordenpago->id) }}" data-toggle="tooltip" data-placement="top" title="Imprimir Orden de Pago" target="_black"><i class="fas fa-print"></i> Imprimir</a>
                                                    
                                                     @can('admin.reversar')
-                                                    <a class="btn btn-sm btn-block btn btn-outline-dark btn-block " href="{{ route('ordenpagos.reversar',$ordenpago->id) }}" data-toggle="tooltip" data-placement="top" title="Reversar Orden de Pago"><i class="fas fa-check"></i> Reversar</a>
+                                                    <a class="btn btn-sm btn-block btn btn-outline-success btn-block " href="{{ route('ordenpagos.reversar',$ordenpago->id) }}" data-toggle="tooltip" data-placement="top" title="Reversar Orden de Pago"><i class="fas fa-check"></i> Reversar</a>
                                                      @endcan 
                                                   {{--  <form action="{{ route('ordenpagos.anular',$ordenpago->id) }}" method="POST" class="submit-prevent-form">
                                                     @csrf
@@ -147,6 +147,7 @@
     
     @section('js')
     <script src="{{ asset('js/submit.js') }}"></script>
+    <script src="{{ asset('js/alerta_reversar.js') }}"></script>
     
     
     @stop

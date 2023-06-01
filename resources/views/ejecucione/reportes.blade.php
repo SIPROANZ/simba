@@ -36,6 +36,14 @@
                 </div>
                 </div>
 
+                <div class="col-md-3">    
+                <div class="form-group">
+                    {{ Form::label('Institucion') }}
+                    {{ Form::select('institucion_id', $instituciones, 0, ['class' => 'form-control' . ($errors->has('institucion_id') ? ' is-invalid' : ''), 'placeholder' => 'Seleccione una']) }}
+                    {!! $errors->first('institucion_id', '<div class="invalid-feedback">:message</div>') !!}
+                </div>
+                </div>
+
             <div class="col-md-3">    
                 <div class="form-group">
                     {{ Form::label('Unidad Administrativa') }}

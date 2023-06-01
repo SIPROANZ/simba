@@ -24,7 +24,17 @@ class TiporetencioneController extends Controller
      */
     public function index()
     {
-        $tiporetenciones = Tiporetencione::paginate();
+       // $tiporetenciones = Tiporetencione::paginate();
+        $tiporetenciones = Tiporetencione::query()
+        ->when(request('search'), function($query){
+            return $query->where ('tipo', 'like', '%'.request('search').'%')
+                         ->orderBy('tipo', 'ASC');
+         },
+         function ($query) {
+             $query->orderBy('tipo', 'ASC');
+         })
+         ->paginate(25)
+        ->withQueryString();
 
         return view('tiporetencione.index', compact('tiporetenciones'))
             ->with('i', (request()->input('page', 1) - 1) * $tiporetenciones->perPage());

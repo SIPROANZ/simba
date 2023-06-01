@@ -82,7 +82,7 @@
                                                     <a class="btn btn-sm btn-block btn btn-outline-dark btn-block" href="{{ route('financiamientos.edit',$financiamiento->id) }}"><i class="fa fa-fw fa-edit"></i> Editar</a>
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn btn-outline-danger btn-sm btn-block submit-prevent-button"><i class="fa fa-fw fa-trash"></i> Eliminar</button>
+                                                    <button type="submit" class="btn btn-outline-danger btn-sm btn-block submit-prevent-button show-alert-delete-box"><i class="fa fa-fw fa-trash"></i> Eliminar</button>
                                                 </form>
                                                                                                               <!-- /.card-body -->
             </div>
@@ -101,4 +101,18 @@
             </div>
         </div>
     </div>
-@endsection
+    @stop
+
+    @section('css')
+       
+       <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous"/>
+       <link rel="stylesheet" href="{{ asset('css/submit.css') }}">
+           
+       @stop
+       
+       @section('js')
+       <script src="{{ asset('js/submit.js') }}"></script>
+       <script src="{{ asset('js/alerta_eliminar.js') }}"></script>
+       
+       
+       @stop

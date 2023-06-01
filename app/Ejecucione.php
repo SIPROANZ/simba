@@ -159,6 +159,12 @@ class Ejecucione extends Model
     	}
     }
 
+    public function scopeInstituciones($query, $institucion) {
+    	if ($institucion) {
+    		return $query->where('institucion_id','like',"$institucion");
+    	}
+    }
+
     public function scopeEjercicios($query, $ejercicio) {
     	if ($ejercicio) {
     		return $query->where('ejercicio_id','like',"$ejercicio");

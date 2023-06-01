@@ -239,11 +239,12 @@
                                  <table class="table table-bordered table-sm resumen">
                                     <thead class="thead">
                                         <tr>
-                                            <th style="text-align: center" colspan="4">FILTRADO POR</th>
+                                            <th style="text-align: center" colspan="5">FILTRADO POR</th>
     
                                         </tr>
                                         <tr>
                                             <th style="text-align: center">Ejercicio</th>
+                                            <th style="text-align: center">Institucion</th>
                                             <th style="text-align: center">Unidad Administrativa.</th>
                                             <th style="text-align: center">Clasificador Presupuestario</th>
                                             <th style="text-align: center">Usuario</th>
@@ -254,8 +255,8 @@
                                            <tr>
                                             
                                              <td style="text-align: center">{{ $datos['ejercicio'] }}</td>
+                                             <td style="text-align: center">{{ $datos['institucion'] }}</td>
                                              <td style="text-align: center">{{ $datos['unidad'] }}</td>
-                                             
                                              <td style="text-align: center"> {{ $datos['clasificador'] }} </td>
                                              <td style="text-align: center"> {{ $datos['usuario'] }}</td>
                                             </tr>

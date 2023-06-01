@@ -89,13 +89,13 @@
 											<td>{!! $ajustescompromiso->concepto !!}</td>
 											<td>{{ number_format($ajustescompromiso->montoajuste,2,',','.') }}</td>
                                             <td>
-                                            @if ($compromiso->status == 'EP')
+                                            @if ($ajustescompromiso->status == 'EP')
                                                     EN PROCESO
-                                                @elseif ($compromiso->status == 'PR')
+                                                @elseif ($ajustescompromiso->status == 'PR')
                                                     PROCESADA
-                                                @elseif ($compromiso->status == 'AP')
+                                                @elseif ($ajustescompromiso->status == 'AP')
                                                     APROBADA
-                                                @elseif ($compromiso->status == 'AN')
+                                                @elseif ($ajustescompromiso->status == 'AN')
                                                     ANULADA
                                                 @endif
                                             </td>

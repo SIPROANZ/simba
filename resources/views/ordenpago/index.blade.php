@@ -132,14 +132,14 @@
                                                    @csrf
                                                     @method('PATCH')
 
-                                                    <button type="submit" class="btn btn-sm btn-block btn btn-outline-primary btn-blockbtn-block" data-toggle="tooltip" data-placement="top" title="Aprobar orden de pago"><i class="fas fa-check-double"></i> Aprobar</button>
+                                                    <button type="submit" class="btn btn-sm btn-block btn btn-outline-success btn-blockbtn-block submit-prevent-button" data-toggle="tooltip" data-placement="top" title="Aprobar orden de pago"><i class="fas fa-check-double"></i> Aprobar</button>
                                                 </form>
 
                                                 @can('admin.reversar')
                                                <form action="{{ route('ordenpagos.anular',$ordenpago->id) }}" method="POST" class="submit-prevent-form">
                                                     @csrf
                                                     @method('PATCH')
-                                                    <button type="submit" class="btn btn-outline-danger btn-sm btn-block submit-prevent-button" data-toggle="tooltip" data-placement="top" title="Anular Orden de pago"><i class="fa fa-fw fa-trash"></i> Anular</button>
+                                                    <button type="submit" class="btn btn-outline-danger btn-sm btn-block submit-prevent-button show-alert-anular-box" data-toggle="tooltip" data-placement="top" title="Anular Orden de pago"><i class="fa fa-fw fa-trash"></i> Anular</button>
                                                 </form> 
                                                 @endcan
                                                 
@@ -166,6 +166,6 @@
     
     @section('js')
     <script src="{{ asset('js/submit.js') }}"></script>
-    
+    <script src="{{ asset('js/alerta_anular.js') }}"></script>
     
     @stop

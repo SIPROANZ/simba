@@ -117,7 +117,7 @@
                                             
                                             <td>{{ $pagado->usuario->name }}</td>
                                              <!-- =====Menu Desplegable====================================================== -->
-
+                                             <td>
         <div class="row">
           <div class="col-md-12">
             <div class="card card-secondary collapsed-card">
@@ -133,7 +133,7 @@
               <!-- /.card-header -->
               <div class="card-body">
 
-                                                <td>
+                                                
                                                 <form action="{{ route('pagados.aprobar',$pagado->id) }}" method="POST" class="submit-prevent-form">                                                   
                                                     <a class="btn btn-sm btn-block btn btn-outline-dark btn-blockbtn-block " href="{{ route('pagados.pdf',$pagado->id) }}" data-toggle="tooltip" data-placement="top" title="Imprimir Pagado" target="_black"><i class="fas fa-print"></i> Imprimir!</a>  
                                               
@@ -156,16 +156,16 @@
                                                 <form action="{{ route('pagados.anular',$pagado->id) }}" method="POST" class="submit-prevent-form">
                                                     @csrf
                                                     @method('PATCH')
-                                                    <button type="submit" class="btn btn-danger btn-sm btn-block submit-prevent-button" data-toggle="tooltip" data-placement="top" title="Anular pagado"><i class="fa fa-fw fa-trash"></i> Anular</button>
+                                                    <button type="submit" class="btn btn-danger btn-sm btn-block submit-prevent-button show-alert-anular-box" data-toggle="tooltip" data-placement="top" title="Anular pagado"><i class="fa fa-fw fa-trash"></i> Anular</button>
                                                 </form>
                                                 @endcan
-                                            </td>
+                                            
               <!-- /.card-body -->
             </div>
             <!-- /.card -->
           </div>
           <!-- /.col -->
-                                                
+          </td>                              
 
                                             
                                         </tr>
@@ -190,6 +190,6 @@
     
     @section('js')
     <script src="{{ asset('js/submit.js') }}"></script>
-    
+    <script src="{{ asset('js/alerta_anular.js') }}"></script>
     
     @stop

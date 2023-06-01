@@ -6,6 +6,8 @@ use App\Institucione;
 use App\Municipio;
 use Illuminate\Http\Request;
 use PDF;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 
 /**
  * Class InstitucioneController
@@ -57,6 +59,7 @@ class InstitucioneController extends Controller
      */
     public function store(Request $request)
     {
+        /*
         //dd($request)->validated()["logoinstitucion"]->getClientOriginalName();
         $data = $request;
         $data["logoinstitucion"] = $filename = time().".".$data["logoinstitucion"]->extension();
@@ -69,7 +72,25 @@ class InstitucioneController extends Controller
                     $institucione['organigrama']=$request->file('organigrama')->store('uploads','public');
                 }*/
         //$institucione=update($data->validated());
-        $institucione = Institucione::create($data->all());
+
+        
+
+        //imagen
+        $file = $request->file('logoinstitucion')->store('public/images');
+        $url = Storage::url($file);
+        //organigrama
+        $organigrama = $request->file('organigrama')->store('public/images');
+        $url_organigrama = Storage::url($organigrama);
+
+
+
+        $institucione = Institucione::create($request->all());
+
+          $institucione->logoinstitucion = $url;
+          $institucione->save();
+
+          $institucione->organigrama = $url_organigrama;
+          $institucione->save();
 
         return redirect()->route('instituciones.index')
             ->with('success', 'Institución creada con Exito.');

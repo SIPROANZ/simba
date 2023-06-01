@@ -34,6 +34,9 @@ Route::resource('users', App\Http\Controllers\UserController::class)->middleware
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('auth');
 
+Route::get('/rutas/{id}', [App\Http\Controllers\HomeController::class, 'rutas'])->name('rutas');
+
+
 
 //reportes
 Route::get('tipobos/reportes', [App\Http\Controllers\TipoboController::class, 'reportes'])->name('tipobos.reportes')->middleware('auth');

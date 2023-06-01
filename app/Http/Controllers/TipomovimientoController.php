@@ -24,7 +24,18 @@ class TipomovimientoController extends Controller
      */
     public function index()
     {
-        $tipomovimientos = Tipomovimiento::paginate();
+       // $tipomovimientos = Tipomovimiento::paginate();
+
+        $tipomovimientos = Tipomovimiento::query()
+        ->when(request('search'), function($query){
+            return $query->where ('descripcion', 'like', '%'.request('search').'%')
+                         ->orderBy('descripcion', 'ASC');
+         },
+         function ($query) {
+             $query->orderBy('descripcion', 'ASC');
+         })
+         ->paginate(25)
+        ->withQueryString();
 
         return view('tipomovimiento.index', compact('tipomovimientos'))
             ->with('i', (request()->input('page', 1) - 1) * $tipomovimientos->perPage());

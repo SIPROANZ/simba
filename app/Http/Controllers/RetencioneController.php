@@ -24,7 +24,18 @@ class RetencioneController extends Controller
      */
     public function index()
     {
-        $retenciones = Retencione::paginate();
+      //  $retenciones = Retencione::paginate();
+
+        $retenciones = Retencione::query()
+        ->when(request('search'), function($query){
+            return $query->where ('descripcion', 'like', '%'.request('search').'%')
+                         ->orderBy('descripcion', 'ASC');
+         },
+         function ($query) {
+             $query->orderBy('descripcion', 'ASC');
+         })
+        ->paginate(25)
+        ->withQueryString();
 
         return view('retencione.index', compact('retenciones'))
             ->with('i', (request()->input('page', 1) - 1) * $retenciones->perPage());

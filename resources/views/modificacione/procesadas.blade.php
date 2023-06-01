@@ -97,7 +97,7 @@
                                             <a class="btn btn-sm btn-block btn btn-outline-dark btn-blockbtn-block " href="{{ route('modificaciones.pdf',$modificacione->id) }}" data-toggle="tooltip" data-placement="top" title="Imprimir Modificacion" target="_black"><i class="fa fa-fw fa-print"></i> Imprimir</a>
                                             
                                             @can('admin.reversar')
-                                            <a class="btn btn-sm btn-block btn btn-outline-danger btn-blockbtn-block" href="{{ route('modificaciones.reversar',$modificacione->id) }}" data-toggle="tooltip" data-placement="top" title="Reversar Orden de Pago"><i class="fas fa-check"></i> Reversar</a>
+                                            <a class="btn btn-sm btn-block btn btn-outline-success btn-blockbtn-block" href="{{ route('modificaciones.reversar',$modificacione->id) }}" data-toggle="tooltip" data-placement="top" title="Reversar Orden de Pago"><i class="fas fa-check"></i> Reversar</a>
                                              @endcan             
 
                                             </td>
