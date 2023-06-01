@@ -114,7 +114,7 @@
 
                                             <td>
                                            
-                                            <a class="btn btn-sm btn-block btn btn-outline-dark btn-block" href="{{ route('compromisos.pdf',$compromiso->id) }}" data-toggle="tooltip" data-placement="top" title="Imprimir Compromiso"><i class="fas fa-print"></i> Imprimir</a>
+                                            <a class="btn btn-sm btn-block btn btn-outline-dark btn-block" href="{{ route('compromisos.pdf',$compromiso->id) }}" data-toggle="tooltip" data-placement="top" title="Imprimir Compromiso" target="_black"><i class="fas fa-print"></i> Imprimir</a>
   
                                             <!--
                                             <form action="{{ route('compromisos.modificar',$compromiso->id) }}" method="POST" class="submit-prevent-form">

@@ -907,6 +907,54 @@ return [
             ],
         ],
 
+          //Seguridad
+          [
+            'text' => 'Seguridad',
+            'icon' => 'fa fa-lock',
+            'icon_color' => 'primary',
+            'url'  => '#',
+            'can' => 'admin.administrador',
+            'submenu' => [
+                [
+                    'text' => 'Usuarios',
+                    'icon' => 'fas fa-fw fa-user-tie', //<i class="fas fa-user-tie"></i>
+                    'icon_color' => 'lightblue',
+                    'route'  => 'users.index',
+                    'can' => 'admin.administrador',
+                ],
+                /*
+                [
+                    'text' => 'Cambio de Contraseña',
+                    'url'  => '#',
+                ],
+                [
+                    'text' => 'Aplicaciones',
+                    'url'  => '#',
+                ],
+                [
+                    'text' => 'Grupos',
+                    'url'  => '#',
+                ],
+                [
+                    'text' => 'Grupo / Aplicaciones',
+                    'url'  => '#',
+                ],
+                [
+                    'text' => 'Sincronizar Aplicaciones',
+                    'url'  => '#',
+                ],
+                [
+                    'text' => 'Usuarios Logueados',
+                    'url'  => '#',
+                ],
+                [
+                    'text' => 'Histórico de Transacciones',
+                    'url'  => '#',
+                ], */
+
+            ],
+        ],
+        
          //Modificaciones Presupuestarias
          //Seguridad
          [

@@ -107,7 +107,7 @@
 											<td style="text-align: left">{{ $ordenpago->montoexento }}</td> --}}
 
                                             <td>
-                                                <a class="btn btn-sm btn-block btn btn-outline-dark btn-block " href="{{ route('ordenpagos.pdf',$ordenpago->id) }}" data-toggle="tooltip" data-placement="top" title="Imprimir Orden de Pago"><i class="fas fa-print"></i> Imprimir</a>
+                                                <a class="btn btn-sm btn-block btn btn-outline-dark btn-block " href="{{ route('ordenpagos.pdf',$ordenpago->id) }}" data-toggle="tooltip" data-placement="top" title="Imprimir Orden de Pago" target="_black"><i class="fas fa-print"></i> Imprimir</a>
 
                                                 @can('admin.reversar')
                                                 <a class="btn btn-sm btn-block btn btn-outline-dark btn-block " href="{{ route('ordenpagos.agregarfacturas',$ordenpago->id) }}" data-toggle="tooltip" data-placement="top" title="Agregar Facturas"><i class="fas fa-check"></i></i> Facturas</a>

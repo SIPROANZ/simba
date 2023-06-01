@@ -97,7 +97,7 @@
 
                                             <td>
                                             <br> 
-                                            <a class="btn btn-sm btn-block btn btn-outline-dark btn-block" href="{{ route('precompromisos.pdf',$precompromiso->id) }}" data-toggle="tooltip" data-placement="top" title="Imprimir Precompromiso"><i class="fas fa-print"></i> Imprimir</a>
+                                            <a class="btn btn-sm btn-block btn btn-outline-dark btn-block" href="{{ route('precompromisos.pdf',$precompromiso->id) }}" data-toggle="tooltip" data-placement="top" title="Imprimir Precompromiso" target="_black"><i class="fas fa-print"></i> Imprimir</a>
                                             
                                             @can('admin.reversar')
                                             <form action="{{ route('precompromisos.modificar',$precompromiso->id) }}" method="POST" class="submit-prevent-form">

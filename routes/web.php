@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
 Route::get('/', function () {
     return view('auth.login');
 });
@@ -32,9 +33,14 @@ Route::post('users/reporte_pdf', [App\Http\Controllers\UserController::class, 'r
 
 Route::resource('users', App\Http\Controllers\UserController::class)->middleware('auth');
 
+Route::get('rutas/pdf/{id}', [App\Http\Controllers\HomeController::class, 'pdf'])->name('rutas.pdf')->middleware('auth');
+
+
+Route::get('/rutas/{id}', [App\Http\Controllers\HomeController::class, 'rutas'])->name('rutas')->middleware('auth');
+
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('auth');
 
-Route::get('/rutas/{id}', [App\Http\Controllers\HomeController::class, 'rutas'])->name('rutas');
+
 
 
 
