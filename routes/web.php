@@ -711,11 +711,16 @@ Route::resource('detallesajustes', App\Http\Controllers\DetallesajusteController
 Route::resource('configuraciones', App\Http\Controllers\ConfiguracioneController::class)->middleware('auth');
 
 //INICIO SISTEMA SIMBAD
+Route::get('empleados/carnet/{id}', [App\Http\Controllers\EmpleadoController::class, 'carnet'])->name('empleados.carnet')->middleware('auth');
+Route::get('hijos/carnet/{id}', [App\Http\Controllers\HijoController::class, 'carnet'])->name('hijos.carnet')->middleware('auth');
+
 Route::resource('gabinetes', App\Http\Controllers\GabineteController::class)->middleware('auth');
 Route::resource('unidades', App\Http\Controllers\UnidadeController::class)->middleware('auth');
 Route::resource('empleados', App\Http\Controllers\EmpleadoController::class)->middleware('auth');
 Route::resource('hijos', App\Http\Controllers\HijoController::class)->middleware('auth');
 Route::resource('eventos', App\Http\Controllers\EventoController::class)->middleware('auth');
 Route::resource('asistencias', App\Http\Controllers\AsistenciaController::class)->middleware('auth');
+
+
 
 

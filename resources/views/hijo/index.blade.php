@@ -90,6 +90,8 @@
 
                                             <td>
                                                 <form action="{{ route('hijos.destroy',$hijo->id) }}" method="POST">
+                                                    <a class="btn btn-sm btn-block btn btn-outline-dark btn-block " href="{{ route('hijos.carnet',$hijo->id) }}" data-toggle="tooltip" data-placement="top" title="Imprimir Carnet" target="_black"><i class="fas fa-print"></i> Carnet</a>
+   
                                                     <a class="btn btn-sm btn-primary " href="{{ route('hijos.show',$hijo->id) }}"><i class="fa fa-fw fa-eye"></i> {{ __('Show') }}</a>
                                                     <a class="btn btn-sm btn-success" href="{{ route('hijos.edit',$hijo->id) }}"><i class="fa fa-fw fa-edit"></i> {{ __('Edit') }}</a>
                                                     @csrf

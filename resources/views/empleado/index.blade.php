@@ -74,6 +74,8 @@
 
                                             <td>
                                                 <form action="{{ route('empleados.destroy',$empleado->id) }}" method="POST">
+                                                <a class="btn btn-sm btn-block btn btn-outline-dark btn-block " href="{{ route('empleados.carnet',$empleado->id) }}" data-toggle="tooltip" data-placement="top" title="Imprimir Carnet" target="_black"><i class="fas fa-print"></i> Carnet</a>
+   
                                                     <a class="btn btn-sm btn-primary " href="{{ route('empleados.show',$empleado->id) }}"><i class="fa fa-fw fa-eye"></i> {{ __('Show') }}</a>
                                                     <a class="btn btn-sm btn-success" href="{{ route('empleados.edit',$empleado->id) }}"><i class="fa fa-fw fa-edit"></i> {{ __('Edit') }}</a>
                                                     @csrf

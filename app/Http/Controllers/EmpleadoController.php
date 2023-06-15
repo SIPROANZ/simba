@@ -7,6 +7,7 @@ use App\Unidade;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
+use PDF;
 
 /**
  * Class EmpleadoController
@@ -167,5 +168,17 @@ class EmpleadoController extends Controller
 
         return redirect()->route('empleados.index')
             ->with('success', 'Empleado deleted successfully');
+    }
+
+    public function carnet($id)
+    {
+      
+        $empleado = Empleado::find($id);
+        $obj_carbon = new Carbon();
+       
+        $pdf = PDF::loadView('empleado.carnet', ['empleado'=>$empleado, 'obj_carbon'=>$obj_carbon]);
+        $pdf->setPaper(array(0,0,612.00,396.00), 'portrait');
+        return $pdf->stream();
+ 
     }
 }

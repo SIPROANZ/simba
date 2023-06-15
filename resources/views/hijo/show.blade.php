@@ -28,7 +28,7 @@
 
                         <!-- Inicio codigo -->
                         <div class="row">
-                        <div class="col-sm-4" style="text-align: left;">
+                        <div class="col-sm-12" style="text-align: left;">
                         
                         <div class="form-group">
                         <h1>Datos del Hijo </h1>
@@ -88,7 +88,7 @@
                         <div class="col-sm-12" style="text-align: center;">
                             <div class="form-group">
 
-                                <div class="card" style="width: 54rem;">
+                                <div class="card" style="width: 72rem;">
                                 <img src="{{ asset ($hijo->anexopartida ) }}" class="card-img-top" alt="Imagen de la partida de nacimiento">
                                 <div class="card-body">
                                     <p class="card-text">Imagen de la Partida de Nacimiento</p>
@@ -99,7 +99,13 @@
                         </div>
                         <!-- Fin tarjeta partida de nacimiento -->
                         <!-- Inicio imagen de perfil y cedula del representante -->
-                        <h1>Datos del Representante <br></h1><br><br>
+                        <div class="col-sm-12" style="text-align: left;">
+                        
+                        <div class="form-group">
+                        <h1>Datos del Representante </h1>
+
+</div>
+</div>
 
                         <div class="col-sm-4" style="text-align: left;">
                         <div class="form-group">
