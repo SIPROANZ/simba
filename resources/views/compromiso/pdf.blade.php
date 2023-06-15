@@ -141,7 +141,7 @@
                                   <div style="text-align: right;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                   @php
-                                  $ruta ='http://localhost/siproespati/public/rutas/COMPROM-' . $compromiso->id;
+                                  $ruta ='http://siproapp.ideasrenovacion.com/rutas/COMPROM-' . $compromiso->id;
 
                                   @endphp
                                   <img src="data:image/svg+xml;base64,{{ base64_encode(QrCode::size(100)->generate($ruta)) }}">
@@ -256,20 +256,13 @@
               <table class="table table-bordered">
                 <thead >
                   <tr>
-                    <th class="firma" >JEFE(A) DE LA UNIDAD DE CONTROL PRESUPUESTARIO</th>
-                    <th  class="firma"  >GERENTE(A) DE PRESUPUESTO 
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.</th>
+                    <th  class="firma">GERENTE(A) DE PRESUPUESTO 
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
                     <td class="lateral"></td>
-                    <td></td>
                   </tr>
                 </tbody>
               </table>

@@ -165,7 +165,7 @@ right: 35px;
                                   <div style="text-align: right;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                   @php
-                                  $ruta ='http://localhost/siproespati/public/rutas/REQ-' . $requisicione->correlativo;
+                                  $ruta ='http://siproapp.ideasrenovacion.com/rutas/REQ-' . $requisicione->correlativo;
 
                                   @endphp
                                   <img src="data:image/svg+xml;base64,{{ base64_encode(QrCode::size(100)->generate($ruta)) }}">
@@ -280,14 +280,14 @@ right: 35px;
               <table class="table table-bordered">
                 <thead >
                   <tr>
-                    <th class="firma" >GERENTE(A) DE LA UNIDAD EJECUTORA</th>
-                    <th  class="firma"  >JEFE(A) DEL DPTO DE COMPRAS</th>
+                    <th class="firma">PRESIDENTE(A)</th>
+                    
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
                     <td class="lateral"></td>
-                    <td></td>
+                   
                   </tr>
                 </tbody>
               </table>

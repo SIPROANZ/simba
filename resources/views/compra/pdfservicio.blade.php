@@ -102,6 +102,7 @@
 
   .firma{
     font-size: 10px;
+    width: 200px
   }
 
   .pie{
@@ -125,7 +126,7 @@
                           <img src="{{ asset('images/logo.png') }}"> 
                          </th>
                           <th class="text-center " WIDTH="40%">
-         <h2 class="titulo2" >REPÚBLICA   BOLIVARIANA DE VENEZUELA PROANZOATEGUI. <h2>
+         <h2 class="titulo2" >REPÚBLICA BOLIVARIANA DE VENEZUELA PROANZOATEGUI.<h2>
                           
                               <h2 class="titulo2" > G-20016716-5 <h2>
                              <h3 class="subtitulo"> ORDEN DE SERVICIO </h3> 
@@ -135,7 +136,7 @@
                             <thead class="table-secondary">
                                 <tr>
                                     <th class="encabezado text-center justify-content">CONTROL PREVIO</th>
-                                    <th class="encabezado text-center justify-content" WIDTH="50%">ORDEN DE SERVICIO </th>                     
+                                    <th class="encabezado text-center justify-content" WIDTH="50%">ORDEN DE SERVICIO</th>                     
                                 </tr>
                             </thead>
                             <tbody>
@@ -336,7 +337,7 @@
                                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                   @php
-                                  $ruta ='http://localhost/siproespati/public/rutas/SERV-' . $compra->id;
+                                  $ruta ='http://siproapp.ideasrenovacion.com/rutas/SERV-' . $compra->id;
 
                                   @endphp
                                   <img src="data:image/svg+xml;base64,{{ base64_encode(QrCode::size(100)->generate($ruta)) }}">
@@ -358,15 +359,12 @@
                 <thead >
                
                   <tr>
-                    <th class="firma" style="width: 50%">JEFE(A) DE COMPRAS</th>
-                    <th  class="firma"  style="width: 50%">GERENTE(A) DE ADMINISTRACION</th>
-                    
+                    <th class="firma" style="width: 50%">ADMINISTRADOR(A)</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
                     <td class="lateral"></td>
-                    <td></td>
                     
                   </tr>
                 </tbody>

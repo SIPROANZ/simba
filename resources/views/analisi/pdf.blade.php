@@ -182,8 +182,15 @@
                    
                     <tr>
                     <td colspan="2">{{ $beneficiario->nombre }}</td>  
-                    <td colspan="2">{{ $beneficiario_b->nombre }}</td>
-                    <td colspan="2">{{ $beneficiario_c->nombre }}</td>   
+                    <td colspan="2">
+                                 @if($beneficiario_b)
+                                  {{ $beneficiario_b->nombre }}
+                                  @endif</td>
+                    <td colspan="2">
+                    @if($beneficiario_c)
+                    {{ $beneficiario_c->nombre }}
+                                  @endif
+                        </td>   
                     </tr>
                     <tr>
                         <td class="table-secondary" >PRECIO UNIT.</td>
@@ -276,15 +283,13 @@
               <table class="table table-bordered">
                 <thead >
                   <tr>
-                    <th class="firma" >ELABORADO POR:</th>
-                    <th  class="firma"  >CONFIRMADO POR:</th>
+                    <th class="firma" >ADMINISTRADOR(A):</th>
                    
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
                     <td class="lateral"></td>
-                    <td></td>
                   </tr>
                 </tbody>
                

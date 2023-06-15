@@ -167,7 +167,7 @@ height: 50px;
           
                    <th class="text-center " WIDTH="20%">
                         <h2 class="titulo">REPÚBLICA BOLIVARIANA DE VENEZUELA <br> PROANZOÁTEGUI
-                        <br>ADMINISTRACIÓN<h2>
+                        <br>ADMINISTRACIÓN - ORDEN DE PAGO<h2>
                           </th>
             <th>
              <table class="table-bordered resumen1">
@@ -313,7 +313,7 @@ height: 50px;
                      <th>SECTOR</th>
                      <th>PROG</th>
                      <th>ACT</th>
-                     <th>META</th>
+                    
                      <th>PART</th>
                      <th>GEN</th>
                      <th>ESP</th>
@@ -336,10 +336,7 @@ height: 50px;
                        <td> {{ $valor->unidadadministrativa->actividad }}</td>
 
                       
-                       <td>
-                       {{ $valor->ejecucione->meta_id  }}
                       
-                      </td>
                     <?php
 
                             $clasificador = explode('.', $valor->clasificadorpresupuestario);
@@ -363,7 +360,7 @@ height: 50px;
 
                  <tr>
                     
-                     <th colspan="9" style="text-align: right">TOTAL</th>
+                     <th colspan="8" style="text-align: right">TOTAL</th>
                      <th style="text-align: right">{{ number_format($suma_partidas,2,',','.') }}</th>
                    </tr>
 
@@ -506,7 +503,7 @@ height: 50px;
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       @php
-      $ruta ='http://localhost/siproespati/public/rutas/ODPAGO-' . $ordenpago->id;
+      $ruta ='http://siproapp.ideasrenovacion.com/rutas/ODPAGO-' . $ordenpago->id;
       @endphp
       <img src="data:image/svg+xml;base64,{{ base64_encode(QrCode::size(100)->generate($ruta)) }}">
       </div>
@@ -532,7 +529,7 @@ height: 50px;
                   </tr>
                 </tbody>
               </table>
-              <div class="pie text-left justify-left">ELABORADO POR EL USUARIO :  {{ $ordenpago->usuario->name }}</div>
+              <div class="pie text-left justify-left">ELABORADO POR:  {{ $ordenpago->usuario->name }}</div>
        
         </footer>
 

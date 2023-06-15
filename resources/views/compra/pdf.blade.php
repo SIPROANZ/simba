@@ -338,7 +338,7 @@
                                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                   @php
-                                  $ruta ='http://localhost/siproespati/public/rutas/COMP-' . $compra->id;
+                                  $ruta ='http://siproapp.ideasrenovacion.com/rutas/COMP-' . $compra->id;
 
                                   @endphp
                                   <img src="data:image/svg+xml;base64,{{ base64_encode(QrCode::size(100)->generate($ruta)) }}">
@@ -364,15 +364,13 @@
                 <thead >
                
                   <tr>
-                    <th class="firma" style="width: 50%">JEFE(A) DE COMPRAS</th>
-                    <th  class="firma"  style="width: 50%">GERENTE(A) DE ADMINISTRACION</th>
+                    <th class="firma" style="width: 50%">ADMINISTRADOR(A)</th>
                     
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
                     <td class="lateral"></td>
-                    <td></td>
                     
                   </tr>
                 </tbody>

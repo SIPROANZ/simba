@@ -303,6 +303,71 @@ return [
 
         // CENTRO DE GESTION
         ['header' => 'PANEL DE GESTION '],
+         //dashboard
+         [
+            'text' => 'Dashboard',
+            'icon' => 'fas fa-chart-line', //<i class="far fa-calendar-check"></i>
+            'icon_color' => 'success',
+            'route'  => 'home',
+            'can' => 'admin.ejecuciones',
+       ],
+        //gabinete
+        [
+            'text' => 'Gabinete',
+            'icon' => 'fas fa-chart-line', //<i class="far fa-calendar-check"></i>
+            'icon_color' => 'success',
+            'route'  => 'gabinetes.index',
+            'can' => 'admin.ejecuciones',
+       ],
+       //unidad administrativa, ente, corporacion
+       [
+        'text' => 'Unidad o ente',
+        'icon' => 'fas fa-chart-line', //<i class="far fa-calendar-check"></i>
+        'icon_color' => 'success',
+        'route'  => 'unidades.index',
+        'can' => 'admin.ejecuciones',
+       ],
+       //empleado
+       [
+        'text' => 'Empleados',
+        'icon' => 'fas fa-chart-line', //<i class="far fa-calendar-check"></i>
+        'icon_color' => 'success',
+        'route'  => 'empleados.index',
+        'can' => 'admin.ejecuciones',
+        ],
+        //hijos
+        [
+            'text' => 'Hijos',
+            'icon' => 'fas fa-chart-line', //<i class="far fa-calendar-check"></i>
+            'icon_color' => 'success',
+            'route'  => 'hijos.index',
+            'can' => 'admin.ejecuciones',
+       ],
+       //evento
+       [
+        'text' => 'Evento',
+        'icon' => 'fas fa-chart-line', //<i class="far fa-calendar-check"></i>
+        'icon_color' => 'success',
+        'route'  => 'eventos.index',
+        'can' => 'admin.ejecuciones',
+        ],
+        //asistencia
+        [
+            'text' => 'Control Asistencia',
+            'icon' => 'fas fa-chart-line', //<i class="far fa-calendar-check"></i>
+            'icon_color' => 'success',
+            'route'  => 'asistencias.index',
+            'can' => 'admin.ejecuciones',
+       ],
+        //reportes
+        [
+            'text' => 'Reportes',
+            'icon' => 'fas fa-chart-line', //<i class="far fa-calendar-check"></i>
+            'icon_color' => 'success',
+            'url'  => '#',
+            'can' => 'admin.ejecuciones',
+       ],
+
         [
             'text'    => '   Administrar Sistema',
             'icon'    => '	fas fa-database',
@@ -542,6 +607,13 @@ return [
                             'icon'    => 'fas fa-fw fa-donate', // <i class="fas fa-chalkboard-teacher"></i>
                             'icon_color' => 'white',
                             'route'  => 'pagados.index',
+                            'can' => 'admin.pagados',
+                        ],
+                        [
+                            'text' => 'Comprobantes Retenciones',
+                            'icon'    => 'fas fa-fw fa-donate', // <i class="fas fa-chalkboard-teacher"></i>
+                            'icon_color' => 'white',
+                            'route'  => 'comprobantesretenciones.index',
                             'can' => 'admin.pagados',
                         ],
   

@@ -141,7 +141,7 @@
                     <th class="text-center">
 
                         <h2 class="titulo" >REPÚBLICA BOLIVARIANA DE VENEZUELA <br> PROANZOÁTEGUI
-                        <br> DIRECCIÓN DE ADMINISTRACIÓN<h2>
+                        <br> ADMINISTRACIÓN - PAGADO<h2>
                         
                     </th>
 
@@ -270,7 +270,9 @@
             <table class="table table-bordered table-sm resumen ">
             <thead class="thead table-secondary">
                 <tr>
-                    <th>RETENCIÓN</th>
+                    <th>EGRESO</th>
+                    <th class="text-left justify-content">REFERENCIA</th>
+                    <th>BANCO</th>
                     <th class="text-right justify-content">MONTO</th>
                 </tr>
             </thead>
@@ -278,11 +280,13 @@
             <tr>
                     <td> </td>
                     <td class="text-right justify-content"> </td>
+                    <td> </td>
+                    <td class="text-right justify-content"> 0,00</td>
                 </tr>
 
                 <tr>
-                    <th class="text-right justify-content">TOTAL</th>
-                    <th class="text-right justify-content"></th>
+                    <th class="text-right justify-content" colspan="3">TOTAL</th>
+                    <th class="text-right justify-content">0,00</th>
                 </tr>
             </tbody>
             </table>
@@ -314,7 +318,7 @@
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       @php
 
-      $ruta ='http://localhost/siproespati/public/rutas/PAG-' . $pagado->id;
+      $ruta ='http://siproapp.ideasrenovacion.com/rutas/PAG-' . $pagado->id;
 
       @endphp
       <img src="data:image/svg+xml;base64,{{ base64_encode(QrCode::size(100)->generate($ruta)) }}">
@@ -333,14 +337,12 @@
               <table class="table table-bordered">
                 <thead >
                   <tr>
-                    <th width="50%" class="firma">JEFE(A) DE UNIDAD DE TESORERIA</th>
                     <th width="50%" class="firma">GERENTE(A) DE ADMINISTRACION</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
                     <td class="lateral"></td>
-                    <td></td>
                   </tr>
                 </tbody>
               </table>

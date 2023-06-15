@@ -23,12 +23,22 @@
      
   
         
-    <div class="col-md-8">
+    <div class="col-md-1">
         
-        <img src="{{ asset('images/backsipro.png') }}" alt="" >
+        <img src="{{ asset('images/fondo3.jpg') }}" alt="" >
 
     </div>
-    <div class="col-md-4" style="top: 120px">
+   
+    <div class="col-md-1" style="top: 1px">
+     <br>
+      <br>
+        <br>
+         <br>
+      <br>
+        <br>  <br>
+         <br>
+      <br>
+        <br>
 
         <!-- Inicio de codigo del login -->
         <div class="{{ $auth_type ?? 'login' }}-box">

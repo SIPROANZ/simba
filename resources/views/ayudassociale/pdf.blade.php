@@ -128,7 +128,7 @@
                           <img src="{{ asset('images/logo.png') }}"> 
                         </th>
 						              <th class="text-center">
-                             <h2 class="titulo" >REPÚBLICA BOLIVARIANA DE VENEZUELA   PROANZOATEGUI <h2>
+                             <h2 class="titulo" >REPÚBLICA BOLIVARIANA DE VENEZUELA PROANZOATEGUI <h2>
                                    <h2 class="titulo" > G-20016716-5 <h2>
                              <h3 class="subtitulo">AYUDA SOCIAL</h3> 
                              <hr>
@@ -143,7 +143,7 @@
                                   <div style="text-align: right;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                   @php
-                                  $ruta ='http://localhost/siproespati/public/rutas/AYU-' . $ayudassociale->id;
+                                  $ruta ='http://siproapp.ideasrenovacion.com/rutas/AYU-' . $ayudassociale->id;
 
                                   @endphp
                                   <img src="data:image/svg+xml;base64,{{ base64_encode(QrCode::size(100)->generate($ruta)) }}">
@@ -287,14 +287,12 @@
               <table class="table table-bordered">
                 <thead >
                   <tr>
-                    <th class="firma" >GERENTE(A) DE LA UNIDAD</th>
-                    <th  class="firma"  >GERENTE(A) DE ADMINISTRACIÓN</th>
+                    <th class="firma">PRESIDENTE(A)</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
                     <td class="lateral"></td>
-                    <td></td>
                   </tr>
                 </tbody>
                

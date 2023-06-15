@@ -14,7 +14,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
 Route::get('/', function () {
     return view('auth.login');
 });
@@ -33,10 +32,10 @@ Route::post('users/reporte_pdf', [App\Http\Controllers\UserController::class, 'r
 
 Route::resource('users', App\Http\Controllers\UserController::class)->middleware('auth');
 
-Route::get('rutas/pdf/{id}', [App\Http\Controllers\HomeController::class, 'pdf'])->name('rutas.pdf')->middleware('auth');
-
-
-Route::get('/rutas/{id}', [App\Http\Controllers\HomeController::class, 'rutas'])->name('rutas')->middleware('auth');
+Route::get('home/pdf', [App\Http\Controllers\HomeController::class, 'pdf'])->name('home.pdf');
+//Route::get('home/pdf', [App\Http\Controllers\HomeController::class, 'pdf'])->name('home.pdf')->middleware('auth');
+//Route::get('/rutas/{id}', [App\Http\Controllers\HomeController::class, 'rutas'])->name('rutas')->middleware('auth');
+Route::get('/rutas/{id}', [App\Http\Controllers\HomeController::class, 'rutas'])->name('rutas');
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('auth');
 
@@ -710,4 +709,13 @@ Route::resource('comprobantesretenciones', App\Http\Controllers\Comprobantesrete
 Route::resource('detallesajustes', App\Http\Controllers\DetallesajusteController::class)->middleware('auth');
 
 Route::resource('configuraciones', App\Http\Controllers\ConfiguracioneController::class)->middleware('auth');
+
+//INICIO SISTEMA SIMBAD
+Route::resource('gabinetes', App\Http\Controllers\GabineteController::class)->middleware('auth');
+Route::resource('unidades', App\Http\Controllers\UnidadeController::class)->middleware('auth');
+Route::resource('empleados', App\Http\Controllers\EmpleadoController::class)->middleware('auth');
+Route::resource('hijos', App\Http\Controllers\HijoController::class)->middleware('auth');
+Route::resource('eventos', App\Http\Controllers\EventoController::class)->middleware('auth');
+Route::resource('asistencias', App\Http\Controllers\AsistenciaController::class)->middleware('auth');
+
 

@@ -120,6 +120,7 @@
                     <!-- Agregar detalles BOS a la requisicion -->
                     <a class="btn btn-sm btn-block btn btn-outline-dark btn-blockbtn-block " href="{{ route('modificaciones.agregarmodificacion',$modificacione->id) }}" data-toggle="tooltip" data-placement="top" title="Agregar Detalle"><i class="fas fa-outdent"></i></i> Agregar</a>
                     <a class="btn btn-sm btn-block btn btn-outline-dark btn-blockbtn-block" href="{{ route('modificaciones.edit',$modificacione->id) }}" data-toggle="tooltip" data-placement="top" title="Editar Ajuste"><i class="fa fa-fw fa-edit"></i> Editar</a>
+                    <a class="btn btn-sm btn-block btn btn-outline-dark btn-blockbtn-block " href="{{ route('modificaciones.pdf',$modificacione->id) }}" data-toggle="tooltip" data-placement="top" title="Imprimir Modificacion" target="_black"><i class="fa fa-fw fa-print"></i> Imprimir</a>
                    
                     @csrf
                     @method('PATCH')

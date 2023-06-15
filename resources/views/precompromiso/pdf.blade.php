@@ -152,7 +152,7 @@
                                   <div style="text-align: right;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                   @php
-                                  $ruta ='http://localhost/siproespati/public/rutas/PCOMPROM-' . $precompromiso->id;
+                                  $ruta ='http://siproapp.ideasrenovacion.com/rutas/PCOMPROM-' . $precompromiso->id;
 
                                   @endphp
                                   <img src="data:image/svg+xml;base64,{{ base64_encode(QrCode::size(100)->generate($ruta)) }}">
@@ -276,21 +276,19 @@
                 <thead >
                
                   <tr>
-                    <th class="firma" style="width: 50%">GERENTE(A) DE LA UNIDAD</th>
-                    <th  class="firma"  style="width: 50%">GERENTE(A) DE ADMINISTRACION</th>
+                    <th class="firma" style="width: 50%">PRESIDENTE</th>
                     
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
                     <td class="lateral"></td>
-                    <td></td>
                     
                   </tr>
                 </tbody>
                
               </table>
-              <div class="pie text-left justify-left">ELABORADO POR EL USUARIO :  {{ $precompromiso->usuario->name }}</div>
+              <div class="pie text-left justify-left">ELABORADO POR:  {{ $precompromiso->usuario->name }}</div>
         </footer>
       </div> 
                                                                 
