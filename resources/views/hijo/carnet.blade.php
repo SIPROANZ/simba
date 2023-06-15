@@ -20,7 +20,18 @@
   
   margin-top: 60px; 
   margin-bottom: 60px; 
+
+            background-image: url({{ asset('images/logo.png') }});
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-position: center center;
+            background-size: 100%;
+            margin: 0px;
+
+
   }
+
+ 
   
   img
   {
@@ -110,6 +121,36 @@
     font-size: 11px;
     margin-left: 5px;  
   }
+
+  .circular--landscape {
+  display: inline-block;
+  position: relative;
+  width: 100px;
+  height: 100px;
+  overflow: hidden;
+  border-radius: 50%;
+}
+
+.circular--landscape img {
+  width: auto;
+  height: 100%;
+ /* margin-left: -50px;*/
+}
+
+.qr {
+  display: inline-block;
+  position: relative;
+  width: 100px;
+  height: 100px;
+  overflow: hidden;
+ /* border-radius: 50%; */
+}
+
+.qr img
+  {
+   width: 70px;
+   height: 70px;
+  }
 </style>
     
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -120,21 +161,28 @@
             
         </header>
         <main>
+          
+        
 
         <table class="table-sm resumen" style="text-align: center;">
                              
                              <tr>
 
-                               <td> 
+                               <td style="text-align: center;"> 
                               
-                               <div class="col-sm-4" style="text-align: left;">
+                               <div class="col-sm-4">
                         
                         <div class="form-group">
 
-                        <div class="card" style="width: 18rem;">
-                        <img src="{{ asset ($hijo->imagen) }}" class="img-circle" alt="Imagen de Perfil del empleado">
-                        <div class="card-body">
-                            <p class="card-text">
+                        <div style="width: 18rem;">
+
+                        <div class="circular--landscape" style="text-align: center;">
+                        <img src="{{ asset ($hijo->imagen) }}" alt="Imagen de Perfil del empleado">
+                        </div>
+                       
+                        <div>
+                           
+                            <p>
                             <strong>Nombre:</strong>
                             {{ $hijo->nombre }} <br>
                             <strong>Cedula:</strong>
@@ -153,24 +201,39 @@
                             {{ $hijo->representante->cedula }}<br>
                         
                             </p>
+
+                            <div class="qr" style="text-align: center;">
+                                                                              @php
+                                                                              $ruta ='http://localhost/simba/public/hijos/' . $hijo->id; @endphp
+                                                                              <img src="data:image/svg+xml;base64,{{ base64_encode(QrCode::size(100)->generate($ruta)) }}" alt="Código Qr">
+                                                                         </div>
+
+                           
                             
                         </div>
                         </div>
 
                         </div>
                         </div>
+                           
 
                                </td>
-                               <td> 
+
+
+                               <td style="text-align: center;"> 
                               
-                               <div class="col-sm-4" style="text-align: left;">
+                               <div class="col-sm-4">
                         
                         <div class="form-group">
 
-                        <div class="card" style="width: 18rem;">
-                        <img src="{{ asset ($hijo->representante->imagen) }}" class="card-img-top" alt="Imagen de Perfil del empleado">
-                        <div class="card-body">
-                            <p class="card-text">
+                        <div style="width: 18rem;">
+
+                        <div class="circular--landscape" style="text-align: center;">
+                        <img src="{{ asset ($hijo->representante->imagen) }}" alt="Imagen de Perfil del empleado">
+                        </div>
+                       
+                        <div>
+                            <p>
                             <strong>Nombre:</strong>
                             {{ $hijo->representante->nombre }} <br>
                             <strong>Cedula:</strong>
@@ -185,30 +248,19 @@
                             {{ $hijo->representante->telefono }}<br>
                             <strong>Tipo:</strong>
                             {{ $hijo->representante->tipo }}<br>
-                            <strong>Unidad Administrativa / Ente / Corporacion:</strong>
+                            <strong>Pertence a:</strong>
                             {{ $hijo->representante->unidade->nombre }}<br>
                             <strong>Gabinete:</strong>
                             {{ $hijo->representante->unidade->gabinete->nombre }}
                             </p>
 
-                            <table class="table-sm resumen1">
-                             
-                                <tr>
+                            <div class="qr" style="text-align: center;">
+                                                                              @php
+                                                                              $ruta ='http://localhost/simba/public/hijos/' . $hijo->id; @endphp
+                                                                              <img src="data:image/svg+xml;base64,{{ base64_encode(QrCode::size(100)->generate($ruta)) }}" alt="Código Qr">
+                                                                         </div>
 
-                                  <th> 
-                                  <div style="text-align: right;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                  @php
-                                  $ruta ='http://localhost/simba/public/hijos/' . $hijo->id;
-
-                                  @endphp
-                                  <img src="data:image/svg+xml;base64,{{ base64_encode(QrCode::size(100)->generate($ruta)) }}">
-                                  </div>
-                                  </th>
-                                </tr>
-                             
-                              
-                              </table>
+                           
                             
                         </div>
                         </div>

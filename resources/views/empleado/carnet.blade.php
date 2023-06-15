@@ -20,7 +20,16 @@
   
   margin-top: 60px; 
   margin-bottom: 60px; 
+
+  background-image: url({{ asset('images/logo.png') }});
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-position: center center;
+            background-size: 100%;
+            margin: 0px;
   }
+
+ 
   
   img
   {
@@ -51,6 +60,7 @@
 
   .resumen1{
     margin-left:10px;
+    text-align: center;
   }
 
   .resumen1 th{
@@ -59,7 +69,7 @@
 
   .resumen1 td{
     font-size: 11px;
-    text-align: justify;
+    text-align: center;
   }
 
   .resumen1 img
@@ -110,6 +120,36 @@
     font-size: 11px;
     margin-left: 5px;  
   }
+
+  .circular--landscape {
+  display: inline-block;
+  position: relative;
+  width: 100px;
+  height: 100px;
+  overflow: hidden;
+  border-radius: 50%;
+}
+
+.circular--landscape img {
+  width: auto;
+  height: 100%;
+ /* margin-left: -50px; */
+}
+
+.qr {
+  display: inline-block;
+  position: relative;
+  width: 100px;
+  height: 100px;
+  overflow: hidden;
+ /* border-radius: 50%; */
+}
+
+.qr img
+  {
+   width: 70px;
+   height: 70px;
+  }
 </style>
     
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -121,59 +161,57 @@
         </header>
         <main>
 
-        <table class="table-sm resumen" style="text-align: center;">
+       
+
+        <table class="table-sm resumen">
                              
                              <tr>
 
-                               <td> 
+                               <td style="text-align: center;"> 
                               
-                               <div class="col-sm-4" style="text-align: left;">
+                               <div class="col-sm-4">
                         <div class="form-group">
 
-                        <div class="card" style="width: 18rem;">
-                        <img src="{{ asset ($empleado->imagen) }}" class="card-img-top" alt="Imagen de Perfil del empleado">
-                        <div class="card-body">
-                            <p class="card-text">
-                            <strong>Nombre:</strong>
-                            {{ $empleado->nombre }} <br>
-                            <strong>Cedula:</strong>
-                            {{ $empleado->cedula }} <br>
-                            <strong>Fecha de Nacimiento:</strong>
-                            {{ $empleado->created_at->toDateString() }}<br>
-                            <strong>Edad:</strong>
-                            {{ $obj_carbon->createFromDate($obj_carbon->parse($empleado->created_at))->age }}<br>
-                            <strong>Genero:</strong>
-                            {{ $empleado->genero }}<br>
-                            <strong>Telefono:</strong>
-                            {{ $empleado->telefono }}<br>
-                            <strong>Tipo:</strong>
-                            {{ $empleado->tipo }}<br>
-                            <strong>Unidad Administrativa / Ente / Corporacion:</strong>
-                            {{ $empleado->unidade->nombre }}<br>
-                            <strong>Gabinete:</strong>
-                            {{ $empleado->unidade->gabinete->nombre }}
-                            </p>
+                        <div style="width: 18rem;">
 
-                            <table class="table-sm resumen1">
-                             
-                             <tr>
+                                <div class="circular--landscape" style="text-align: center;">
+                                <img src="{{ asset ($empleado->imagen) }}" alt="Imagen de Perfil del empleado">
+                                
+                                </div>
 
-                               <th> 
-                               <div style="text-align: right;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                               @php
-                               $ruta ='http://localhost/simba/public/empleados/'. $empleado->id;
-                               @endphp
-                               <img src="data:image/svg+xml;base64,{{ base64_encode(QrCode::size(100)->generate($ruta)) }}">
-                               </div>
-                               </th>
-                             </tr>
-                          
-                           
-                           </table>
-    
-  </div>
-</div>
+                                                                      <p>
+                                                                      <strong>Nombre:</strong>
+                                                                      {{ $empleado->nombre }} <br>
+                                                                      <strong>Cedula:</strong>
+                                                                      {{ $empleado->cedula }} <br>
+                                                                      <strong>Fecha de Nacimiento:</strong>
+                                                                      {{ $empleado->created_at->toDateString() }}<br>
+                                                                      <strong>Edad:</strong>
+                                                                      {{ $obj_carbon->createFromDate($obj_carbon->parse($empleado->created_at))->age }}<br>
+                                                                      <strong>Genero:</strong>
+                                                                      {{ $empleado->genero }}<br>
+                                                                      <strong>Telefono:</strong>
+                                                                      {{ $empleado->telefono }}<br>
+                                                                      <strong>Tipo:</strong>
+                                                                      {{ $empleado->tipo }}<br>
+                                                                      <strong>Pertenece a:</strong>
+                                                                      {{ $empleado->unidade->nombre }}<br>
+                                                                      <strong>Gabinete:</strong>
+                                                                      {{ $empleado->unidade->gabinete->nombre }}
+                                                                      </p>
+                                                                      
+
+                                                                      
+                                                                        <div class="qr" style="text-align: center;">
+                                                                              @php
+                                                                              $ruta ='http://localhost/simba/public/empleados/'. $empleado->id;
+                                                                              @endphp
+                                                                              <img src="data:image/svg+xml;base64,{{ base64_encode(QrCode::size(100)->generate($ruta)) }}" alt="Código Qr">
+                                                                         </div>
+                                                                        
+          
+                                              
+                                                              </div>
 
                         </div>
                         </div>
