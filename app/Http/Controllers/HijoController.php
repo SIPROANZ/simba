@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Hijo;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Carbon\Carbon;
 
 /**
  * Class HijoController
@@ -19,8 +21,9 @@ class HijoController extends Controller
     public function index()
     {
         $hijos = Hijo::paginate();
+        $obj_carbon = new Carbon();
 
-        return view('hijo.index', compact('hijos'))
+        return view('hijo.index', compact('hijos', 'obj_carbon'))
             ->with('i', (request()->input('page', 1) - 1) * $hijos->perPage());
     }
 
@@ -45,13 +48,27 @@ class HijoController extends Controller
     {
         request()->validate(Hijo::$rules);
 
-        //Agregar el id del usuario
-        $id_usuario = $request->user()->id;
-        $request->merge(['usuario_id'=>$id_usuario]);
+            //Agregar el id del usuario
+            $id_usuario = $request->user()->id;
+            $request->merge(['usuario_id'=>$id_usuario]);
 
-        $hijo = Hijo::create($request->all());
+            //Subir al servidor la imagen de perfil del empleado
+            $file = $request->file('imagen')->store('public/perfil');
+            $url = Storage::url($file);
+            //Subir al servidor la imagen de la cedula del empleado
+            $fileCedula = $request->file('anexocedula')->store('public/documentos');
+            $urlCedula = Storage::url($fileCedula);
+            //Subir al servidor la imagen de la partida de nacimiento
+            $filePartida = $request->file('anexopartida')->store('public/documentos');
+            $urlPartida= Storage::url($filePartida);
 
-        return redirect()->route('hijos.index')
+            $hijo = Hijo::create($request->all());
+            $hijo->imagen = $url;
+            $hijo->anexocedula = $urlCedula;
+            $hijo->anexopartida = $urlPartida;
+            $hijo->save();
+
+            return redirect()->route('hijos.index')
             ->with('success', 'Hijo created successfully.');
     }
 
@@ -65,7 +82,9 @@ class HijoController extends Controller
     {
         $hijo = Hijo::find($id);
 
-        return view('hijo.show', compact('hijo'));
+        $obj_carbon = new Carbon();
+
+        return view('hijo.show', compact('hijo', 'obj_carbon'));
     }
 
     /**
@@ -92,8 +111,26 @@ class HijoController extends Controller
     {
         request()->validate(Hijo::$rules);
 
-        $hijo->update($request->all());
 
+
+         //Subir al servidor la imagen de perfil del empleado
+         $file = $request->file('imagen')->store('public/perfil');
+         $url = Storage::url($file);
+         //Subir al servidor la imagen de la cedula del empleado
+         $fileCedula = $request->file('anexocedula')->store('public/documentos');
+         $urlCedula = Storage::url($fileCedula);
+         //Subir al servidor la imagen de la partida de nacimiento
+         $filePartida = $request->file('anexopartida')->store('public/documentos');
+         $urlPartida= Storage::url($filePartida);
+
+         $hijo->update($request->all());
+         
+         $hijo->imagen = $url;
+         $hijo->anexocedula = $urlCedula;
+         $hijo->anexopartida = $urlPartida;
+         $hijo->save();
+
+        
         return redirect()->route('hijos.index')
             ->with('success', 'Hijo updated successfully');
     }

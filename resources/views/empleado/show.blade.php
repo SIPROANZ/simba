@@ -22,31 +22,59 @@
                     </div>
 
                     <div class="card-body">
+
+                    <div class="row">
                         
+
+                        <div class="col-sm-4" style="text-align: left;">
                         <div class="form-group">
+
+                        <div class="card" style="width: 18rem;">
+                        <img src="{{ asset ($empleado->imagen) }}" class="card-img-top" alt="Imagen de Perfil del empleado">
+                        <div class="card-body">
+                            <p class="card-text">
                             <strong>Nombre:</strong>
-                            {{ $empleado->nombre }}
-                        </div>
-                        <div class="form-group">
+                            {{ $empleado->nombre }} <br>
                             <strong>Cedula:</strong>
-                            {{ $empleado->cedula }}
-                        </div>
-                        <div class="form-group">
+                            {{ $empleado->cedula }} <br>
+                            <strong>Fecha de Nacimiento:</strong>
+                            {{ $empleado->created_at->toDateString() }}<br>
+                            <strong>Edad:</strong>
+                            {{ $obj_carbon->createFromDate($obj_carbon->parse($empleado->created_at))->age }}<br>
                             <strong>Genero:</strong>
-                            {{ $empleado->genero }}
-                        </div>
-                        <div class="form-group">
+                            {{ $empleado->genero }}<br>
                             <strong>Telefono:</strong>
-                            {{ $empleado->telefono }}
-                        </div>
-                        <div class="form-group">
+                            {{ $empleado->telefono }}<br>
                             <strong>Tipo:</strong>
-                            {{ $empleado->tipo }}
+                            {{ $empleado->tipo }}<br>
+                            <strong>Unidad Administrativa / Ente / Corporacion:</strong>
+                            {{ $empleado->unidade->nombre }}<br>
+                            <strong>Gabinete:</strong>
+                            {{ $empleado->unidade->gabinete->nombre }}
+                            </p>
+    
+  </div>
+</div>
+
                         </div>
+                        </div>
+
+                        
+
+                        <div class="col-sm-8" style="text-align: center;">
                         <div class="form-group">
-                            <strong>Unidad Id:</strong>
-                            {{ $empleado->unidad_id }}
+
+                        <div class="card" style="width: 36rem;">
+                        <img src="{{ asset ($empleado->imagencedula) }}" class="card-img-top" alt="Imagen de cedula del empleado">
+                        <div class="card-body">
+                            <p class="card-text">Imagen de la cédula</p>
                         </div>
+                        </div>
+
+                        </div>
+                        </div>
+
+</div>
 
                     </div>
                 </div>

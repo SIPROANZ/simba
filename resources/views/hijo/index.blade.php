@@ -37,14 +37,18 @@
                             <table class="table table-striped table-hover">
                                 <thead class="thead">
                                     <tr>
-                                        <th>No</th>
-                                        
+                                        <th>ID</th>
+                                        <th>Perfil</th>
 										<th>Nombre</th>
+                                        <th>Genero</th>
+                                        <th>Fecha Nac.</th>
+                                        <th>Edad</th>
 										<th>Cedula</th>
-										<th>Genero</th>
-										<th>Anexocedula</th>
-										<th>Anexopartida</th>
-										<th>Cedularepresentante</th>
+										
+										<th>Imagen Cedula</th>
+										<th>Imagen Partida</th>
+										<th>Representante</th>
+                                        <th>Perfil Representante</th>
 										<th>Observacion</th>
                                         <th>Usuario</th>
                                         <th>Opciones</th>
@@ -53,14 +57,34 @@
                                 <tbody>
                                     @foreach ($hijos as $hijo)
                                         <tr>
-                                            <td>{{ ++$i }}</td>
-                                            
+                                            <td>{{ $hijo->id }}</td>
+                                            <td><img src="{{ asset ($hijo->imagen) }}" class="img-responsive" style="max-height: 100px; max-width: 100px" alt="Imagen de perfil del hijo del empleado"></td>
+											
 											<td>{{ $hijo->nombre }}</td>
+                                            <td>{{ $hijo->genero }}</td>
+                                            <td>{{ $hijo->created_at->toDateString() }}</td>
+                                            <td>
+                                            {{ $obj_carbon->createFromDate($obj_carbon->parse($hijo->created_at))->age }}
+                                            </td>
 											<td>{{ $hijo->cedula }}</td>
-											<td>{{ $hijo->genero }}</td>
-											<td>{{ $hijo->anexocedula }}</td>
-											<td>{{ $hijo->anexopartida }}</td>
-											<td>{{ $hijo->cedularepresentante }}</td>
+											
+											<td>
+                                            <img src="{{ asset ($hijo->anexocedula) }}" class="img-responsive" style="max-height: 100px; max-width: 100px" alt="Imagen de la cédula del hijo">    
+                                            </td>
+											<td><img src="{{ asset ($hijo->anexopartida) }}" class="img-responsive" style="max-height: 100px; max-width: 100px" alt="Imagen de la partida de nacimiento">    
+                                            </td>
+											<td>{{ $hijo->representante->nombre }}<br>
+
+
+                                                {{ $hijo->cedularepresentante }}</td>
+
+
+                                                <td>
+                                                <img src="{{ asset ($hijo->representante->imagen) }}" class="img-responsive" style="max-height: 100px; max-width: 100px" alt="Imagen de perfil del representante">
+                                                </td>
+
+
+
 											<td>{{ $hijo->observacion }}</td>
                                             <td>{{ $hijo->usuario->name }}</td>
 

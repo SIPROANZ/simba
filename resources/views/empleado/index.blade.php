@@ -37,10 +37,11 @@
                             <table class="table table-striped table-hover">
                                 <thead class="thead">
                                     <tr>
-                                        <th>No</th>
+                                        <th>ID</th>
                                         <th>Perfil</th>
 										<th>Nombre</th>
 										<th>Cedula</th>
+                                        <th>Imagen</th>
                                         <th>Fecha Nac.</th>
                                         <th>Edad</th>
 										<th>Genero</th>
@@ -55,12 +56,16 @@
                                 <tbody>
                                     @foreach ($empleados as $empleado)
                                         <tr>
-                                            <td>{{ ++$i }}</td>
-                                            <td></td>
+                                            <td>{{ $empleado->id }}</td>
+                                            <td><img src="{{ asset ($empleado->imagen) }}" class="img-responsive" style="max-height: 100px; max-width: 100px" alt="Imagen de perfil del empleado"></td>
 											<td>{{ $empleado->nombre }}</td>
 											<td>{{ $empleado->cedula }}</td>
-                                            <td><td>{{ $empleado->created_at->toDateString() }}</td></td>
-                                            <td></td>
+                                            <td><img src="{{ asset ($empleado->imagencedula) }}" class="img-responsive" style="max-height: 100px; max-width: 100px" alt="Imagen de la cedula de identidad del empleado"></td>
+											
+                                            <td>{{ $empleado->created_at->toDateString() }}</td>
+                                            <td>
+                                            {{ $obj_carbon->createFromDate($obj_carbon->parse($empleado->created_at))->age }}
+                                            </td>
 											<td>{{ $empleado->genero }}</td>
 											<td>{{ $empleado->telefono }}</td>
 											<td>{{ $empleado->tipo }}</td>

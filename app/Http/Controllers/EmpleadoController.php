@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Empleado;
 use App\Unidade;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Carbon\Carbon;
 
 /**
  * Class EmpleadoController
@@ -20,8 +22,9 @@ class EmpleadoController extends Controller
     public function index()
     {
         $empleados = Empleado::paginate();
+        $obj_carbon = new Carbon();
 
-        return view('empleado.index', compact('empleados'))
+        return view('empleado.index', compact('empleados', 'obj_carbon'))
             ->with('i', (request()->input('page', 1) - 1) * $empleados->perPage());
     }
 
@@ -47,14 +50,36 @@ class EmpleadoController extends Controller
     {
         request()->validate(Empleado::$rules);
 
-        //Agregar el id del usuario
-        $id_usuario = $request->user()->id;
-        $request->merge(['usuario_id'=>$id_usuario]);
+        //validar que la cedula del usuario no este repetida en el sistema
+        $validar_cedula = Empleado::where('cedula', $request->cedula)->first();
+        if($validar_cedula){
 
-        $empleado = Empleado::create($request->all());
+           return redirect()->route('empleados.index')
+            ->with('success', 'Error, el número de cédula que intenta ingresar, ya se encuentra registrado en el sistema.'); 
 
-        return redirect()->route('empleados.index')
-            ->with('success', 'Empleado created successfully.');
+        }else{
+ //Agregar el id del usuario
+ $id_usuario = $request->user()->id;
+ $request->merge(['usuario_id'=>$id_usuario]);
+ //Subir al servidor la imagen de perfil del empleado
+ $file = $request->file('imagen')->store('public/perfil');
+ $url = Storage::url($file);
+ //Subir al servidor la imagen de la cedula del empleado
+ $fileCedula = $request->file('imagencedula')->store('public/documentos');
+ $urlCedula = Storage::url($fileCedula);
+ 
+
+ $empleado = Empleado::create($request->all());
+ //Actualizar las url en la base dadtos para el empleado recien creado.
+ $empleado->imagen = $url;
+ $empleado->imagencedula = $urlCedula;
+ $empleado->save();
+
+
+ return redirect()->route('empleados.index')
+     ->with('success', 'Empleado created successfully.');
+        }
+       
     }
 
     /**
@@ -67,7 +92,9 @@ class EmpleadoController extends Controller
     {
         $empleado = Empleado::find($id);
 
-        return view('empleado.show', compact('empleado'));
+        $obj_carbon = new Carbon();
+
+        return view('empleado.show', compact('empleado', 'obj_carbon'));
     }
 
     /**
@@ -95,10 +122,38 @@ class EmpleadoController extends Controller
     {
         request()->validate(Empleado::$rules);
 
-        $empleado->update($request->all());
+        
 
-        return redirect()->route('empleados.index')
-            ->with('success', 'Empleado updated successfully');
+
+          //validar que la cedula del usuario no este repetida en el sistema
+          $validar_cedula = Empleado::where('cedula', $request->cedula)->first();
+          if($validar_cedula && $request->cedula != $empleado->cedula){
+            return redirect()->route('empleados.index')
+            ->with('success', 'Error, el número de cédula que intenta ingresar, ya se encuentra registrado en el sistema.');
+
+          }else{
+   
+   //Subir al servidor la imagen de perfil del empleado
+   $file = $request->file('imagen')->store('public/perfil');
+   $url = Storage::url($file);
+   //Subir al servidor la imagen de la cedula del empleado
+   $fileCedula = $request->file('imagencedula')->store('public/documentos');
+   $urlCedula = Storage::url($fileCedula);
+    
+   //Actualizar las url en la base dadtos para el empleado recien creado.
+  
+   $empleado->update($request->all());
+   $empleado->imagen = $url;
+   $empleado->imagencedula = $urlCedula;
+   $empleado->save();
+
+   return redirect()->route('empleados.index')
+       ->with('success', 'Empleado updated successfully');
+
+          }
+
+
+
     }
 
     /**

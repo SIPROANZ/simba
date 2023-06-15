@@ -33,6 +33,7 @@ class Empleado extends Model
 		'unidad_id' => 'required',
     'created_at' => 'required',
     'imagen' => 'required',
+    'imagencedula' => 'required',
     ];
 
     protected $perPage = 20;
@@ -42,7 +43,7 @@ class Empleado extends Model
      *
      * @var array
      */
-    protected $fillable = ['nombre','cedula','genero','telefono','tipo','unidad_id', 'created_at', 'usuario_id', 'imagen'];
+    protected $fillable = ['nombre','cedula','genero','telefono','tipo','unidad_id', 'created_at', 'usuario_id', 'imagen', 'imagencedula'];
 
 
     /**

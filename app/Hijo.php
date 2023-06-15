@@ -43,12 +43,17 @@ class Hijo extends Model
      *
      * @var array
      */
-    protected $fillable = ['nombre','cedula','genero','anexocedula','anexopartida','cedularepresentante','observacion','created_at', 'usuario_id', 'hijo'];
+    protected $fillable = ['nombre','cedula','genero','anexocedula','anexopartida','cedularepresentante','observacion','created_at', 'usuario_id', 'hijo', 'imagen'];
 
 
     public function usuario()
     {
         return $this->hasOne('App\Models\User', 'id', 'usuario_id');
+    }
+
+    public function representante()
+    {
+        return $this->hasOne('App\Empleado', 'cedula', 'cedularepresentante');
     }
 
 }

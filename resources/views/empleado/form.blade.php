@@ -37,6 +37,23 @@
             {!! $errors->first('created_at', '<div class="invalid-feedback">:message</div>') !!}
         </div>
 
+{{-- Imagen para la foto de perfil y para la imagen de la cedula --}}
+    <div class="col-md-12">
+        <div class="form-group">
+            {{ Form::label('imagen de perfil') }}
+            {{ Form::file('imagen', ['class' => 'form-control' . ($errors->has('imagen') ? ' is-invalid' : ''), 'placeholder' => 'Imagen']) }}
+            {!! $errors->first('imagen', '<div class="invalid-feedback">:message</div>') !!}
+        </div>
+    </div>
+
+    <div class="col-md-12">
+        <div class="form-group">
+            {{ Form::label('Imagen de la cédula') }}
+            {{ Form::file('imagencedula', ['class' => 'form-control' . ($errors->has('imagencedula') ? ' is-invalid' : ''), 'placeholder' => 'Imagen Cedula']) }}
+            {!! $errors->first('imagencedula', '<div class="invalid-feedback">:message</div>') !!}
+        </div>
+    </div>
+
     </div>
     <div class="box-footer mt20">
         <button type="submit" class="btn btn-primary">{{ __('Submit') }}</button>
