@@ -724,7 +724,13 @@ Route::get('empleados/reportes', [App\Http\Controllers\EmpleadoController::class
 Route::post('empleados/reporte_pdf', [App\Http\Controllers\EmpleadoController::class, 'reporte_pdf'])->name('empleados.reporte_pdf')->middleware('auth');
 Route::resource('empleados', App\Http\Controllers\EmpleadoController::class)->middleware('auth');
 
+
+//reportes
+Route::get('hijos/reportes', [App\Http\Controllers\HijoController::class, 'reportes'])->name('hijos.reportes')->middleware('auth');
+Route::post('hijos/reporte_pdf', [App\Http\Controllers\HijoController::class, 'reporte_pdf'])->name('hijos.reporte_pdf')->middleware('auth');
 Route::resource('hijos', App\Http\Controllers\HijoController::class)->middleware('auth');
+
+
 Route::resource('eventos', App\Http\Controllers\EventoController::class)->middleware('auth');
 Route::resource('asistencias', App\Http\Controllers\AsistenciaController::class)->middleware('auth');
 

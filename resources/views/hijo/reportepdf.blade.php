@@ -3,7 +3,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> REPORTE DE EMPLEADOS</title>
+    <title> REPORTE DE HIJOS</title>
 
     <style>
 * {
@@ -140,7 +140,7 @@
                                     <h2 class="titulo2">PROANZOÁTEGUI<br>
                                     G-20016716-5<br>
                                     <h4>
-                                    Reporte de Empleados<br></h4>
+                                    Reporte de Hijos<br></h4>
                                 </h2>
 
                                    
@@ -160,23 +160,27 @@
         
             <table class="table table-bordered table-sm resumen">
                                       <thead class="thead">
-                                          <tr>
-                                          <th>ID</th>
+                                       <tr>
+                                      
+
+                                        <th>ID</th>
                                         @if($datos['imagen']=='CON IMAGEN')
                                         <th>Perfil</th>
                                         @endif
 										<th>Nombre</th>
-										<th>Cedula</th>
-                                        @if($datos['imagen']=='CON IMAGEN')
-                                        <th>Imagen</th>
-                                        @endif
+                                        <th>Genero</th>
                                         <th>Fecha Nac.</th>
                                         <th>Edad</th>
-										<th>Genero</th>
-										<th>Telefono</th>
-										<th>Tipo</th>
-										<th>Pertenece a</th>
-                                        <th>Gabinete</th>
+										<th>Cedula</th>
+										@if($datos['imagen']=='CON IMAGEN')
+										<th>Imagen Cedula</th>
+										<th>Imagen Partida</th>
+                                        @endif
+										<th>Representante</th>
+                                        @if($datos['imagen']=='CON IMAGEN')
+                                        <th>Perfil Representante</th>
+                                        @endif
+										<th>Observacion</th>
                                         <th>Usuario</th>
                                          
       
@@ -185,27 +189,45 @@
                                       <tbody>
                                         
 
-                                      @foreach ($empleados as $empleado)
+                                      @foreach ($hijos as $hijo)
                                         <tr>
-                                            <td>{{ $empleado->id }}</td>
+                                            <td>{{ $hijo->id }}</td>
                                             @if($datos['imagen']=='CON IMAGEN')
-                                            <td><img src="{{ asset ($empleado->imagen) }}" class="img-responsive" style="max-height: 40px; max-width: 40px" alt="Imagen de perfil del empleado"></td>
+                                            <td><img src="{{ asset ($hijo->imagen) }}" class="img-responsive" style="max-height: 100px; max-width: 100px" alt="Imagen de perfil del hijo del empleado"></td>
                                             @endif
-                                            <td>{{ $empleado->nombre }}</td>
-											<td>{{ $empleado->cedula }}</td>
-                                            @if($datos['imagen']=='CON IMAGEN')
-                                            <td><img src="{{ asset ($empleado->imagencedula) }}" class="img-responsive" style="max-height: 40px; max-width: 40px" alt="Imagen de la cedula de identidad del empleado"></td>
-                                            @endif
-                                            <td>{{ $empleado->created_at->toDateString() }}</td>
+											<td>{{ $hijo->nombre }}</td>
+                                            <td>{{ $hijo->genero }}</td>
+                                            <td>{{ $hijo->created_at->toDateString() }}</td>
                                             <td>
-                                            {{ $obj_carbon->createFromDate($obj_carbon->parse($empleado->created_at))->age }}
+                                            {{ $obj_carbon->createFromDate($obj_carbon->parse($hijo->created_at))->age }}
                                             </td>
-											<td>{{ $empleado->genero }}</td>
-											<td>{{ $empleado->telefono }}</td>
-											<td>{{ $empleado->tipo }}</td>
-											<td>{{ $empleado->unidade->nombre }}</td>
-                                            <td>{{ $empleado->unidade->gabinete->nombre }}</td>
-                                            <td>{{ $empleado->usuario->name }}</td>
+											<td>{{ $hijo->cedula }}</td>
+											
+                                            @if($datos['imagen']=='CON IMAGEN')
+											<td>
+                                            <img src="{{ asset ($hijo->anexocedula) }}" class="img-responsive" style="max-height: 100px; max-width: 100px" alt="Imagen de la cédula del hijo">    
+                                            </td>
+											<td><img src="{{ asset ($hijo->anexopartida) }}" class="img-responsive" style="max-height: 100px; max-width: 100px" alt="Imagen de la partida de nacimiento">    
+                                            </td>
+                                            @endif
+											<td>{{ $hijo->representante->nombre }}<br>
+                                                {{ $hijo->cedularepresentante }} <br>
+
+                                                {{ $hijo->representante->unidade->nombre }} <br>
+                                                {{ $hijo->representante->unidade->gabinete->nombre }} <br>
+                                            
+                                            </td>
+
+                                                @if($datos['imagen']=='CON IMAGEN')
+                                                <td>
+                                                <img src="{{ asset ($hijo->representante->imagen) }}" class="img-responsive" style="max-height: 100px; max-width: 100px" alt="Imagen de perfil del representante">
+                                                </td>
+                                                @endif
+
+
+
+											<td>{{ $hijo->observacion }}</td>
+                                            <td>{{ $hijo->usuario->name }}</td>
 
                                           
                                         </tr>
@@ -223,13 +245,13 @@
                                   <table class="table table-bordered table-sm resumen">
                                     <thead class="thead">
                                         <tr>
-                                            <th style="text-align: center" colspan="3">RESUMEN EMPLEADO</th>
+                                            <th style="text-align: center" colspan="3">RESUMEN HIJO</th>
     
                                         </tr>
                                         <tr>
-                                            
-                                        <th style="text-align: center">Total Hombres</th>
-                                        <th style="text-align: center">Total Mujeres</th>
+                                        
+                                        <th style="text-align: center">Total Niños</th>
+                                        <th style="text-align: center">Total Niñas</th>
                                         <th style="text-align: center">Total General</th>
                                             
     
@@ -237,7 +259,8 @@
                                     </thead>
                                     <tbody>
                                            <tr>
-                                           <td style="text-align: center">
+                                           
+                                             <td style="text-align: center">
                                                 {{ $datos['total_ninos'] }}
                                              </td>
                                              <td style="text-align: center">
@@ -266,7 +289,9 @@
                                         <tr>
                                             <th style="text-align: center">Nombre</th>
                                             <th style="text-align: center">Genero</th>
-                                            <th style="text-align: center">Tipo</th>
+                                            <th style="text-align: center">Cedula Rep</th>
+                                            <th style="text-align: center">Nombre Rep</th>
+
                                             <th style="text-align: center">Pertenece a</th>
                                             <th style="text-align: center">Gabinete</th>
                                             <th style="text-align: center">Inicio</th>
@@ -284,7 +309,8 @@
                                                 {{ $datos['genero'] }}
                                               
                                             </td>
-                                             <td style="text-align: center"> {{ $datos['tipo'] }}</td>
+                                             <td style="text-align: center"> {{ $datos['cedula'] }}</td>
+                                             <td style="text-align: center"> {{ $datos['nombre_representante'] }}</td>
                                              <td style="text-align: center"> {{ $datos['nombre_unidad'] }}</td>
                                              <td style="text-align: center"> {{ $datos['nombre_gabinete'] }}</td>
                                              <td style="text-align: center"> {{ $datos['inicio'] }}</td>

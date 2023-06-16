@@ -59,21 +59,42 @@ class Empleado extends Model
         return $this->hasOne('App\Models\User', 'id', 'usuario_id');
     }
 
-    public function scopeBeneficiarios($query, $beneficiario) {
-    	if ($beneficiario) {
-    		return $query->where('beneficiario_id','like',"$beneficiario");
+    public function scopeNombre($query, $nombre) {
+    	if ($nombre) {
+    		return $query->where('nombre','like',"%$nombre%");
     	}
     }
 
-    public function scopeEstatus($query, $estatus) {
-    	if ($estatus) {
-    		return $query->where('status','like',"$estatus");
+    public function scopeGenero($query, $genero) {
+    	if ($genero) {
+    		return $query->where('genero','like',"$genero");
     	}
     }
 
-    public function scopeUsuarios($query, $usuario) {
-    	if ($usuario) {
-    		return $query->where('usuario_id','like',"$usuario");
+    public function scopeTipo($query, $tipo) {
+    	if ($tipo) {
+    		return $query->where('tipo','like',"$tipo");
+    	}
+    }
+
+    public function scopeUnidades($query, $unidad_id) {
+    	if ($unidad_id) {
+    		return $query->where('unidad_id','like',"$unidad_id");
+    	}
+    }
+
+    public function scopeGabinetes($query, $gabinete_id) {
+    	if ($gabinete_id) {
+
+            return $query->whereHas('unidade', function($qa) use ($gabinete_id) {
+                $qa->whereHas('gabinete', function($q) use ($gabinete_id) {
+                    $q->where('id', 'like', "$gabinete_id");
+                });
+            });
+
+            /*
+    		return $query->where('gabinete_id','like',"$gabinete_id");
+            */
     	}
     }
 

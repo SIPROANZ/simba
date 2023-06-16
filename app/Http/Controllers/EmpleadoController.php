@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Empleado;
 use App\Unidade;
+use App\Gabinete;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
@@ -185,84 +186,65 @@ class EmpleadoController extends Controller
     public function reportes()
     {
     
-        $usuarios = User::orderBy('name', 'ASC')->pluck('name' , 'id'); 
-
+        $unidades = Unidade::orderBy('nombre', 'ASC')->pluck('nombre' , 'id'); 
+        $gabinetes = Gabinete::orderBy('nombre', 'ASC')->pluck('nombre' , 'id'); 
         $fecha_actual = Carbon::now();
       
 
-        return view('ordenpago.reportes', compact('fecha_actual','usuarios'));
-
+        return view('empleado.reportes', compact('fecha_actual','unidades', 'gabinetes'));
             
     }
 
     public function reporte_pdf(Request $request)
     {
-        //Buscar por institucion
-        $rif = $request->rif;
-
-        //Obtener Beneficiario
-        $beneficiario_id = false;
-        $nombre_beneficiario = '';
-        $rs_beneficiario = Beneficiario::where('rif', $rif)->first();
-        if($rs_beneficiario){
-            $beneficiario_id = $rs_beneficiario->id;
-            $nombre_beneficiario = $rs_beneficiario->nombre;
-        }
-        
-        $estatus = $request->status;
-        $nombre_estatus = '';
-        if($estatus == 'EP')
-        {
-            $nombre_estatus = 'EN PROCESO';
-        }elseif($estatus == 'AP'){
-            $nombre_estatus = 'APROBADO';
-        }elseif($estatus == 'PR'){
-            $nombre_estatus = 'PROCESADO';
-        }elseif($estatus == 'AN'){
-            $nombre_estatus = 'ANULADO';
-        }
-        $usuario = $request->usuario_id;
+        //Incializando variables POST
+        $nombre = $request->nombre;
+        $genero = $request->genero;
+        $tipo = $request->tipo;
+        $unidad_id = $request->unidad;
+        $gabinete_id = $request->gabinete;
         $inicio = $request->fecha_inicio;
+        $imagen = $request->imagen;
         $fin = $request->fecha_fin;
-        
-        $nombre_usuario = '';
-        $rs_usuario = User::find($usuario);
-        if($rs_usuario){
-            $nombre_usuario = $rs_usuario->name;
+        $obj_carbon = new Carbon();
+
+        //Obtener el nombre de la unidad
+        $rs_unidad = Unidade::find($unidad_id);
+        $nombre_unidad ='';
+        if($rs_unidad){
+            $nombre_unidad =$rs_unidad->nombre; 
         }
 
-        $ordenpagos = Ordenpago::beneficiarios($beneficiario_id)->estatus($estatus)->usuarios($usuario)->fechaInicio($inicio)->fechaFin($fin)->get();
-        $base = $ordenpagos->sum('montobase');
-        $retencion = $ordenpagos->sum('montoretencion');
-        $iva = $ordenpagos->sum('montoiva');
-        $neto = $ordenpagos->sum('montoneto');
-        $aprobadas = Ordenpago::where('status', 'AP')->beneficiarios($beneficiario_id)->estatus($estatus)->usuarios($usuario)->fechaInicio($inicio)->fechaFin($fin)->count();
-        $procesadas = Ordenpago::where('status', 'PR')->beneficiarios($beneficiario_id)->estatus($estatus)->usuarios($usuario)->fechaInicio($inicio)->fechaFin($fin)->count();
-        $enproceso = Ordenpago::where('status', 'EP')->beneficiarios($beneficiario_id)->estatus($estatus)->usuarios($usuario)->fechaInicio($inicio)->fechaFin($fin)->count();
-        $anuladas = Ordenpago::where('status', 'AN')->beneficiarios($beneficiario_id)->estatus($estatus)->usuarios($usuario)->fechaInicio($inicio)->fechaFin($fin)->count();
-        $total = Ordenpago::beneficiarios($beneficiario_id)->estatus($estatus)->usuarios($usuario)->fechaInicio($inicio)->fechaFin($fin)->count();
+        //Obtener el nombre del gabinete
+        $rs_gabinete = Gabinete::find($gabinete_id);
+        $nombre_gabinete ='';
+        if($rs_gabinete){
+            $nombre_gabinete =$rs_gabinete->nombre; 
+        }
+
+        $empleados = Empleado::unidades($unidad_id)->gabinetes($gabinete_id)->nombre($nombre)->genero($genero)->tipo($tipo)->fechaInicio($inicio)->fechaFin($fin)->get();
        
+        $total_ninos = count($empleados->where('genero','MASCULINO'));
+        $total_ninas = count($empleados->where('genero','FEMENINO'));
+
+        $total = count($empleados);
         $datos = [
             
-            'aprobadas' => $aprobadas,
-            'procesadas' => $procesadas,
-            'enproceso' => $enproceso,
-            'anuladas' => $anuladas,
-            'total' => $total, 
-            
-            
+            'nombre' => $nombre,
+            'genero' => $genero,
+            'tipo' => $tipo,
+            'nombre_unidad' => $nombre_unidad,
+            'nombre_gabinete' => $nombre_gabinete,
             'inicio' => $inicio,
-            'fin' => $fin,  
-            'usuario' =>$nombre_usuario,  
-            'estatus' =>$nombre_estatus,  
-            'beneficiario' => $nombre_beneficiario,
-            'base' => $base,
-            'retencion' => $retencion,
-            'iva' => $iva,
-            'neto' => $neto
+            'fin' => $fin,
+            'total' => $total,
+            'imagen' => $imagen,
+            'total_ninos' => $total_ninos,
+            'total_ninas' => $total_ninas,
+           
             ]; 
 
-        $pdf = PDF::setPaper('letter', 'landscape')->loadView('ordenpago.reportepdf', ['datos'=>$datos, 'ordenpagos'=>$ordenpagos]);
+        $pdf = PDF::setPaper('letter', 'landscape')->loadView('empleado.reportepdf', ['datos'=>$datos, 'empleados'=>$empleados, 'obj_carbon'=>$obj_carbon]);
         return $pdf->stream();
         
          

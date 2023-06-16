@@ -1,10 +1,10 @@
 @extends('adminlte::page')
 
 
-@section('title', 'Empleados')
+@section('title', 'Hijo')
 
 @section('content_header')
-    <h1>Reportes de Empleados</h1>
+    <h1>Reportes de Hijos</h1>
 @stop
 
 @section('content')
@@ -20,7 +20,7 @@
                     <span class="card-title">Seleccione los campos a buscar</span>
                 </div>
                 <div class="card-body">
-<form method="POST" action="{{ route('empleados.reporte_pdf') }}"  role="form" enctype="multipart/form-data" class="submit-prevent-form" target="_black">
+<form method="POST" action="{{ route('hijos.reporte_pdf') }}"  role="form" enctype="multipart/form-data" class="submit-prevent-form" target="_black">
     @csrf
 
     <div class="box box-info padding-1">
@@ -30,11 +30,28 @@
 
                 <div class="col-md-3">    
                 <div class="form-group">
-                    {{ Form::label('Nombre') }}
+                    {{ Form::label('Nombre del Hijo') }}
                     {{ Form::text('nombre', '', ['class' => 'form-control' . ($errors->has('nombre') ? ' is-invalid' : ''), 'placeholder' => 'Ingrese Nombre']) }}
                     {!! $errors->first('nombre', '<div class="invalid-feedback">:message</div>') !!}
                 </div>
                 </div>
+
+                <div class="col-md-3">    
+                <div class="form-group">
+                    {{ Form::label('Nombre del Representante') }}
+                    {{ Form::text('nombre_representante', '', ['class' => 'form-control' . ($errors->has('nombre_representante') ? ' is-invalid' : ''), 'placeholder' => 'Ingrese Nombre']) }}
+                    {!! $errors->first('nombre_representante', '<div class="invalid-feedback">:message</div>') !!}
+                </div>
+                </div>
+
+                <div class="col-md-3">    
+                <div class="form-group">
+                    {{ Form::label('Cedula del Representante') }}
+                    {{ Form::text('cedula', '', ['class' => 'form-control' . ($errors->has('cedula') ? ' is-invalid' : ''), 'placeholder' => 'Ingrese Cedula']) }}
+                    {!! $errors->first('cedula', '<div class="invalid-feedback">:message</div>') !!}
+                </div>
+                </div>
+
 
                     <div class="col-md-3">    
                         <div class="form-group">
@@ -126,6 +143,3 @@
 
 
 @stop
-
-
-

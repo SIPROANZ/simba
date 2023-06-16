@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Hijo;
 use App\Empleado;
+use App\Gabinete;
+use App\Unidade;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
@@ -208,5 +210,77 @@ class HijoController extends Controller
         $pdf->setPaper(array(0,0,612.00,396.00), 'portrait');
         return $pdf->stream();
  
+    }
+
+    public function reportes()
+    {
+    
+        $unidades = Unidade::orderBy('nombre', 'ASC')->pluck('nombre' , 'id'); 
+        $gabinetes = Gabinete::orderBy('nombre', 'ASC')->pluck('nombre' , 'id'); 
+        $fecha_actual = Carbon::now();
+      
+
+        return view('hijo.reportes', compact('fecha_actual','unidades', 'gabinetes'));
+            
+    }
+
+    public function reporte_pdf(Request $request)
+    {
+        //Incializando variables POST
+        $nombre = $request->nombre;
+        $cedula = $request->cedula; //cedula del representante
+        $nombre_representante = $request->nombre_representante; //nombre_representante del representante
+        $genero = $request->genero;
+        $tipo = $request->tipo;
+        $unidad_id = $request->unidad;
+        $gabinete_id = $request->gabinete;
+        $inicio = $request->fecha_inicio;
+        $imagen = $request->imagen;
+        $fin = $request->fecha_fin;
+        $obj_carbon = new Carbon();
+
+        //Obtener el nombre de la unidad
+        $rs_unidad = Unidade::find($unidad_id);
+        $nombre_unidad ='';
+        if($rs_unidad){
+            $nombre_unidad =$rs_unidad->nombre; 
+        }
+
+        //Obtener el nombre del gabinete
+        $rs_gabinete = Gabinete::find($gabinete_id);
+        $nombre_gabinete ='';
+        if($rs_gabinete){
+            $nombre_gabinete =$rs_gabinete->nombre; 
+        }
+
+        $hijos = Hijo::cedulas($cedula)->nombre_representante($nombre_representante)->gabinetes($gabinete_id)->unidades($unidad_id)->nombre($nombre)->genero($genero)->fechaInicio($inicio)->fechaFin($fin)->get();
+        
+        $total_ninos = count($hijos->where('genero','MASCULINO'));
+        $total_ninas = count($hijos->where('genero','FEMENINO'));
+
+
+        $total = count($hijos);
+        $datos = [
+            
+            'nombre' => $nombre,
+            'genero' => $genero,
+            'tipo' => $tipo,
+            'nombre_unidad' => $nombre_unidad,
+            'nombre_gabinete' => $nombre_gabinete,
+            'inicio' => $inicio,
+            'fin' => $fin,
+            'total' => $total,
+            'imagen' => $imagen,
+            'cedula' => $cedula,
+            'nombre_representante' => $nombre_representante,
+            'total_ninos' => $total_ninos,
+            'total_ninas' => $total_ninas,
+           
+            ]; 
+
+        $pdf = PDF::setPaper('letter', 'landscape')->loadView('hijo.reportepdf', ['datos'=>$datos, 'hijos'=>$hijos, 'obj_carbon'=>$obj_carbon]);
+        return $pdf->stream();
+        
+         
     }
 }

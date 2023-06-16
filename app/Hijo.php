@@ -56,4 +56,79 @@ class Hijo extends Model
         return $this->hasOne('App\Empleado', 'cedula', 'cedularepresentante');
     }
 
+    public function scopeNombre($query, $nombre) {
+    	if ($nombre) {
+    		return $query->where('nombre','like',"%$nombre%");
+    	}
+    }
+
+    public function scopeGenero($query, $genero) {
+    	if ($genero) {
+    		return $query->where('genero','like',"$genero");
+    	}
+    }
+
+    public function scopeCedulas($query, $cedula) {
+    	if ($cedula) {
+
+            return $query->whereHas('representante', function($qa) use ($cedula) {
+                $qa->where('cedula', 'like', "$cedula");
+            });
+            /*
+    		return $query->where('tipo','like',"$tipo");*/
+    	}
+    }
+
+    public function scopeNombre_representante($query, $nombre) {
+    	if ($nombre) {
+
+            return $query->whereHas('representante', function($qa) use ($nombre) {
+                $qa->where('nombre', 'like', "%$nombre%");
+            });
+            /*
+    		return $query->where('tipo','like',"$tipo");*/
+    	}
+    }
+
+    public function scopeUnidades($query, $unidad_id) {
+    	if ($unidad_id) {
+
+            return $query->whereHas('representante', function($qa) use ($unidad_id) {
+                $qa->where('unidad_id', 'like', "$unidad_id");
+            });
+            /*
+    		return $query->where('unidad_id','like',"$unidad_id");*/
+    	}
+    }
+
+    public function scopeGabinetes($query, $gabinete_id) {
+    	if ($gabinete_id) {
+
+            return $query->whereHas('representante', function($qat) use ($gabinete_id) {
+             $qat->whereHas('unidade', function($qa) use ($gabinete_id) {
+                $qa->whereHas('gabinete', function($q) use ($gabinete_id) {
+                    $q->where('id', 'like', "$gabinete_id");
+                });
+            });
+
+        });
+
+            /*
+    		return $query->where('gabinete_id','like',"$gabinete_id");
+            */
+    	}
+    }
+
+    public function scopeFechaInicio($query, $inicio) {
+    	if ($inicio) {
+    		return $query->where('created_at','>=',"$inicio");
+    	}
+    }
+
+    public function scopeFechaFin($query, $fin) {
+    	if ($fin) {
+    		return $query->where('created_at','<=',"$fin");
+    	}
+    }
+
 }

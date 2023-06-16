@@ -20,6 +20,10 @@
                             </span>
 
                              <div class="float-right">
+                                <a href="{{ route('empleados.reportes') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
+                                  {{ __('Reporte') }}
+                                </a>
+
                                 <a href="{{ route('empleados.create') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
                                   {{ __('Create New') }}
                                 </a>

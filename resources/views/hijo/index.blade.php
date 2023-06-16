@@ -20,6 +20,9 @@
                             </span>
 
                              <div class="float-right">
+                             <a href="{{ route('hijos.reportes') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
+                                  {{ __('Reporte') }}
+                                </a>
                                 <a href="{{ route('hijos.create') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
                                   {{ __('Create New') }}
                                 </a>
@@ -74,9 +77,10 @@
 											<td><img src="{{ asset ($hijo->anexopartida) }}" class="img-responsive" style="max-height: 100px; max-width: 100px" alt="Imagen de la partida de nacimiento">    
                                             </td>
 											<td>{{ $hijo->representante->nombre }}<br>
-
-
-                                                {{ $hijo->cedularepresentante }}</td>
+                                                {{ $hijo->cedularepresentante }}
+                                                {{ $hijo->representante->unidade->nombre }} <br>
+                                                {{ $hijo->representante->unidade->gabinete->nombre }} <br>
+                                            </td>
 
 
                                                 <td>

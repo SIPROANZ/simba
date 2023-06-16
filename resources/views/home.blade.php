@@ -6,7 +6,7 @@
     
     <div class="row">
 <div class="col-sm-12">
-<h1>Resumen Presupuestario y Financiero </h1>
+<h1>Resumen Estadistico </h1>
 <div class="float-right">                                                
 <a class="btn btn-sm btn-block btn btn-outline-dark btn-block " href="{{ route('home.pdf') }}" data-toggle="tooltip" data-placement="top" title="Imprimir Reporte Resumen" target="_black"><i class="fas fa-print"></i> Reporte</a>
 </div>
@@ -25,8 +25,8 @@
 <div class="info-box">
   <span class="info-box-icon bg-info"><i class="fas fa-money-bill-alt"></i></span>
   <div class="info-box-content">
-    <span class="info-box-text">Total Inicial</span>
-    <span class="info-box-number">{{ $datos['total_presupuestario'] }}</span>
+    <span class="info-box-text">Total Empleados</span>
+    <span class="info-box-number">{{ $datos['empleados'] }}</span>
     <div class="progress">
       <div class="progress-bar bg-info" style="width: 100%"></div>
     </div>
@@ -40,8 +40,8 @@
 <div class="info-box">
   <span class="info-box-icon bg-info"><i class="fas fa-money-bill-alt"></i></span>
   <div class="info-box-content">
-    <span class="info-box-text">Total Modificado</span>
-    <span class="info-box-number">{{ $datos['total_modificacion'] }}</span>
+    <span class="info-box-text">Total Empleadas</span>
+    <span class="info-box-number">{{ $datos['empleadas'] }}</span>
     <div class="progress">
       <div class="progress-bar bg-info" style="width: 100%"></div>
     </div>
@@ -55,8 +55,8 @@
 <div class="info-box">
   <span class="info-box-icon bg-warning"><i class="fas fa-money-bill-alt"></i></span>
   <div class="info-box-content">
-    <span class="info-box-text">Total Ajustado</span>
-    <span class="info-box-number">{{ $datos['total_ajustado'] }}</span>
+    <span class="info-box-text">Total Hijos</span>
+    <span class="info-box-number">{{ $datos['hijos'] }}</span>
     <div class="progress">
       <div class="progress-bar bg-info" style="width: 100%"></div>
     </div>
@@ -70,8 +70,8 @@
     <div class="info-box">
       <span class="info-box-icon bg-success"><i class="fas fa-money-check-alt"></i></span>
       <div class="info-box-content">
-        <span class="info-box-text">Total Financiera</span>
-        <span class="info-box-number">{{ $datos['total_financiera'] }}</span>
+        <span class="info-box-text">Total Hijas</span>
+        <span class="info-box-number">{{ $datos['hijas'] }}</span>
         <div class="progress">
           <div class="progress-bar bg-success" style="width: 100%"></div>
         </div>
