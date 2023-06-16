@@ -714,9 +714,16 @@ Route::resource('configuraciones', App\Http\Controllers\ConfiguracioneController
 Route::get('empleados/carnet/{id}', [App\Http\Controllers\EmpleadoController::class, 'carnet'])->name('empleados.carnet')->middleware('auth');
 Route::get('hijos/carnet/{id}', [App\Http\Controllers\HijoController::class, 'carnet'])->name('hijos.carnet')->middleware('auth');
 
+
+
 Route::resource('gabinetes', App\Http\Controllers\GabineteController::class)->middleware('auth');
 Route::resource('unidades', App\Http\Controllers\UnidadeController::class)->middleware('auth');
+
+//reportes
+Route::get('empleados/reportes', [App\Http\Controllers\EmpleadoController::class, 'reportes'])->name('empleados.reportes')->middleware('auth');
+Route::post('empleados/reporte_pdf', [App\Http\Controllers\EmpleadoController::class, 'reporte_pdf'])->name('empleados.reporte_pdf')->middleware('auth');
 Route::resource('empleados', App\Http\Controllers\EmpleadoController::class)->middleware('auth');
+
 Route::resource('hijos', App\Http\Controllers\HijoController::class)->middleware('auth');
 Route::resource('eventos', App\Http\Controllers\EventoController::class)->middleware('auth');
 Route::resource('asistencias', App\Http\Controllers\AsistenciaController::class)->middleware('auth');
